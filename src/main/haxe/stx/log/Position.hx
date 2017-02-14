@@ -6,7 +6,7 @@ import thx.Position in PositionT;
 
 @:allow(stx.log.Meta) @:forward abstract Position(PositionT) from PositionT to PositionT{
   @:from static public function fromPos(pos:haxe.PosInfos):Position{
-    return new Position(new thx.Position(pos));
+    return new Position((pos:thx.Position));
   }
   public function new(self){
     this = self;
