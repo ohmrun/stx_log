@@ -1,0 +1,10 @@
+package stx.log.head;
+
+typedef Level       = stx.log.head.data.Level;
+typedef LogFailure  = stx.log.head.data.LogFailure;
+
+enum Scope{
+  ScopeMethod;
+  ScopeClass;
+  ScopeModule;
+}

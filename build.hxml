@@ -1,0 +1,19 @@
+-main Main
+--interp 
+
+#--macro Main.macro_test()
+
+-D test=stx_log
+-D stx_log_config_show
+
+-lib tink_core
+
+-lib stx_pico
+-lib stx_nano
+-lib stx_fn
+-lib stx_assert
+
+
+-cp src/main/haxe
+-cp src/test/haxe
+
