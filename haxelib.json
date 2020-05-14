@@ -8,7 +8,6 @@
     "releasenote": "pairs for tink_core integration",
     "contributors": ["0b1kn00b"],
     "dependencies": {
-        "tink_core": "1.0.0-rc.11",
         "stx_pico": "",
         "stx_nano": "",
         "stx_fn": "",

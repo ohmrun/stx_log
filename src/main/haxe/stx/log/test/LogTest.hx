@@ -1,4 +1,4 @@
-package stx.io.log;
+package stx.io.log.test;
 /**
  * ...
  * @author 0b1kn00b
