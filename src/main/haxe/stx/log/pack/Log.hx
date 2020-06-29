@@ -16,8 +16,14 @@ import stx.log.pack.log.pack.Level;
   /**
     For using in each functions.
   */
-  public function printer(?pos:Pos):Dynamic->Void{
-    return function(x:Dynamic){
+  @:deprecated
+  public function printer<T>(?pos:Pos):T->Void{
+    return function(x:T){
+      this(x,pos);
+    }
+  }
+  public function sink<T>(?pos:Pos):T->Void{
+    return function(x:T){
       this(x,pos);
     }
   }

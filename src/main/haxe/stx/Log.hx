@@ -15,8 +15,8 @@ typedef FullHaxeLog   = stx.log.pack.FullHaxeLog;
 typedef Scoping       = stx.log.pack.Scoping; 
 
 class LiftLog{
-  static public function log(wildcard:Wildcard):Log{
-    return Log.instance;  
+  static public function log(wildcard:Wildcard,?impl:LogDef):Log{
+    return impl == null ? Log.instance : impl;
   }
   static public function logger<T>(wildcard:Wildcard,?pos:Pos):T->T{
     return (t:T) -> {

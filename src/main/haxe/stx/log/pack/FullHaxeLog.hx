@@ -28,7 +28,7 @@ import stx.log.pack.log.pack.Stamp;
  */
 
 class FullHaxeLog{
-  public static function trace( v : Dynamic, ?infos : LogPosition ) : Void {
+  @:noUsing public static function trace( v : Dynamic, ?infos : LogPosition ) : Void {
     var arr     = __.option(infos.customParams).def(()->[]);
     var meta    =
         arr.search(
