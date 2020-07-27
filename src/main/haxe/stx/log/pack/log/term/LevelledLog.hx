@@ -15,7 +15,7 @@ class LevelledLog implements PredicateApi<Pos,LogFailure>{
     ).map_filter(
       (param:Any)-> (Meta == (StdType.getClass(param):Class<Dynamic>)).if_else(
         () -> __.option(
-          Std.is(param,Meta) ? (param:Meta) : null
+          Std.isOfType(param,Meta) ? (param:Meta) : null
         ).map((x:Meta) -> x.stamp.map(x -> x.level.asInt() >= level.asInt()).defv(false)),
         () -> None
       )

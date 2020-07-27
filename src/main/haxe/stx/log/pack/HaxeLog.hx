@@ -61,8 +61,8 @@ class HaxeLog {
 				note('cs');
 				cs.system.Console.WriteLine(str);
 			#elseif java
-				note('java');
-				untyped __java__("java.lang.System.out.println(str)");
+			note('java');
+				Sys.print("java.lang.System.out.println(str)");
 			#end
 		#elseif (python)
 			note('python');
