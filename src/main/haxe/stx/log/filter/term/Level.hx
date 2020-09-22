@@ -6,7 +6,10 @@ class Level<T> extends Filter<T>{
     super();
     this.level = level;
   }
-  override public function opine(v:Value<T>){
-    return v.stamp.level.asInt() >= level.asInt();
+  override public function applyI(v:Value<T>){
+    return (v.stamp.level.asInt() >= level.asInt()).if_else(
+      () -> Report.unit(),
+      () -> Report.make(E_Log_UnderLogLevel)
+    );
   }
 }

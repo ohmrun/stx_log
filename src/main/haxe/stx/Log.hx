@@ -31,6 +31,7 @@ typedef LogDef = Dynamic -> ?Pos -> Void;
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
   static public function LOG(value:Dynamic,?pos:Pos):Void{
+    //trace("transmit");
     Signal.transmit(enlog(value,pos));
   }
   static public function enlog<T>(value:T,?pos:Pos):Value<T>{

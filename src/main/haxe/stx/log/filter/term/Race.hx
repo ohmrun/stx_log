@@ -8,7 +8,7 @@ class Race<T> extends Filter<T>{
     super();
     this.races = [];
   }
-  override public function opine(value:Value<T>){
+  override public function applyI(value:Value<T>){
     var race = races.fold(
       (next:Stamp,memo:Option<Stamp>) -> memo.fold(
         (v:Stamp) -> (next.timestamp > v.timestamp).if_else(
@@ -26,8 +26,8 @@ class Race<T> extends Filter<T>{
         if(out){
           trace('wins race');
         }
-        out;
-      default       : false; 
+        out.if_else(() -> Report.unit(),() -> Report.pure(__.fault().of(E_Log_LosesRace)));
+        default       : Report.pure(__.fault().of(E_Log_LosesRace));
     }
   }
 }

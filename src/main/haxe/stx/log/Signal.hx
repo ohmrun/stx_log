@@ -8,9 +8,11 @@ typedef SignalDef = TinkSignal<Value<Dynamic>>;
 abstract Signal(SignalDef){
   static function __init__(){
     #if (stx.log.debugging)
-      instance.handle((x) -> new DebugLogger().react(x));
+      new Signal().attach(new DebugLogger());
+      is_custom = false;
     #end
-      instance.handle(Facade.unit().react);
+    new Signal().attach(Facade.unit());
+    is_custom = false;
   }
   static public   var is_custom(default,null):Bool                              = false;
   static private  var transmitter(default,never):Trigger                        = new Trigger();
@@ -20,7 +22,11 @@ abstract Signal(SignalDef){
     this = instance;
   }
   public function attach(logger:LoggerApi<Dynamic>){
-    handle(logger.react);
+    handle(
+      (x:Value<Dynamic>) -> { 
+        var o = logger.apply(x)(Logger.spur);
+      }
+    );
   }
   public function handle(x){
     is_custom = true;
@@ -38,7 +44,5 @@ typedef TriggerDef = TinkSignalTrigger<Value<Dynamic>>;
 }
 
 class DebugLogger<T> extends Logger<T>{
-  override public function apply(value:Value<T>):String{
-    return '<DEBUGLOGGER>' + super.apply(value);
-  }
+  
 }

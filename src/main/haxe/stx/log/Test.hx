@@ -14,13 +14,17 @@ class Test{
 	}
 }
 class StartTest extends TestCase{
+	public function test_basic_effect(){
+		new Facade().reset();
+		__.log()("test");
+	}
 	public function _test(){
 		var track = "stx.log".split(".");
 		var pred 	= Log._.Logic().pack(track);
 		var ok 		= pred.opine(Value.make(null,__.here()));
 		trace(ok);
 	}
-	public function test_default(){
+	public function _test_default(){
 		var facade 				= Log._.Facade();
 		var track 				= "stx.log".split(".");
 		var logic  				= Log._.Logic();
@@ -45,7 +49,7 @@ class StartTest extends TestCase{
 
 		__.log().info("hello");
 		__.log().tag("test").info("hello");
-				facade.includes.push('tes');
+				facade.includes.push('test');
 		__.log().tag("test").info("hello");
 	}
 	public function test_custom_log(){

@@ -105,6 +105,10 @@ import stx.log.Stamp;
   private function get_lineNumber():Int{
     return #if macro -1 #else this.lineNumber #end;
   }
+  public var methodName(get,never):String;
+  private function get_methodName():String{
+    return #if macro 'unknown' #else this.methodName #end;
+  }
 
   public function re_methodName(method:String):LogPosition{
     return copy(null,null,method);

@@ -30,12 +30,15 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   public function not():Logic<T>{
     return LNot(lift(this));
   }
-  public function apply(value:Value<T>):Bool{
+  public function apply(value:Value<T>):Report<LogFailure>{
     return switch(this){
-      case LAnd(l,r)  : l.apply(value)  && r.apply(value);
-      case LOr(l,r)   : l.apply(value)  || r.apply(value);
-      case LNot(v)    : !v.apply(value);
-      case LV(v)      : v.opine(value);
+      case LAnd(l,r)  : l.apply(value).or(() -> r.apply(value));
+      case LOr(l,r)   : l.apply(value).merge(r.apply(value));
+      case LNot(v)    : v.apply(value).fold(
+        (e) -> Report.unit(),
+        ()  -> Report.make(E_Log_Not)//TODO hmmm
+      );
+      case LV(v)      : v.applyI(value);
     }
   }
   public function opine(value:Value<T>){
@@ -83,6 +86,14 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       ).is_defined().if_else(
         () -> Report.unit(),
         () -> __.fault().of(E_Log_DoesNotContainTag(str))
+      )
+    );
+  }
+  static public function method(str:String):stx.log.Logic<Dynamic>{
+    return construct(
+      (value) -> (value.methodName == str).if_else(
+        () -> Report.unit(),
+        () -> __.fault().of(E_Log_NotInMethod(str))
       )
     );
   }

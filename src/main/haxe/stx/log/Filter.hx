@@ -1,19 +1,10 @@
 package stx.log;
 
-class Filter<T>{
-  public function new(?cause:Null<String>,opinion = true){
-    this.cause   = __.option(cause);
-    this.opinion = __.option(opinion).defv(true);
-  }
-  public var opinion(default,null):Bool;
-  public var cause(default,null):Option<String>;
+class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure>{
+  public function new(){}
 
-  public function react(value:Value<T>){
-    this.opinion = this.opine(value);
-  }
-  public function opine(value:Value<T>):Bool{
-    this.react(value);
-    return this.opinion;
+  public function applyI(value:Value<T>):Report<LogFailure>{
+    return Report.unit();
   }
   function note(str){
     #if stx.log.filter.show
@@ -21,17 +12,12 @@ class Filter<T>{
     #end
   }
   static public function Unit(){
-    return new UnitFilter();
+    return new stx.log.filter.term.Unit();
   }
   static public function Race(){
     return new stx.log.filter.term.Race();
   }
   static public function PosPredicate(){
     return stx.log.filter.term.PosPredicate;
-  }
-}
-class UnitFilter<T> extends Filter<T>{
-  override public function react(value:Value<T>){
-    this.opinion = true;
   }
 }

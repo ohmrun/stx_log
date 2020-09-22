@@ -8,4 +8,7 @@ package stx.log;
   static public function unit(){
     return new Facade();
   }
+  @:to public function toLoggerApi():LoggerApi<Dynamic>{
+    return this;
+  }
 }
