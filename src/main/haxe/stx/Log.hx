@@ -27,6 +27,7 @@ class LiftLog{
   }
 }
 typedef LogDef = Dynamic -> ?Pos -> Void;
+
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
   static public function LOG(value:Dynamic,?pos:Pos):Void{

@@ -1,5 +1,6 @@
 package stx.log;
 
+using stx.log.Test;
 using stx.fs.Path;
 import haxe.unit.TestCase;
 
@@ -46,5 +47,19 @@ class StartTest extends TestCase{
 		__.log().tag("test").info("hello");
 				facade.includes.push('tes');
 		__.log().tag("test").info("hello");
+	}
+	public function test_custom_log(){
+		var facade = stx.log.Facade.unit();
+				facade.reset();
+				facade.includes.push("testy");
+		__.clog()("Test");
+	}
+}
+@:callable abstract TestyLog(Log){
+	static public function clog(wildcard:Wildcard){
+		return new TestyLog();
+	}
+	public function new(){
+		this = __.log().tag("testy");
 	}
 }

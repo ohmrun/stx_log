@@ -19,6 +19,9 @@ abstract Signal(SignalDef){
   public inline function new(){
     this = instance;
   }
+  public function attach(logger:LoggerApi<Dynamic>){
+    handle(logger.react);
+  }
   public function handle(x){
     is_custom = true;
     return this.handle(x);

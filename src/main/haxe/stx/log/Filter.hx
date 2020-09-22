@@ -23,14 +23,11 @@ class Filter<T>{
   static public function Unit(){
     return new UnitFilter();
   }
-  static public function ZebraList(bias){
-    return new stx.log.filter.term.ZebraList(bias);
-  }
   static public function Race(){
     return new stx.log.filter.term.Race();
   }
-  static public function Predicate(){
-    return stx.log.filter.term.Predicate;
+  static public function PosPredicate(){
+    return stx.log.filter.term.PosPredicate;
   }
 }
 class UnitFilter<T> extends Filter<T>{

@@ -5,31 +5,36 @@ import hre.RegExp;
 enum LogicSum<T>{
   LAnd(l:Logic<T>,r:Logic<T>);
   LOr(l:Logic<T>,r:Logic<T>);
+  LNot(l:Logic<T>);
   LV(v:Filter<T>);
 }
 abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   public function new(self) this = self;
   static public function lift<T>(self:LogicSum<T>):Logic<T> return new Logic(self);
  
-  @:from static public function fromPredicate(self:stx.assert.Predicate<LogPosition,LogFailure>):Logic<Dynamic>{
-    return new stx.log.filter.term.Predicate(self);
+  @:from static public function fromPosPredicate(self:stx.assert.Predicate<LogPosition,LogFailure>):Logic<Dynamic>{
+    return new stx.log.filter.term.PosPredicate(self);
   }
   @:from static public function fromFilter<T>(self:Filter<T>):Logic<T>{
     return LV(self);
   }
   @:op(A && B)
-  public function and(that:Logic<T>){
+  public function and(that:Logic<T>):Logic<T>{
     return LAnd(this,that);
   }
   @:op(A || B)
-  public function or(that:Logic<T>){
+  public function or(that:Logic<T>):Logic<T>{
     return LOr(this,that);
   }
-
+  @:op(!A)
+  public function not():Logic<T>{
+    return LNot(lift(this));
+  }
   public function apply(value:Value<T>):Bool{
     return switch(this){
       case LAnd(l,r)  : l.apply(value)  && r.apply(value);
       case LOr(l,r)   : l.apply(value)  || r.apply(value);
+      case LNot(v)    : !v.apply(value);
       case LV(v)      : v.opine(value);
     }
   }
@@ -41,7 +46,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   private function get_self():Logic<T> return lift(this);
 
   private static function construct(fn:LogPosition->Report<LogFailure>){
-    return Logic.fromPredicate(stx.assert.Predicate.Anon(fn));
+    return Logic.fromPosPredicate(stx.assert.Predicate.Anon(fn));
   }
   static public function pack(pack:Array<String>):stx.log.Logic<Dynamic>{
     return construct((value:LogPosition) -> {

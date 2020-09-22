@@ -1,13 +1,14 @@
 package stx.log.logger;
 
 class Default extends Logger<Dynamic>{
-  public var level  : Level;
-
+  public var level      : Level;
+  public var reinstate  : Bool;
   public function new(){
     super();
-    this.level    = CRAZY;
-    this.verbose  = false;
-    this.includes = [];
+    this.level      = CRAZY;
+    this.verbose    = false;
+    this.reinstate  = false;
+    this.includes   = [];
   }
   public var includes(default,null) : Includes;
   public var verbose                : Bool;
@@ -34,7 +35,7 @@ class Default extends Logger<Dynamic>{
       'stamp_tag:${value.stamp.tags}'             +
       'verbose:$verbose '         
     );
-    return is_custom ? false : verbose ? true : include_tag ? parent && level : false;
+    return is_custom ? reinstate : verbose ? true : include_tag ? parent && level : false;
   }
   public function reset(){
     this.includes.clear();

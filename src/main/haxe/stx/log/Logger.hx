@@ -9,7 +9,7 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   public var logic:stx.log.Logic<T>;
   public var format:Format;
 
-  public function opine(value:Value<T>):Bool{
+  private function opine(value:Value<T>):Bool{
     return logic.apply(value);
   }
   public function react(value:Value<T>):Void{
@@ -19,7 +19,7 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
       }
     }
   }
-  public function apply(value:Value<T>):String{
+  private function apply(value:Value<T>):String{
     return Std.string(value);
   }
   override private function render(value:Dynamic,?pos:Pos):Void{
