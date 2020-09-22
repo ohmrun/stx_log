@@ -10,8 +10,8 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
     this.format = __.option(format).defv(Format.DEFAULT);
   }
 
-  public var logic:stx.log.Logic<T>;
-  public var format:Format;
+  public var logic  : stx.log.Logic<T>;
+  public var format : Format;
 
   final public function apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
     return do_apply(value).mod(

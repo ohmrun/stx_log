@@ -8,10 +8,11 @@
     "releasenote": "pairs for tink_core integration",
     "contributors": ["0b1kn00b"],
     "dependencies": {
-        "stx_pico": "",
-        "stx_nano": "",
-        "stx_fn": "",
-        "stx_assert": ""
+        "stx_pico":     "",
+        "stx_nano":     "",
+        "stx_fp":       "",
+        "stx_fn":       "",
+        "stx_assert":   ""
     },
     "classPath": "src/main/haxe"
 }

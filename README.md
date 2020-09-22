@@ -26,14 +26,15 @@ The default situation works as follows.
 The Logger `stx.log.logger.Default` is attached by default, but is removed automatically when you add your own via: `stx.log.Signal.attach(logger:LoggerApi<Dynamic>)`
 
 ```haxe
+  var logger = new MyEmptyLogger();//A logger which does nothing.
   __.log()("test")//printed to screen
-  stx.log.Signal.handle(
-    (x)  -> {}
+  stx.log.Signal.attach(
+    logger
   );//automatically disuse default
 
   __.log()("test")//nothing, default unused.
   stx.log.Facade.reinstate = true;
-  __.log()("test")//we're back.
+  __.log()("test")//we're back using `stx.log.logger.Default`
 ```
 The Facade **only shows values which are not tagged** unless you add to the array `Facade.includes` or set `Facade.verbose` to true.
 
@@ -59,7 +60,7 @@ package my.pack;
 using stx.Nano;
 using my.pack.Log;//needs to go after `using stx.Nano` for this local `log` function to be used.
 
-abstract Log(stx.Log){
+@:forward @:callable abstract Log(stx.Log){
  static public function log(wildcard:Wildcard){
   return new my.pack.Log();
  }
@@ -80,20 +81,34 @@ You can use this to make your logs unobtrusive to other projects and development
 
 
 There is `stx.log.Logic` available to do complex white and blacklisting
-The value of Logic is a `stx.log.Filter` which keeps a record of it's decision. override `opine` for your own use.
+The value of Logic is a `stx.log.Filter` which keeps a record of it's decision. override `applyI` for your own use.
 
 `stx.log.Logic` supports the `&&` and `||` operators.
 
 The log value type is at `stx.log.Value`, it's immutable, so keep that in mind, and contains a typed value `T` and `source` which is a wrapper over `haxe.PosInfos` called `stx.log.LogPosition`
 
+
+## Logger Type
+
+The Logger `apply` function takes a `Value` and produces a `stx.fp.Continuation<Res<String,LogFailure>>`. `apply` hardwires the effect and `do_apply` does the filter logic in the typical case, although you can go from scratch with `LoggerApi` should you need it.
+
 ```haxe
-class TestLogger<T> extends Logger<T>{
- override public function react(value:Value<T>){
-  super.react(
-   value.restamp(
-    stamp -> stamp.tag("test")
-   )
-  );
+class TestLogger<T> implement Logger<T>{
+ override public function do_apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
+  super.do_apply(value).mod(// allows you to edit the result
+    (res:Res<String,LogFailure>) -> {
+      return res;
+    }
+  ).map(
+    (value:Value<T>) -> {//allows to edit the input
+      return stamp.tag("test");
+    }
+  )
+  /**
+    .flat_map(
+      //see `stx.fp.Continuation` in the `stx.Fp` library for details
+    )
+  */
  }
 }
 ```
@@ -101,9 +116,9 @@ class TestLogger<T> extends Logger<T>{
 `LogPosition` is backward compatible with `haxe.PosInfos` but keeps track of a value in `customParams` called `stamp:stx.log.Stamp`
 
 ```haxe
-\\Stamp vars
-public var id(default,null)         : String;//random asigned
-public var level                    : Level;//usually passed by the statics on `stx.Log`
+//Stamp variables
+public var id(default,null)         : String;//uuid
+public var level                    : Level;//usually passed by the statics on `stx.Log`, defaults to CRAZY
 public var timestamp                : Date;//Date.now()
 public var tags(default,null)       : Array<String>;//[]
 public var hidden                   : Bool;//false, not used just yet, but could be a clearer control flow for 1.0.
@@ -115,27 +130,7 @@ You can write whatever filters you like to make use of that data.
 See `stx.log.Logic` for examples of this.
 
 
-To implement your own Logger
-```haxe
-class MyLogger extends Logger{
- public function new(){
-   super(stx.Log.Logic().always());
- }
- override private function opine(value:Value<T>):Bool{
-  var my_logic = true;
-   return my_logic && super.opine(value);
- }
- override private function render(value:Dynamic,?pos:Pos):Void{
-   super.render(value,pos);//or to wherever
- }
-}
-class Main{
- static public function main(){
-  stx.log.Signal.attach(new MyLogger());//removes Default loggerr, uses this one.
- }
-}
-```
-
 ### TODO
 1 FileSystem Logger.  
-2 Grammar for Formatting. 
+2 Grammar for Formatting.  
+3 
