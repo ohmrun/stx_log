@@ -5,7 +5,6 @@
 
 #-D stx.log.debugging
 #-D stx.log.filter.show
-
 -D no-deprecation-warnings
 -D test=stx_log
 -D stx_log_config_show

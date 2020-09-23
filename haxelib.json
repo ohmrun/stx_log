@@ -12,6 +12,7 @@
         "stx_nano":     "",
         "stx_fp":       "",
         "stx_fn":       "",
+        "stx_arw":      "",
         "stx_assert":   ""
     },
     "classPath": "src/main/haxe"

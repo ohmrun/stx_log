@@ -1,7 +1,6 @@
 package stx.log;
 
 using stx.log.Test;
-using stx.fs.Path;
 import haxe.unit.TestCase;
 
 import stx.log.filter.term.Level in LevelFilter;

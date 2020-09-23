@@ -6,7 +6,7 @@ abstract LogFileName(String) from String to String{
   
 
   public function get_pack():Array<String>{
-    var parts = this.split(__.asys().local().device.sep);
+    var parts = this.split(__.sep());
     parts.pop();
     return parts;
   }
