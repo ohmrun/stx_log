@@ -15,8 +15,14 @@ abstract Signal(SignalDef){
     is_custom = false;
   }
   static public   var is_custom(default,null):Bool                              = false;
-  static private  var transmitter(default,never):Trigger                        = new Trigger();
-  static private  var instance                                                  = transmitter.asSignal();
+  @:isVar static private  var transmitter(get,null):Trigger;
+  static private function get_transmitter(){
+    return transmitter == null ? transmitter = new Trigger() : transmitter;
+  }
+  @:isVar static private  var instance(get,null):SignalDef;
+  static private function get_instance(){
+    return instance == null ? instance = transmitter.asSignal() : instance;
+  }
 
   public inline function new(){
     this = instance;
