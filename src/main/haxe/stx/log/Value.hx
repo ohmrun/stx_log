@@ -20,7 +20,8 @@ class Value<T>{
     var next = source.restamp(fn);
     return new Value(detail,next);
   }
-  public function toString(){
-    return this.source.stamp.toLogString(this.source) + ":" + Std.string(this.detail);
-  }
+
+  // public function toString(){
+  //   return this.source.stamp.toLogString(this.source) + ":" + Std.string(this.detail);
+  // }
 }

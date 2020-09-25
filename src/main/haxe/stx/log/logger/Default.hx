@@ -45,7 +45,7 @@ class Default extends Logger<Dynamic>{
       'res:$res '
     );
     return (fn:Value<Dynamic>->Res<String,LogFailure>) -> res.if_else(
-      () -> __.accept(value.toString()),
+      () -> __.accept(format.print(value)),
       () -> __.reject(__.fault().of(E_Log_Default({
         is_custom   : is_custom,
         parent      : parent,

@@ -34,6 +34,7 @@ class Stamp{
   public function hide(){
     return copy(id,level,timestamp,tags,true);
   }
+  /*
   inline public function toString(){
     var time  = timestamp.toString();
     var lev   = level.toString();
@@ -42,7 +43,7 @@ class Stamp{
   }
   public function toLogString(posInfos:Pos){
     var pos   = LogPosition.is_runtime().if_else(
-      () -> Position._.toStringClassMethodLine(posInfos),
+      () -> Position._.to_vscode_clickable_link(posInfos),
       () -> '<unknown>'
     );
     var time  = timestamp.toString();
@@ -51,6 +52,7 @@ class Stamp{
     var out   = '$lev $time [$tags] $pos';
     return out;
   }
+  */
   public function is_zero(){
     return this == ZERO;
   }

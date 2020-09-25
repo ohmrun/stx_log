@@ -6,7 +6,8 @@ typedef Level         = stx.log.Level;
 typedef LevelSum      = stx.log.LevelSum;
 typedef LogPosition   = stx.log.LogPosition;
 typedef LogFailure    = stx.fail.LogFailure;
-
+typedef FormatSum     = stx.log.Format.FormatSum;
+typedef Format        = stx.log.Format.Format;
 typedef ScopeSum      = stx.log.ScopeSum;
 typedef Scoping       = stx.log.Scoping; 
 
@@ -48,24 +49,24 @@ typedef LogDef = Dynamic -> ?Pos -> Void;
     this = LOG;
   }
   /** Logs with LogLevel[LEVEL] **/
-  function with_level(level:Level):Log{
+  public function level(level:Level):Log{
     return mod(
       (pos) -> pos.restamp( stamp -> stamp.relevel(level) )
     );
   }
 
   /** Logs with Level.TRACE   **/
-  public function trace(v:Dynamic,?pos:Pos) with_level(TRACE)(v,pos);
+  public function trace(v:Dynamic,?pos:Pos) level(TRACE)(v,pos);
   /** Logs with Level.DEBUG   **/
-  public function debug(v:Dynamic,?pos:Pos) with_level(DEBUG)(v,pos);
+  public function debug(v:Dynamic,?pos:Pos) level(DEBUG)(v,pos);
   /** Logs with LogLevel.INFO **/
-  public function info(v:Dynamic,?pos:Pos)  with_level(INFO)(v,pos);
+  public function info(v:Dynamic,?pos:Pos)  level(INFO)(v,pos);
   /** Logs with LogLevel.WARN **/
-  public function warn(v:Dynamic,?pos:Pos)  with_level(WARN)(v,pos);
+  public function warn(v:Dynamic,?pos:Pos)  level(WARN)(v,pos);
   /** Logs with LogLevel.ERROR **/
-  public function error(v:Dynamic,?pos:Pos) with_level(ERROR)(v,pos);
+  public function error(v:Dynamic,?pos:Pos) level(ERROR)(v,pos);
   /** Logs with LogLevel.FATAL **/
-  public function fatal(v:Dynamic,?pos:Pos) with_level(FATAL)(v,pos);
+  public function fatal(v:Dynamic,?pos:Pos) level(FATAL)(v,pos);
 
   public function mod(fn:LogPosition->LogPosition){
     return (value:Dynamic,?pos:Pos) -> this(value,fn(pos));

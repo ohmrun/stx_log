@@ -7,7 +7,7 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   }  
   public function new(?logic:Filter<T>,?format:Format){
     this.logic  = __.option(logic).def(Filter.Unit);
-    this.format = __.option(format).defv(Format.DEFAULT);
+    this.format = __.option(format).defv(Format.unit());
   }
 
   public var logic  : stx.log.Logic<T>;
@@ -31,7 +31,7 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   private function do_apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
     return Continuation.lift(
       (fn:Value<T>->Res<String,LogFailure>) -> {
-        var result = logic.apply(value).populate(() -> value.toString());
+        var result = logic.apply(value).populate(() -> this.format.print(value));
         return result;
       }
     );

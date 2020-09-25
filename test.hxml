@@ -1,5 +1,3 @@
--main Main
---interp 
 
 #--macro Main.macro_test()
 
@@ -20,3 +18,14 @@
 -cp src/main/haxe
 -cp src/test/haxe
 
+
+--each
+
+-main Main
+--interp 
+
+--next
+
+-main Main
+--js bin/main.js
+--cmd node bin/main.js

@@ -13,7 +13,8 @@
         "stx_fp":       "",
         "stx_fn":       "",
         "stx_arw":      "",
-        "stx_assert":   ""
+        "stx_assert":   "",
+        "hre":          ""
     },
     "classPath": "src/main/haxe"
 }
