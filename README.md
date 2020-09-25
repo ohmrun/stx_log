@@ -129,8 +129,21 @@ You can write whatever filters you like to make use of that data.
 `stx.log.PosPredicate` contains logic which allows you to write filters using the `stx.Assert` library for your predicate grammar.
 See `stx.log.Logic` for examples of this.
 
+### Formatting
+
+```haxe
+  INCLUDE_LEVEL;
+  INCLUDE_TIMESTAMP;
+  INCLUDE_TAGS;
+  INCLUDE_LOCATION;
+  INCLUDE_NEWLINE_FOR_DETAIL;
+  INCLUDE_DETAIL;
+```
+
+To edit the format on the Facade, use `stx.log.Facade.unit().format =  [];`
+
+The order is currently fixed `[level, timestamp, tags, path, newline, detail]`.
 
 ### TODO
 1 FileSystem Logger.  
-2 Grammar for Formatting.  
-3 
+2 Sane detail printing
