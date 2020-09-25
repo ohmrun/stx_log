@@ -11,7 +11,8 @@ abstract Signal(SignalDef){
       new Signal().attach(new DebugLogger());
       is_custom = false;
     #end
-    new Signal().attach(Facade.unit());
+    var facade = Facade.unit();
+    new Signal().attach(facade);
     is_custom = false;
   }
   static public   var is_custom(default,null):Bool                              = false;
@@ -28,6 +29,7 @@ abstract Signal(SignalDef){
     this = instance;
   }
   public function attach(logger:LoggerApi<Dynamic>){
+    __.assert().exists(logger);
     handle(
       (x:Value<Dynamic>) -> { 
         var o = logger.apply(x)(Logger.spur);
