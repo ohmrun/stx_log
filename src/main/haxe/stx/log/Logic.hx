@@ -51,6 +51,8 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   private static function construct(fn:LogPosition->Report<LogFailure>){
     return Logic.fromPosPredicate(stx.assert.Predicate.Anon(fn));
   }
+
+
   static public function pack(pack:Array<String>):stx.log.Logic<Dynamic>{
     return construct((value:LogPosition) -> {
       var canonical   = pack.join(".");
