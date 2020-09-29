@@ -45,7 +45,12 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   public function apply(value:Value<T>):Report<LogFailure>{
     return switch(this){
       case LAnd(l,r)  : l.apply(value).or(() -> r.apply(value));
-      case LOr(l,r)   : l.apply(value).merge(r.apply(value));
+      case LOr(l,r)   : 
+        var fst = l.apply(value);
+        fst.is_defined().if_else(
+          () -> r.apply(value),
+          () -> fst
+        );
       case LNot(v)    : v.apply(value).fold(
         (e) -> Report.unit(),
         ()  -> Report.make(E_Log_Not)//TODO hmmm
@@ -94,7 +99,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       )
     ));
   }
-  static public function tag(str:String):stx.log.Logic<Dynamic>{
+static public function tag(str:String):stx.log.Logic<Dynamic>{
     return construct(
       (value) -> value.stamp.tags.search(
         (tag) -> tag == str
