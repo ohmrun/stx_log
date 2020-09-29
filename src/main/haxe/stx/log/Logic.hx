@@ -2,6 +2,14 @@ package stx.log;
 
 import hre.RegExp;
 
+typedef LogicMake = {
+  public function pack(pack:Array<String>):stx.log.Logic<Dynamic>;
+  public function line(n:Int):stx.log.Logic<Dynamic>;
+  public function lines(l:Int,h:Int):stx.log.Logic<Dynamic>;
+  public function tag(str:String):stx.log.Logic<Dynamic>;
+  public function method(str:String):stx.log.Logic<Dynamic>;
+  public function always():stx.log.Logic<Dynamic>;
+}
 enum LogicSum<T>{
   LAnd(l:Logic<T>,r:Logic<T>);
   LOr(l:Logic<T>,r:Logic<T>);
@@ -10,8 +18,12 @@ enum LogicSum<T>{
 }
 abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   public function new(self) this = self;
+  static public var _(default,never) = LogicLift;
   static public function lift<T>(self:LogicSum<T>):Logic<T> return new Logic(self);
  
+  @:noUsing static public function constructor<T>(fn):Logic<T>{
+    return _._(fn);
+  }
   @:from static public function fromPosPredicate(self:stx.assert.Predicate<LogPosition,LogFailure>):Logic<Dynamic>{
     return new stx.log.filter.term.PosPredicate(self);
   }
@@ -75,7 +87,8 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   }
   static public function lines(l:Int,h:Int):stx.log.Logic<Dynamic>{
     return construct((
-      (value) -> return value.lineNumber.is_of_range(l,h).if_else(
+      (value) -> return 
+        ((value.lineNumber >= l) && (value.lineNumber <= h)).if_else(
         () -> Report.unit(),
         () -> __.fault().of(E_Log_NotOfRange(l,h))
       )
@@ -106,5 +119,17 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   }
 }
 class LogicLift{
-  
+  static public function make():LogicMake{
+    return {
+      pack      : stx.log.Logic.pack,
+      line      : stx.log.Logic.line,
+      lines     : stx.log.Logic.lines,
+      tag       : stx.log.Logic.tag,
+      always    : stx.log.Logic.always,
+      method    : stx.log.Logic.method
+    };
+  }
+  static public function _<T>(fn:LogicMake->Logic<T>):Logic<T>{
+    return fn(make());
+  }
 }

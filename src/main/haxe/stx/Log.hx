@@ -97,7 +97,8 @@ class LogLift{
       line      : stx.log.Logic.line,
       lines     : stx.log.Logic.lines,
       tag       : stx.log.Logic.tag,
-      always    : stx.log.Logic.always 
+      always    : stx.log.Logic.always,
+      method    : stx.log.Logic.method
     };
   }
 }
