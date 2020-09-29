@@ -9,6 +9,7 @@ typedef LogicMake = {
   public function tag(str:String):stx.log.Logic<Dynamic>;
   public function method(str:String):stx.log.Logic<Dynamic>;
   public function always():stx.log.Logic<Dynamic>;
+  public function never():stx.log.Logic<Dynamic>;
 }
 enum LogicSum<T>{
   LAnd(l:Logic<T>,r:Logic<T>);
@@ -122,6 +123,11 @@ static public function tag(str:String):stx.log.Logic<Dynamic>{
       (value) -> Report.unit()
     );
   }
+  static public function never():stx.log.Logic<Dynamic>{
+    return construct(
+      (value) -> Report.make(E_Log_Zero)
+    );
+  }
 }
 class LogicLift{
   static public function make():LogicMake{
@@ -131,6 +137,7 @@ class LogicLift{
       lines     : stx.log.Logic.lines,
       tag       : stx.log.Logic.tag,
       always    : stx.log.Logic.always,
+      never     : stx.log.Logic.never,
       method    : stx.log.Logic.method
     };
   }
