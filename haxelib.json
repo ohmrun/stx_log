@@ -4,8 +4,8 @@
     "license": "MIT",
     "tags": ["functional", "comparisons", "monads", "utils"],
     "description": "",
-    "version": "0.1.0",
-    "releasenote": "pairs for tink_core integration",
+    "version": "0.1.1",
+    "releasenote": "see changelog.MD",
     "contributors": ["0b1kn00b"],
     "dependencies": {
         "tink_core":     "2.0.0-rc.1",
