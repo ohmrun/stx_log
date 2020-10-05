@@ -83,6 +83,11 @@ typedef LogDef = Dynamic -> ?Pos -> Void;
       return v;
     }
   }
+  public function printer<T>(?pos:Pos):T->Void{
+    return (v:T) -> {
+      this(v,pos);
+    }
+  }
 }
 class LogLift{
   static public function Filter(){
