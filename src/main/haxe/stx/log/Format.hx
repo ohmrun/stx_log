@@ -17,7 +17,7 @@ abstract Format(Array<FormatSum>) from Array<FormatSum> to Array<FormatSum>{
   @:isVar static public var DEFAULT(get,null) : Array<FormatSum>;
   
   private static function get_DEFAULT(){
-    return DEFAULT == null ? DEFAULT = [INCLUDE_LEVEL,INCLUDE_TIMESTAMP,INCLUDE_LOCATION,INCLUDE_DETAIL] : DEFAULT;
+    return DEFAULT == null ? DEFAULT = [INCLUDE_TAGS,INCLUDE_LEVEL,INCLUDE_TIMESTAMP,INCLUDE_LOCATION,INCLUDE_DETAIL] : DEFAULT;
   }
 
   public function prj():Array<FormatSum> return this;
