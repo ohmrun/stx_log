@@ -4,7 +4,7 @@
     "license": "MIT",
     "tags": ["functional", "comparisons", "monads", "utils"],
     "description": "",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "releasenote": "see CHANGELOG.md",
     "contributors": ["0b1kn00b"],
     "dependencies": {
