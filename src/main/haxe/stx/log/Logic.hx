@@ -4,6 +4,7 @@ import hre.RegExp;
 
 typedef LogicMake = {
   public function pack(pack:Array<String>):stx.log.Logic<Dynamic>;
+  public function type(type:String):stx.log.Logic<Dynamic>;
   public function line(n:Int):stx.log.Logic<Dynamic>;
   public function lines(l:Int,h:Int):stx.log.Logic<Dynamic>;
   public function tag(str:String):stx.log.Logic<Dynamic>;
@@ -82,6 +83,15 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       );
     });
   }
+  static public function type(type:String):stx.log.Logic<Dynamic>{
+    return construct((value:LogPosition) -> {
+      var result      = type == value.fileName.get_canonical();
+      return result.if_else(
+        () -> Report.unit(),
+        () -> __.fault().of(E_Log_SourceNotInPackage(value.fileName,value.fileName.get_canonical()))
+      );
+    });
+  }
   static public function line(n:Int):stx.log.Logic<Dynamic>{
     return construct((value) -> {
       var result      = value.lineNumber == n;
@@ -100,7 +110,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       )
     ));
   }
-static public function tag(str:String):stx.log.Logic<Dynamic>{
+  static public function tag(str:String):stx.log.Logic<Dynamic>{
     return construct(
       (value) -> value.stamp.tags.search(
         (tag) -> tag == str
@@ -133,6 +143,7 @@ class LogicLift{
   static public function make():LogicMake{
     return {
       pack      : stx.log.Logic.pack,
+      type      : stx.log.Logic.type,
       line      : stx.log.Logic.line,
       lines     : stx.log.Logic.lines,
       tag       : stx.log.Logic.tag,

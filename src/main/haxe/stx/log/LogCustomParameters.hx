@@ -1,7 +1,7 @@
 package stx.log;
 
 @:forward abstract LogCustomParameters(Array<Dynamic>) from Array<Dynamic> to Array<Dynamic>{
-  public function new(?self) this = __.option(self).defv([]);
+  public function new(?self:Array<Dynamic>) this = __.option(self).defv([]);
 
   public var stamp(get,never) : Stamp;
 

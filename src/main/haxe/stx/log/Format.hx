@@ -11,8 +11,8 @@ enum FormatSum{
 abstract Format(Array<FormatSum>) from Array<FormatSum> to Array<FormatSum>{
   static public function unit():Format return lift(DEFAULT);
   
-  public function new(self) this = self;
-  static public function lift(self:Array<FormatSum>):Format return new Format(self);
+  public inline function new(self) this = self;
+  static public inline function lift(self:Array<FormatSum>):Format return new Format(self);
   
   @:isVar static public var DEFAULT(get,null) : Array<FormatSum>;
   
@@ -41,7 +41,8 @@ abstract Format(Array<FormatSum>) from Array<FormatSum> to Array<FormatSum>{
       a.push('[' + s.tags.join(",") + ']');
     }
     if(has(INCLUDE_LOCATION)){
-      a.push(Position._.to_vscode_clickable_link(p));
+      //TODO can be earlier than __init__?;
+      a.push(stx.nano.Position.PositionLift.to_vscode_clickable_link(p));
     }
     if(has(INCLUDE_NEWLINE_FOR_DETAIL)){
       a.push("\n");

@@ -1,6 +1,5 @@
 package stx;
 
-typedef Signal        = stx.log.Signal;
 typedef Value<T>      = stx.log.Value<T>;
 typedef Level         = stx.log.Level;
 typedef LevelSum      = stx.log.LevelSum;
@@ -13,6 +12,7 @@ typedef Scoping       = stx.log.Scoping;
 
 
 class LiftLog{
+
   static public function log(wildcard:Wildcard):Log{
     return Log.ZERO;
   }
@@ -31,9 +31,13 @@ typedef LogDef = Dynamic -> ?Pos -> Void;
 
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
+
   static public function LOG(value:Dynamic,?pos:Pos):Void{
     //trace("transmit");
-    Signal.transmit(enlog(value,pos));
+    stx.log.Signal.transmit(enlog(value,pos));
+  }
+  static public function unit():Log{
+    return new Log();
   }
   static public function enlog<T>(value:T,?pos:Pos):Value<T>{
     var log_position  = LogPosition.pure(pos);
@@ -45,13 +49,12 @@ typedef LogDef = Dynamic -> ?Pos -> Void;
   }
   static public var ZERO(default,null)  : Log     = LOG;
 
-  public function new(){
-    this = LOG;
-  }
+  inline public function new() this = LOG;
+  
   /** Logs with LogLevel[LEVEL] **/
   public function level(level:Level):Log{
     return mod(
-      (pos) -> pos.restamp( stamp -> stamp.relevel(level) )
+      (pos:LogPosition) -> pos.restamp( stamp -> stamp.relevel(level) )
     );
   }
 
@@ -96,14 +99,7 @@ class LogLift{
   static public function Facade(){
     return new stx.log.Facade();
   }
-  static public function Logic(){
-    return {
-      pack      : stx.log.Logic.pack,
-      line      : stx.log.Logic.line,
-      lines     : stx.log.Logic.lines,
-      tag       : stx.log.Logic.tag,
-      always    : stx.log.Logic.always,
-      method    : stx.log.Logic.method
-    };
+  static public inline function Logic(){
+    return stx.log.Logic._.make();
   }
 }

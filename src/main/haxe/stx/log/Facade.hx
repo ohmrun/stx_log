@@ -1,6 +1,7 @@
 package stx.log;
 
 @:forward abstract Facade(stx.log.logger.Default){
+  static public var ZERO(default,never) = unit();
   @:isVar private static var instance(get,null):stx.log.logger.Default;
   static private function get_instance(){
     return instance == null ? instance = new stx.log.logger.Default() : instance;

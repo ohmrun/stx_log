@@ -28,6 +28,7 @@ private class SignalCls{
 typedef SignalDef = SignalCls;
 
 @:forward(attach) abstract Signal(SignalDef){
+  static public var ZERO(default,null) : Signal = new Signal();
   static function __init__(){
     #if (stx.log.debugging)
       new Signal().attach(new DebugLogger());
