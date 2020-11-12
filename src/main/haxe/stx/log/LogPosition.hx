@@ -56,11 +56,13 @@ import stx.log.Stamp;
     #if macro 
       return macro_custom_params.search(
         (x) -> x.fst() == this
+      ).map(
+        (x) -> x.snd()
       ).def(
         () -> {
           var val = __.couple(this,new LogCustomParameters());
           macro_custom_params.push(val);
-          return val;
+          return val.snd();
         }
       );
     #else
