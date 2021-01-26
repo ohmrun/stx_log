@@ -3,6 +3,7 @@
 
 #-D stx.log.debugging
 #-D stx.log.filter.show
+-D stx_log.logging
 -D no-deprecation-warnings
 -D test=stx_log
 -D stx_log_config_show
@@ -14,6 +15,7 @@
 -lib stx_assert
 -lib stx_fp:0.1.3
 -lib hre
+-lib polygonal-printf
 
 -cp src/main/haxe
 -cp src/test/haxe

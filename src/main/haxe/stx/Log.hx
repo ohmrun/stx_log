@@ -9,30 +9,30 @@ typedef FormatSum     = stx.log.Format.FormatSum;
 typedef Format        = stx.log.Format.Format;
 typedef ScopeSum      = stx.log.ScopeSum;
 typedef Scoping       = stx.log.Scoping; 
-
+typedef Stringify<T>  = T;//stx.log.Stringify<T>;
 
 class LiftLog{
 
-  static public function log(wildcard:Wildcard):Log{
+  static public inline function log(wildcard:Wildcard):Log{
     return Log.ZERO;
   }
-  static public function scope(stx:Wildcard,pos:Pos,?method:String){
+  static public inline function scope(stx:Wildcard,pos:Pos,?method:String){
     var scoping = return LogPosition.fromPos(pos).scoping;
     if(method!=null){
       scoping.method = method;
     }
     return scoping;
   }
-  static public function stamp(pos:Pos):LogPosition{
+  static public inline function stamp(pos:Pos):LogPosition{
     return new LogPosition(pos);
   }
 }
-typedef LogDef = Dynamic -> ?Pos -> Void;
+typedef LogDef = Stringify<Dynamic> -> ?Pos -> Void;
 
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
 
-  static public function LOG(value:Dynamic,?pos:Pos):Void{
+  static public inline function LOG(value:Dynamic,?pos:Pos):Void{
     //trace("transmit");
     stx.log.Signal.transmit(enlog(value,pos));
   }
@@ -52,42 +52,42 @@ typedef LogDef = Dynamic -> ?Pos -> Void;
   inline public function new() this = LOG;
   
   /** Logs with LogLevel[LEVEL] **/
-  public function level(level:Level):Log{
+  public inline function level(level:Level):Log{
     return mod(
       (pos:LogPosition) -> pos.restamp( stamp -> stamp.relevel(level) )
     );
   }
 
   /** Logs with Level.TRACE   **/
-  public function trace(v:Dynamic,?pos:Pos) level(TRACE)(v,pos);
+  public inline function trace(v:Dynamic,?pos:Pos) level(TRACE)(v,pos);
   /** Logs with Level.DEBUG   **/
-  public function debug(v:Dynamic,?pos:Pos) level(DEBUG)(v,pos);
+  public inline function debug(v:Dynamic,?pos:Pos) level(DEBUG)(v,pos);
   /** Logs with LogLevel.INFO **/
-  public function info(v:Dynamic,?pos:Pos)  level(INFO)(v,pos);
+  public inline function info(v:Dynamic,?pos:Pos)  level(INFO)(v,pos);
   /** Logs with LogLevel.WARN **/
-  public function warn(v:Dynamic,?pos:Pos)  level(WARN)(v,pos);
+  public inline function warn(v:Dynamic,?pos:Pos)  level(WARN)(v,pos);
   /** Logs with LogLevel.ERROR **/
-  public function error(v:Dynamic,?pos:Pos) level(ERROR)(v,pos);
+  public inline function error(v:Dynamic,?pos:Pos) level(ERROR)(v,pos);
   /** Logs with LogLevel.FATAL **/
-  public function fatal(v:Dynamic,?pos:Pos) level(FATAL)(v,pos);
+  public inline function fatal(v:Dynamic,?pos:Pos) level(FATAL)(v,pos);
 
-  public function mod(fn:LogPosition->LogPosition){
-    return (value:Dynamic,?pos:Pos) -> this(value,fn(pos));
+  public inline function mod(fn:LogPosition->LogPosition){
+    return (value:Stringify<Dynamic>,?pos:Pos) -> this(value,fn(pos));
   }
-  public function tag(tag:String):Log{
+  public inline function tag(tag:String):Log{
     return mod((pos) -> pos.restamp((stamp) -> stamp.tag(tag)));
   }
-  public function close():Log{
+  public inline function close():Log{
     return mod((pos) -> pos.restamp(stamp -> stamp.hide()));
   }
-  public function through<T>(?pos:Pos):T->T{
-    return (v:T) -> {
+  public inline function through<T>(?pos:Pos):Stringify<T>->Stringify<T>{
+    return (v:Stringify<T>) -> {
       this(v,pos);
       return v;
     }
   }
-  public function printer<T>(?pos:Pos):T->Void{
-    return (v:T) -> {
+  public inline function printer<T>(?pos:Pos):Stringify<T>->Void{
+    return (v:Stringify<T>) -> {
       this(v,pos);
     }
   }

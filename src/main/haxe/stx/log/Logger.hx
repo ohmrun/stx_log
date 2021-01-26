@@ -20,7 +20,13 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
           __.passthrough(
             (string:String) -> 
               if(!value.stamp.hidden){
-                render(string,value.source);
+                #if macro
+                  if(value.stamp.level != CRAZY){
+                    render(string,value.source);
+                  }
+                #else
+                  render(string,value.source);
+                #end
               }
           )
         );

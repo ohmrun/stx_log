@@ -7,9 +7,7 @@ import stx.log.filter.term.Level in LevelFilter;
 
 class Test{
 	static public function main(){
-		__.test([
-			new StartTest()
-		]);
+		__.test([new StartTest()]);
 	}
 }
 class StartTest extends TestCase{
