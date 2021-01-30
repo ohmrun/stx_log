@@ -1,15 +1,18 @@
 package stx;
 
-typedef Value<T>      = stx.log.Value<T>;
-typedef Level         = stx.log.Level;
-typedef LevelSum      = stx.log.LevelSum;
-typedef LogPosition   = stx.log.LogPosition;
-typedef LogFailure    = stx.fail.LogFailure;
-typedef FormatSum     = stx.log.Format.FormatSum;
-typedef Format        = stx.log.Format.Format;
-typedef ScopeSum      = stx.log.ScopeSum;
-typedef Scoping       = stx.log.Scoping; 
-typedef Stringify<T>  = T;//stx.log.Stringify<T>;
+typedef Value<T>          = stx.log.Value<T>;
+typedef Level             = stx.log.Level;
+typedef LevelSum          = stx.log.LevelSum;
+typedef LogPosition       = stx.log.LogPosition;
+typedef LogFailure        = stx.fail.LogFailure;
+typedef FormatSum         = stx.log.Format.FormatSum;
+typedef Format            = stx.log.Format.Format;
+typedef ScopeSum          = stx.log.ScopeSum;
+typedef Scoping           = stx.log.Scoping; //stx.log.Entry<T>;
+typedef EntryCtr<T>       = stx.log.EntryCtr<T>;
+typedef Stringify<T>      = stx.log.Stringify<T>;
+typedef StringCtr<T>      = stx.log.StringCtr<T>;
+typedef StringCtrDef<T>   = stx.log.StringCtr.StringCtrDef<T>;
 
 class LiftLog{
 
@@ -27,19 +30,19 @@ class LiftLog{
     return new LogPosition(pos);
   }
 }
-typedef LogDef = Stringify<Dynamic> -> ?Pos -> Void;
+typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
 
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
 
-  static public inline function LOG(value:Dynamic,?pos:Pos):Void{
+  static public inline function LOG<T>(value:stx.log.core.Entry<T>,?pos:Pos):Void{
     //trace("transmit");
     stx.log.Signal.transmit(enlog(value,pos));
   }
   static public function unit():Log{
     return new Log();
   }
-  static public function enlog<T>(value:T,?pos:Pos):Value<T>{
+  static public function enlog<T>(value:stx.log.core.Entry<T>,?pos:Pos):Value<T>{
     var log_position  = LogPosition.pure(pos);
     var value         = new Value(value,log_position);
     return value;
@@ -57,22 +60,21 @@ typedef LogDef = Stringify<Dynamic> -> ?Pos -> Void;
       (pos:LogPosition) -> pos.restamp( stamp -> stamp.relevel(level) )
     );
   }
-
   /** Logs with Level.TRACE   **/
-  public inline function trace(v:Dynamic,?pos:Pos) level(TRACE)(v,pos);
+  public inline function trace<X>(v:Stringify<X>,?pos:Pos) level(TRACE)(v(new EntryCtr()),pos);
   /** Logs with Level.DEBUG   **/
-  public inline function debug(v:Dynamic,?pos:Pos) level(DEBUG)(v,pos);
+  public inline function debug<X>(v:Stringify<X>,?pos:Pos) level(DEBUG)(v(new EntryCtr()),pos);
   /** Logs with LogLevel.INFO **/
-  public inline function info(v:Dynamic,?pos:Pos)  level(INFO)(v,pos);
+  public inline function info<X>(v:Stringify<X>,?pos:Pos)  level(INFO)(v(new EntryCtr()),pos);
   /** Logs with LogLevel.WARN **/
-  public inline function warn(v:Dynamic,?pos:Pos)  level(WARN)(v,pos);
+  public inline function warn<X>(v:Stringify<X>,?pos:Pos)  level(WARN)(v(new EntryCtr()),pos);
   /** Logs with LogLevel.ERROR **/
-  public inline function error(v:Dynamic,?pos:Pos) level(ERROR)(v,pos);
+  public inline function error<X>(v:Stringify<X>,?pos:Pos) level(ERROR)(v(new EntryCtr()),pos);
   /** Logs with LogLevel.FATAL **/
-  public inline function fatal(v:Dynamic,?pos:Pos) level(FATAL)(v,pos);
+  public inline function fatal<X>(v:Stringify<X>,?pos:Pos) level(FATAL)(v(new EntryCtr()),pos);
 
   public inline function mod(fn:LogPosition->LogPosition){
-    return (value:Stringify<Dynamic>,?pos:Pos) -> this(value,fn(pos));
+    return (value:stx.log.core.Entry<Dynamic>,?pos:Pos) -> this(value,fn(pos));
   }
   public inline function tag(tag:String):Log{
     return mod((pos) -> pos.restamp((stamp) -> stamp.tag(tag)));
@@ -80,21 +82,23 @@ typedef LogDef = Stringify<Dynamic> -> ?Pos -> Void;
   public inline function close():Log{
     return mod((pos) -> pos.restamp(stamp -> stamp.hide()));
   }
-  public inline function through<T>(?pos:Pos):Stringify<T>->Stringify<T>{
-    return (v:Stringify<T>) -> {
-      this(v,pos);
+  public inline function through<T>(?ctr:StringCtr<T>,?pos:Pos):T->T{
+    ctr = __.option(ctr).def(StringCtr.unit);
+    return (v:T) -> {
+      this(ctr.capture(v),pos);
       return v;
     }
   }
-  public inline function printer<T>(?pos:Pos):Stringify<T>->Void{
-    return (v:Stringify<T>) -> {
-      this(v,pos);
+  public inline function printer<T>(?ctr:StringCtr<T>,?pos:Pos):T->Void{
+    ctr = __.option(ctr).def(StringCtr.unit);
+    return (v:T) -> {
+      this(ctr.capture(v),pos);
     }
   }
 }
 class LogLift{
   static public function Filter(){
-    return stx.log.Filter;
+    return stx.log.Filter;  
   }
   static public function Facade(){
     return new stx.log.Facade();
