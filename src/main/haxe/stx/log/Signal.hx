@@ -17,7 +17,6 @@ private class SignalCls{
     }
   }
   public function attach(logger:LoggerApi<Dynamic>){
-    __.assert().exists(logger);
     handle(
       (x:Value<Dynamic>) -> { 
         var o = logger.apply(x)(Logger.spur);
