@@ -20,7 +20,7 @@
         "stx_fn"        :       "git:https://github.com/ohmrun/stx_fn.git",
         "stx_fp"        :       "git:https://github.com/ohmrun/stx_fp.git",
         "stx_assert"    :       "git:https://github.com/ohmrun/stx_assert.git",
-        "hre"           :       "0.2.1"
+        "hre"           :       "0.2.1",
         "polygonal-printf"      : "https://github.com/polygonal/printf.git"
     },
     "classPath": "src/main/haxe"
