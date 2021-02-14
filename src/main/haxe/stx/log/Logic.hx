@@ -23,7 +23,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   static public var _(default,never) = LogicLift;
   static public function lift<T>(self:LogicSum<T>):Logic<T> return new Logic(self);
  
-  @:noUsing static public function constructor<T>(fn):Logic<T>{
+  @:noUsing static public function ctr<T>(fn):Logic<T>{
     return _._(fn);
   }
   @:from static public function fromPosPredicate(self:stx.assert.Predicate<LogPosition,LogFailure>):Logic<Dynamic>{
