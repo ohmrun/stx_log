@@ -12,5 +12,5 @@
 -lib stx_fp
 -lib stx_assert
 
-gi-lib hre
+-lib hre
 -lib polygonal-printf
