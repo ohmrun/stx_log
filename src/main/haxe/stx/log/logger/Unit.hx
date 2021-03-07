@@ -1,6 +1,6 @@
 package stx.log.logger;
 
-class Default extends Logger<Dynamic>{
+class Unit extends Logger<Dynamic>{
   public var level      : Level;
   public var reinstate  : Bool;
   public function new(){

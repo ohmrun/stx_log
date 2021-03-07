@@ -1,0 +1,5 @@
+./common.hxml
+
+-cp src/main/haxe
+-cs bin/cs
+-main Main
