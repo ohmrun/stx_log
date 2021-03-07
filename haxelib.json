@@ -8,16 +8,16 @@
     "releasenote": "see CHANGELOG.md",
     "contributors": ["0b1kn00b"],
     "dependencies": {
-        "tink_core":     "git:https://github.com/haxetink/tink_core.git",
+        "tink_core"             : "git:https://github.com/haxetink/tink_core.git",
         
-        "stx_pico"      : "git:https://github.com/ohmrun/stx_pico.git",
-        "stx_nano"      : "git:https://github.com/ohmrun/stx_nano.git",
-        "stx_assert"    : "git:https://github.com/ohmrun/stx_assert.git",
-        "stx_fp"        : "git:https://github.com/ohmrun/stx_fp.git",
+        "stx_pico"              : "git:https://github.com/ohmrun/stx_pico.git",
+        "stx_nano"              : "git:https://github.com/ohmrun/stx_nano.git",
+        "stx_assert"            : "git:https://github.com/ohmrun/stx_assert.git",
+        "stx_fp"                : "git:https://github.com/ohmrun/stx_fp.git",
+        "stx_fn"                : "git:https://github.com/ohmrun/stx_fn.git",
 
-        "stx_fn"        :       "git:https://github.com/ohmrun/stx_fn.git",
-        "stx_assert"    :       "git:https://github.com/ohmrun/stx_assert.git",
-        "hre"           :       "0.2.1",
+        "console.hx"            : "git:https://github.com/haxiomic/console.hx.git",
+        "hre"                   : "0.2.1",
         "polygonal-printf"      : "https://github.com/polygonal/printf.git"
     },
     "classPath": "src/main/haxe"

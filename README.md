@@ -108,11 +108,6 @@ class TestLogger<T> implement Logger<T>{
       return stamp.tag("test");
     }
   )
-  /**
-    .flat_map(
-      //see `stx.fp.Continuation` in the `stx.Fp` library for details
-    )
-  */
  }
 }
 ```
