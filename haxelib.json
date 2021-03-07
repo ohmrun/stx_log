@@ -1,6 +1,6 @@
 {
     "name": "stx_log",
-    "url": "https://github.com/0b1kn00b/stx_addendum",
+    "url": "https://github.com/ohmrun/stx_log",
     "license": "MIT",
     "tags": ["functional", "comparisons", "monads", "utils"],
     "description": "",
@@ -15,10 +15,7 @@
         "stx_assert"    : "git:https://github.com/ohmrun/stx_assert.git",
         "stx_fp"        : "git:https://github.com/ohmrun/stx_fp.git",
 
-        "stx_pico"      :       "git:https://github.com/ohmrun/stx_pico.git",
-        "stx_nano"      :       "git:https://github.com/ohmrun/stx_nano.git",
         "stx_fn"        :       "git:https://github.com/ohmrun/stx_fn.git",
-        "stx_fp"        :       "git:https://github.com/ohmrun/stx_fp.git",
         "stx_assert"    :       "git:https://github.com/ohmrun/stx_assert.git",
         "hre"           :       "0.2.1",
         "polygonal-printf"      : "https://github.com/polygonal/printf.git"
