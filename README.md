@@ -2,7 +2,11 @@
 
 Logging framework (beta-ish)
 
+## Install
 
+``` bash
+haxelib git stx_log https://github.com/ohmrun/stx_log.git
+```
 ## Usage
 
 ```haxe
