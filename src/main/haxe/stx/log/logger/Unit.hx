@@ -3,11 +3,11 @@ package stx.log.logger;
 class Unit extends Logger<Dynamic>{
   public var level      : Level;
   public var reinstate  : Bool;
-  public function new(){
-    super();
-    this.level      = CRAZY;
-    this.verbose    = false;
-    this.reinstate  = false;
+  public function new(?logic:Filter<Dynamic>,?format:Format,?level = CRAZY,?verbose=false,?reinstate=false){
+    super(logic,format);
+    this.level      = level;
+    this.verbose    = verbose;
+    this.reinstate  = reinstate;
     this.includes   = [];
   }
   public var includes(default,null) : Includes;

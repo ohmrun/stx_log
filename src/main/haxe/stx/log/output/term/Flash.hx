@@ -6,7 +6,7 @@ class Flash implements OutputApi extends Clazz{
     var tf = flash.Boot.getTrace();
     var pstr = if( pos == null ) "(null)" else pos.fileName+":"+pos.lineNumber;
     if( lines == null ) lines = [];
-    var str = pstr +": "+ flash.Boot.__string_rec(v, "");
+    var str = flash.Boot.__string_rec(v, "");
     lines = lines.concat(str.split("\n"));
     tf.text = lines.join("\n");
     var stage = flash.Lib.current.stage;

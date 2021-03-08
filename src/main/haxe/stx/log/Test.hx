@@ -1,13 +1,28 @@
 package stx.log;
 
 using stx.log.Test;
-import haxe.unit.TestCase;
+using stx.unit.Test;
 
 import stx.log.filter.term.Level in LevelFilter;
 
 class Test{
 	static public function main(){
-		__.test([new StartTest()]);
+		__.unit([
+			//new StartTest(),
+			new ColumnTest(),
+		],[ColumnTest]);
+	}
+}
+class ColumnTest extends TestCase{
+	public function test(){
+		// stx.log.Signal.ZERO.attach(
+			
+		// );
+		var logger = new stx.log.logger.Linux(); 
+		var string = "sodmfdbt suyfgusbfd u7nsfoiubhoub sdfi sd";
+		var entry  = Entry.fromString(string);
+		var value  = Value.make(entry);
+		logger.apply(value)(Logger.spur); 
 	}
 }
 class StartTest extends TestCase{
@@ -21,7 +36,7 @@ class StartTest extends TestCase{
 		var ok 		= pred.opine(Value.make(null,__.here()));
 		trace(ok);
 	}
-	public function _test_default(){
+	public function test_default(){
 		var facade 				= Log._.Facade();
 		var track 				= "stx.log".split(".");
 		var logic  				= Log._.Logic();

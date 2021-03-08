@@ -5,8 +5,7 @@ typedef Level             = stx.log.Level;
 typedef LevelSum          = stx.log.LevelSum;
 typedef LogPosition       = stx.log.LogPosition;
 typedef LogFailure        = stx.fail.LogFailure;
-typedef FormatSum         = stx.log.Format.FormatSum;
-typedef Format            = stx.log.Format.Format;
+
 typedef ScopeSum          = stx.log.ScopeSum;
 typedef Scoping           = stx.log.Scoping; //stx.log.Entry<T>;
 typedef EntryCtr<T>       = stx.log.EntryCtr<T>;
