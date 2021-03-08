@@ -6,6 +6,7 @@
 -D stx_log_config_show
 
 
+-lib stx_test
 -lib stx_pico
 -lib stx_nano
 -lib stx_fn
