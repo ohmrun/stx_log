@@ -38,7 +38,7 @@ typedef SignalDef = SignalCls;
     is_custom = false;
   }
   static public   var is_custom(default,null):Bool                              = false;
-  @:isVar static private  var instance(get,null):SignalDef;
+  @:isVar static public  var instance(get,null):SignalDef;
   static private function get_instance(){
     return instance == null ? instance = new SignalCls() : instance;
   }
