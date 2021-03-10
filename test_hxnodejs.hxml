@@ -1,0 +1,7 @@
+./common.hxml
+-lib hxnodejs
+-D nodejs
+-main Main
+--macro haxe.macro.Compiler.define("sys")
+#--remap asys:sys
+--js bin/main.js

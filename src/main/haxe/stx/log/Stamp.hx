@@ -34,13 +34,13 @@ class Stamp{
   public function hide(){
     return copy(id,level,timestamp,tags,true);
   }
-  /*
+  
   inline public function toString(){
     var time  = timestamp.toString();
     var lev   = level.toString();
     var out   = 'Stamp($lev $time)';
     return out;
-  }
+  }/*
   public function toLogString(posInfos:Pos){
     var pos   = LogPosition.is_runtime().if_else(
       () -> Position._.to_vscode_clickable_link(posInfos),

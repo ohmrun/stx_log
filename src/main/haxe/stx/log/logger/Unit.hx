@@ -21,7 +21,6 @@ class Unit extends Logger<Dynamic>{
       x -> value.stamp.tags.search(
         y -> x == y
       ).is_defined()
-
     ) : !value.stamp.tags.is_defined();
     var res = is_custom.if_else(
       () -> reinstate,

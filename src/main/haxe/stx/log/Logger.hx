@@ -18,16 +18,19 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
       (res) -> {
         return res.map(
           __.passthrough(
-            (string:String) -> 
+            (string:String) -> { 
+              //trace('about to render: ${value.stamp}');
               if(!value.stamp.hidden){
                 #if macro
-                  if(value.stamp.level != CRAZY){
-                    render(string,value.source);
-                  }
+                  render(string,value.source);
+                  // if(value.stamp.level != CRAZY){
+                   
+                  // }
                 #else
                   render(string,value.source);
                 #end
               }
+            }
           )
         );
       }

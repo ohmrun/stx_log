@@ -7,25 +7,32 @@ import stx.log.filter.term.Level in LevelFilter;
 
 class Test{
 	static public function main(){
+		trace("test");
 		__.unit([
-			//new StartTest(),
-			new ColumnTest(),
-		],[ColumnTest]);
+			new StartTest(),
+		],[StartTest]);
 	}
 }
+#if hxnodejs
 class ColumnTest extends TestCase{
 	public function test(){
 		// stx.log.Signal.ZERO.attach(
 			
 		// );
-		var logger = new stx.log.logger.Linux(); 
-		var string = "sodmfdbt suyfgusbfd u7nsfoiubhoub sdfi sd";
-		var entry  = Entry.fromString(string);
-		var value  = Value.make(entry);
-		logger.apply(value)(Logger.spur); 
+		try{
+			var logger = new stx.log.logger.Linux(); 
+			var string = "sodmfdbt suyfgusbfd u7nsfoiubhoub sdfi sd";
+			var entry  = Entry.fromString(string);
+			var value  = Value.make(entry);
+			logger.apply(value)(Logger.spur);
+		}catch(e:Dynamic){
+			trace(e);
+			throw(e);
+		} 
 	}
 }
-class StartTest extends TestCase{
+#end
+@:rtti class StartTest extends TestCase{
 	public function test_basic_effect(){
 		new Facade().reset();
 		__.log()("test");
@@ -37,6 +44,7 @@ class StartTest extends TestCase{
 		trace(ok);
 	}
 	public function test_default(){
+		trace('test_default');
 		var facade 				= Log._.Facade();
 		var track 				= "stx.log".split(".");
 		var logic  				= Log._.Logic();
