@@ -57,7 +57,7 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
   public inline function level(level:Level):Log{
     return mod(
       (pos:LogPosition) -> {
-        trace(pos);
+        //trace(pos);
         return pos.restamp( stamp -> stamp.relevel(level) );
       }
     );
