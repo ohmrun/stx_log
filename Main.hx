@@ -9,7 +9,7 @@ class Main{
   static function main(){
     macro_test(); 
     trace("MAIN");
-    //stx.log.Test.main();   
+    stx.log.Test.main();   
   }
   macro static function macro_test(){
     trace("MACRO");

@@ -9,8 +9,19 @@ class Test{
 	static public function main(){
 		trace("test");
 		__.unit([
-			new StartTest(),
-		],[StartTest]);
+			new ConsoleTest(),
+		],[ConsoleTest]);
+	}
+}
+class ConsoleTest extends TestCase{
+	public function test(){
+		Signal.instance.attach(new stx.log.logger.ConsoleLogger());
+		__.log()("hello");
+		__.log().trace("hello");
+		__.log().debug("hello");
+		__.log().warn("hello");
+		__.log().error("hello");
+		__.log().fatal("hello");
 	}
 }
 #if hxnodejs
