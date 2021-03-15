@@ -17,6 +17,7 @@ private class SignalCls{
     }
   }
   public function attach(logger:LoggerApi<Dynamic>){
+    has_custom = true;
     handle(
       (x:Value<Dynamic>) -> { 
         var o = logger.apply(x)(Logger.spur);
@@ -31,13 +32,13 @@ typedef SignalDef = SignalCls;
   static function __init__(){
     #if (stx.log.debugging)
       new Signal().attach(new DebugLogger());
-      is_custom = false;
+       = false;
     #end
     var facade = Facade.unit();
     new Signal().attach(facade);
-    is_custom = false;
+    has_custom = false;
   }
-  static public   var is_custom(default,null):Bool                              = false;
+  static public var has_custom(default,null):Bool                              = false;
   @:isVar static public  var instance(get,null):SignalDef;
   static private function get_instance(){
     return instance == null ? instance = new SignalCls() : instance;
@@ -48,7 +49,7 @@ typedef SignalDef = SignalCls;
   }
   
   public function handle(x){
-    is_custom = true;
+    has_custom = true;
     return this.handle(x);
   }
   static public function transmit(v){

@@ -15,14 +15,15 @@ class Unit extends Logger<Dynamic>{
 
   override private function do_apply(value:Value<Dynamic>):Continuation<Res<String,LogFailure>,Value<Dynamic>>{
     var parent      = super.do_apply(value)(_ -> __.reject(__.fault().of(E_Log_Zero))).ok();
-    var is_custom   = Signal.is_custom;
+    var has_custom  = Signal.has_custom;
+    trace(has_custom);
     var level       = value.stamp.level.asInt() >= level.asInt();
     var include_tag = includes.is_defined() ? includes.any(
       x -> value.stamp.tags.search(
-        y -> x == y
+        y -> x == yf
       ).is_defined()
     ) : !value.stamp.tags.is_defined();
-    var res = is_custom.if_else(
+    var res = has_custom.if_else(
       () -> reinstate,
       () -> verbose.if_else(
         () -> true,
@@ -33,7 +34,7 @@ class Unit extends Logger<Dynamic>{
       )
     );
     note( 
-      'is_custom:$is_custom '                     +
+      'has_custom:$has_custom '                     +
       'parent:$parent '                           +
       'level:$level '                             +
       'includes:${includes} '                     +
@@ -46,7 +47,7 @@ class Unit extends Logger<Dynamic>{
     return (fn:Value<Dynamic>->Res<String,LogFailure>) -> res.if_else(
       () -> __.accept(format.print(value)),
       () -> __.reject(__.fault().of(E_Log_Default({
-        is_custom   : is_custom,
+        has_custom   : has_custom,
         parent      : parent,
         level       : level,
         includes    : includes,
