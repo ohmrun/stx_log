@@ -1,6 +1,6 @@
 package stx.log.logger;
 
-class ConsoleLogger extends Unit{
+class ConsoleLogger extends Custom{
   public function new(?logic:Filter<Dynamic>,?format:Format,?level = CRAZY,?verbose=false,?reinstate=false){
     super(logic,__.option(format).defv(new stx.log.core.format.Console()),level,verbose,reinstate);
   }

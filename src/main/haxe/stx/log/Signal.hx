@@ -17,7 +17,7 @@ private class SignalCls{
     }
   }
   public function attach(logger:LoggerApi<Dynamic>){
-    has_custom = true;
+    @:privateAccess Signal.has_custom = true;
     handle(
       (x:Value<Dynamic>) -> { 
         var o = logger.apply(x)(Logger.spur);

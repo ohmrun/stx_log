@@ -16,11 +16,10 @@ class Unit extends Logger<Dynamic>{
   override private function do_apply(value:Value<Dynamic>):Continuation<Res<String,LogFailure>,Value<Dynamic>>{
     var parent      = super.do_apply(value)(_ -> __.reject(__.fault().of(E_Log_Zero))).ok();
     var has_custom  = Signal.has_custom;
-    trace(has_custom);
     var level       = value.stamp.level.asInt() >= level.asInt();
     var include_tag = includes.is_defined() ? includes.any(
       x -> value.stamp.tags.search(
-        y -> x == yf
+        y -> x == y
       ).is_defined()
     ) : !value.stamp.tags.is_defined();
     var res = has_custom.if_else(
