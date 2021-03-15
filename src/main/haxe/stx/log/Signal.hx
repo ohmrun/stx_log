@@ -31,11 +31,11 @@ typedef SignalDef = SignalCls;
   static public var ZERO(default,null) : Signal = new Signal();
   static function __init__(){
     #if (stx.log.debugging)
-      new Signal().attach(new DebugLogger());
-       = false;
+      instanceg.attach(new DebugLogger());
+      has_custom = false;
     #end
     var facade = Facade.unit();
-    new Signal().attach(facade);
+    instance.attach(facade);
     has_custom = false;
   }
   static public var has_custom(default,null):Bool                              = false;
