@@ -1,7 +1,7 @@
 package stx.log;
 
 class EntryCtr<T> extends Clazz{
-  public function self(val:T,ctr:T->String):stx.log.core.Entry<T>{
+  public function make(val:T,ctr:T->String):stx.log.core.Entry<T>{
     return { val : val, ctr : ctr };
   }
   public function pure(val:T):stx.log.core.Entry<T>{
