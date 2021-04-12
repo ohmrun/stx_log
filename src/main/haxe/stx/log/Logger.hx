@@ -40,7 +40,7 @@ class Logger<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   private function do_apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
     return Continuation.lift(
       (fn:Value<T>->Res<String,LogFailure>) -> {
-        var result = logic.apply(value).populate(() -> this.format.print(value));
+        var result = logic.apply(value).resolve(() -> this.format.print(value));
         return result;
       }
     );
