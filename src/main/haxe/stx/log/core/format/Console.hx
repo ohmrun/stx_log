@@ -20,7 +20,9 @@ class Console extends FormatCls{
       a.push('$level_str');
     }
     if(has(INCLUDE_TIMESTAMP)){
-      a.push('${s.timestamp}');
+      //https://www.w3.org/TR/NOTE-datetime
+      var fmt = '%Y-%m-%dT%H:%M:%S'; 
+      a.push('${DateTools.format(s.timestamp,fmt)}');
     }
     if(has(INCLUDE_TAGS)){
       var tag_string = [${s.tags.join(",")}]; 
@@ -36,7 +38,7 @@ class Console extends FormatCls{
     }
     if(has(INCLUDE_DETAIL)){
       var detail_string = Std.string(value.detail); 
-      a.push('<bg_light_yellow><black>$detail_string</black></bg_light_yellow>');
+      a.push('<invert>$detail_string</invert>');
     }
     return a.join(" ");
   }
