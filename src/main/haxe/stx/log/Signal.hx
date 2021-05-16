@@ -25,13 +25,18 @@ private class SignalCls{
     );
   }
 }
+private class NullSignalCls extends SignalCls{
+  override public function trigger(v:Value<Dynamic>):Void{
+
+  }
+}
 typedef SignalDef = SignalCls;
 
 @:forward(attach) abstract Signal(SignalDef){
   static public var ZERO(default,null) : Signal = new Signal();
   static function __init__(){
     #if (stx.log.debugging)
-      instanceg.attach(new DebugLogger());
+      instance.attach(new DebugLogger());
       has_custom = false;
     #end
     var facade = Facade.unit();
@@ -40,8 +45,27 @@ typedef SignalDef = SignalCls;
   }
   static public var has_custom(default,null):Bool                              = false;
   @:isVar static public  var instance(get,null):SignalDef;
-  static private function get_instance(){
-    return instance == null ? instance = new SignalCls() : instance;
+  static private function get_instance(){ 
+#if sys
+      var do_logging = __.option(Sys.getEnv("STX_LOG"));
+      return (instance == null).if_else(
+        () -> {
+          return instance = do_logging.fold(
+            (str) -> Bools.truthiness(str).if_else(
+              ()  -> new SignalCls(),
+              ()  -> new NullSignalCls()
+            ),
+            () -> new SignalCls()
+          );
+        },
+        () -> instance
+        );
+#else
+      return (instance == null).if_else(
+        () -> instance = new SignalCls(),
+        () -> instance
+        );
+#end
   }
 
   public inline function new(){
