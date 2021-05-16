@@ -1,9 +1,9 @@
 package stx.log.logger;
 
-class Unit extends Logger<Dynamic>{
+class Unit extends Logger<Any>{
   public var level      : Level;
   public var reinstate  : Bool;
-  public function new(?logic:Filter<Dynamic>,?format:Format,?level = CRAZY,?verbose=false,?reinstate=false){
+  public function new(?logic:Filter<Any>,?format:Format,?level = CRAZY,?verbose=false,?reinstate=false){
     super(logic,format);
     this.level      = level;
     this.verbose    = verbose;
@@ -13,15 +13,17 @@ class Unit extends Logger<Dynamic>{
   public var includes(default,null) : Includes;
   public var verbose                : Bool;
 
-  override private function do_apply(value:Value<Dynamic>):Continuation<Res<String,LogFailure>,Value<Dynamic>>{
-    var parent      = super.do_apply(value)(_ -> __.reject(__.fault().of(E_Log_Zero))).ok();
+  override private function do_apply(data:Value<Any>):Continuation<Res<String,LogFailure>,Value<Any>>{
+    var applied     = super.do_apply(data);
+    var applied_fn  = __.reject.bind(__.fault().of(E_Log_Zero));
+    var parent      = applied(_ -> applied_fn()).ok();
     var has_custom  = Signal.has_custom;
-    var level       = value.stamp.level.asInt() >= level.asInt();
+    var level       = data.stamp.level.asInt() >= level.asInt();
     var include_tag = includes.is_defined() ? includes.any(
-      x -> value.stamp.tags.search(
+      x -> data.stamp.tags.search(
         y -> x == y
       ).is_defined()
-    ) : !value.stamp.tags.is_defined();
+    ) : !data.stamp.tags.is_defined();
     var res = has_custom.if_else(
       () -> reinstate,
       () -> verbose.if_else(
@@ -38,20 +40,20 @@ class Unit extends Logger<Dynamic>{
       'level:$level '                             +
       'includes:${includes} '                     +
       'include_tag:$include_tag '                 +
-      'stamp_tag:${value.stamp.tags} '            +
+      'stamp_tag:${data.stamp.tags} '            +
       'parent && level: ${parent && level} '      +
       'verbose:$verbose '                         +
       'res:$res '
     );
-    return (fn:Value<Dynamic>->Res<String,LogFailure>) -> res.if_else(
-      () -> __.accept(format.print(value)),
+    return (fn:Value<Any>->Res<String,LogFailure>) -> res.if_else(
+      () -> __.accept(format.print(data)),
       () -> __.reject(__.fault().of(E_Log_Default({
         has_custom   : has_custom,
         parent      : parent,
         level       : level,
         includes    : includes,
         include_tag : include_tag,
-        stamp_tag   : value.stamp.tags,
+        stamp_tag   : data.stamp.tags,
         verbose     : verbose
       })))
     );
