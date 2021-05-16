@@ -39,7 +39,14 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
     #if stx.log.null
 
     #else
-    stx.log.Signal.transmit(enlog(value,pos));
+      #if sys
+        Bools.truthiness(Sys.getEnv("STX_LOG")).if_else(
+          () -> stx.log.Signal.transmit(enlog(value,pos)),
+          () -> {}
+        );
+      #else
+        stx.log.Signal.transmit(enlog(value,pos));
+      #end
     #end 
   }
   static public function unit():Log{
