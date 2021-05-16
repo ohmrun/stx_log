@@ -79,7 +79,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       var result      = query.test(value.fileName.get_pack().join("."));
       return result.if_else(
         () -> Report.unit(),
-        () -> __.fault().of(E_Log_SourceNotInPackage(value.fileName,canonical))
+        () -> __.report(E_Log_SourceNotInPackage(value.fileName,canonical))
       );
     });
   }
@@ -88,7 +88,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       var result      = type == value.fileName.get_canonical();
       return result.if_else(
         () -> Report.unit(),
-        () -> __.fault().of(E_Log_SourceNotInPackage(value.fileName,value.fileName.get_canonical()))
+        () -> __.report(E_Log_SourceNotInPackage(value.fileName,value.fileName.get_canonical()))
       );
     });
   }
@@ -97,7 +97,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       var result      = value.lineNumber == n;
       return result.if_else(
         () -> Report.unit(),
-        () -> __.fault().of(E_Log_NotLine(n))
+        () -> __.report(E_Log_NotLine(n))
       );
     });
   }
@@ -106,7 +106,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       (value) -> return 
         ((value.lineNumber >= l) && (value.lineNumber <= h)).if_else(
         () -> Report.unit(),
-        () -> __.fault().of(E_Log_NotOfRange(l,h))
+        () -> __.report(E_Log_NotOfRange(l,h))
       )
     ));
   }
@@ -116,7 +116,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
         (tag) -> tag == str
       ).is_defined().if_else(
         () -> Report.unit(),
-        () -> __.fault().of(E_Log_DoesNotContainTag(str))
+        () -> __.report(E_Log_DoesNotContainTag(str))
       )
     );
   }
@@ -124,7 +124,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
     return construct(
       (value) -> (value.methodName == str).if_else(
         () -> Report.unit(),
-        () -> __.fault().of(E_Log_NotInMethod(str))
+        () -> __.report(E_Log_NotInMethod(str))
       )
     );
   }
