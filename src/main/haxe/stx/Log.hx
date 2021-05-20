@@ -37,7 +37,7 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
   static public inline function LOG<T>(value:stx.log.core.Entry<T>,?pos:Pos):Void{
     //trace("transmit");
     #if stx.log.null
-
+    
     #else
       #if sys
         Bools.truthiness(Sys.getEnv("STX_LOG")).if_else(
