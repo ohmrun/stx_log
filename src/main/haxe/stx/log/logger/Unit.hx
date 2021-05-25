@@ -20,7 +20,7 @@ class Unit extends Logger<Any>{
     var has_custom  = Signal.has_custom;
     var level       = data.stamp.level.asInt() >= level.asInt();
     var include_tag = includes.is_defined() ? includes.any(
-      x -> data.stamp.tags.search(
+      x -> __.option(data).flat_map(x -> x.stamp).flat_map( x -> x.tags).defv([]).search(
         y -> x == y
       ).is_defined()
     ) : !data.stamp.tags.is_defined();
