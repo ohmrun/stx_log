@@ -8,7 +8,7 @@ class Unit extends Logger<Any>{
     this.level      = level;
     this.verbose    = verbose;
     this.reinstate  = reinstate;
-    this.includes   = [];
+    this.includes   = new Array();
   }
   public var includes(default,null) : Includes;
   public var verbose                : Bool;

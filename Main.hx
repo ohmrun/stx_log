@@ -13,7 +13,7 @@ class Main{
   }
   macro static function macro_test(){
     trace("MACRO");
-    //stx.log.Test.main();
+    stx.log.Test.main();
     __.log().debug("ok");
     return macro {};
   }

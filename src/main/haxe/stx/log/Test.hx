@@ -1,5 +1,7 @@
 package stx.log;
 
+import stx.log.test.*;
+
 using stx.log.Test;
 using stx.unit.Test;
 
@@ -13,17 +15,7 @@ class Test{
 		],[ConsoleTest]);
 	}
 }
-class ConsoleTest extends TestCase{
-	public function test(){
-		Signal.instance.attach(new stx.log.logger.ConsoleLogger());
-		__.log()("hello");
-		__.log().trace("hello");
-		__.log().debug("hello");
-		__.log().warn("hello");
-		__.log().error("hello");
-		__.log().fatal("hello");
-	}
-}
+
 #if hxnodejs
 class ColumnTest extends TestCase{
 	public function test(){

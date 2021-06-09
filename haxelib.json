@@ -18,8 +18,8 @@
         "stx_test"              : "git:https://github.com/ohmrun/stx_test.git",
 
         "console.hx"            : "git:https://github.com/haxiomic/console.hx.git",
-        "hre"                   : "0.2.1",
-        "polygonal-printf"      : "https://github.com/polygonal/printf.git"
+        "hre"                   : "git:https://gitlab.com/demurgos/hre.git",
+        "polygonal-printf"      : "git:https://github.com/polygonal/printf.git"
     },
     "classPath": "src/main/haxe"
 }
