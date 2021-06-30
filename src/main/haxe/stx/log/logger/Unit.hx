@@ -19,11 +19,18 @@ class Unit extends Logger<Any>{
     var parent      = applied(_ -> applied_fn()).ok();
     var has_custom  = Signal.has_custom;
     var level       = data.stamp.level.asInt() >= level.asInt();
-    var include_tag = includes.is_defined() ? includes.any(
-      x -> __.option(data).flat_map(x -> x.stamp).flat_map( x -> x.tags).defv([]).search(
-        y -> x == y
-      ).is_defined()
-    ) : !data.stamp.tags.is_defined();
+    var include_tag = includes.is_defined().if_else(
+      () -> 
+        __.option(data).flat_map(x -> x.stamp).flat_map(x -> x.tags).defv([]).lfold(
+          (next:String,memo:Bool) -> memo.if_else(
+            () -> true,
+            () -> includes.match(next)
+          ),
+          false
+        )
+      ,
+      () -> !data.stamp.tags.is_defined()
+    ); 
     var res = has_custom.if_else(
       () -> reinstate,
       () -> verbose.if_else(

@@ -9,7 +9,7 @@ class Custom extends Unit{
         y -> x == y
       ).is_defined()
     ) : !value.stamp.tags.is_defined();
-
+        
     var res = (level && include_tag) || verbose;
 
     note( 

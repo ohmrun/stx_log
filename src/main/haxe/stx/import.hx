@@ -13,3 +13,7 @@ using stx.Nano;
 using stx.Log;
 using stx.Fp;
 using stx.Assert;
+
+#if !macro
+using stx.Pkg;
+#end

@@ -12,7 +12,9 @@
 -lib stx_fn
 -lib stx_fp
 -lib stx_assert
+-lib stx_pkg
 -lib asys
+-lib haxe-files
 
 -lib hre
 -lib polygonal-printf

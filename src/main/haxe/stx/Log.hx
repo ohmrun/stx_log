@@ -33,11 +33,15 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
 
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
-
+  
+  static public inline function pkg(pkg:Pkg):Log{
+    return @:privateAccess pkg.source().map(
+      scope -> unit().tag((scope.pack.join("/")))
+    ).def(unit);
+  }
   static public inline function LOG<T>(value:stx.log.core.Entry<T>,?pos:Pos):Void{
     //trace("transmit");
     #if stx.log.null
-    
     #else
       stx.log.Signal.transmit(enlog(value,pos));
     #end 

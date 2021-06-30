@@ -1,6 +1,6 @@
 package stx.log;
 
-@:forward abstract Facade(stx.log.logger.Unit){
+@:forward abstract Facade(stx.log.logger.Unit) to stx.log.logger.Unit{
   static public var ZERO(default,never) = unit();
   @:isVar private static var instance(get,null):stx.log.logger.Unit;
   static private function get_instance(){

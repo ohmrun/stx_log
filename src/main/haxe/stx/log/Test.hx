@@ -10,14 +10,16 @@ import stx.log.filter.term.Level in LevelFilter;
 class Test{
 	static public function main(){
 		trace("test");
-		__.unit([
-			new ConsoleTest(),
-		],[ConsoleTest]);
+		#if !macro
+			__.unit([
+				new ConsoleTest(),
+			],[ConsoleTest]);
+		#end
 	}
 }
 
 #if hxnodejs
-class ColumnTest extends TestCase{
+@:rtti class ColumnTest extends TestCase{
 	public function test(){
 		// stx.log.Signal.ZERO.attach(
 			

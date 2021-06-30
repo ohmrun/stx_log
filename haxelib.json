@@ -16,10 +16,12 @@
         "stx_fp"                : "git:https://github.com/ohmrun/stx_fp.git",
         "stx_fn"                : "git:https://github.com/ohmrun/stx_fn.git",
         "stx_test"              : "git:https://github.com/ohmrun/stx_test.git",
+        "stx_pkg"               : "git:https://github.com/ohmrun/stx_pkg.git",
 
         "console.hx"            : "git:https://github.com/haxiomic/console.hx.git",
         "hre"                   : "git:https://gitlab.com/demurgos/hre.git",
-        "polygonal-printf"      : "git:https://github.com/polygonal/printf.git"
+        "polygonal-printf"      : "git:https://github.com/polygonal/printf.git",
+        "haxe-files"            : "git:https://github.com/vegardit/haxe-files.git"
     },
     "classPath": "src/main/haxe"
 }
