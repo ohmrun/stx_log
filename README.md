@@ -1,6 +1,8 @@
 # stx_log
+## 01/07/2021
 
-Logging framework (beta-ish)
+Leave your log calls in your source code without effecting downstream source. Uses glob matching for filters
+
 
 ## Install
 
@@ -25,7 +27,7 @@ The `Log` is a function that sends a signal, and a `Logger` is an interface that
 
 The default situation works as follows.
 
-`stx.log.Facade` is a singleton used for easy setup and points to `stx.log.logger.Default`
+`stx.log.Facade` is a singleton used for easy setup and points to `stx.log.logger.Unit`
 
 The Logger `stx.log.logger.Default` is attached by default, but is removed automatically when you add your own via: `stx.log.Signal.attach(logger:LoggerApi<Dynamic>)`
 
