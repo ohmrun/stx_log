@@ -1,0 +1,11 @@
+{
+  "name": "stx_log",
+  "version": "0.1.5",
+  "main": "index.js",
+  "author": "0b1kn00b <polysemantic@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@google-cloud/logging": "^9.2.1"
+  }
+}
