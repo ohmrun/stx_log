@@ -3,7 +3,7 @@
 -cp src/main/haxe
 
 --each
--D stx.log.filter.show
+#-D stx.log.filter.show
 -main Main
 --interp 
 

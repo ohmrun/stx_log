@@ -12,12 +12,20 @@ class Test{
 		trace("test");
 		#if !macro
 			__.unit([
-				new ConsoleTest(),
-			],[ConsoleTest]);
+				//new ConsoleTest(),
+				new GlobTest()
+			],[GlobTest]);
 		#end
 	}
 }
-
+class GlobTest extends TestCase{
+	public function test(){
+		var log 		= __.log().tag("some/deep/package");
+		var logger 	= new stx.log.Facade();
+		 		logger.includes.push("some/deep/*");
+				log.debug("test");
+	}
+}
 #if hxnodejs
 @:rtti class ColumnTest extends TestCase{
 	public function test(){
