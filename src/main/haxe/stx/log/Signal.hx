@@ -39,7 +39,7 @@ typedef SignalDef = SignalCls;
       instance.attach(new DebugLogger());
       has_custom = false;
     #end
-    var facade = Facade.unit();
+    var facade = Logger.ZERO;
     instance.attach(facade);
     has_custom = false;
   }
@@ -81,6 +81,6 @@ typedef SignalDef = SignalCls;
   }
 }
 
-class DebugLogger<T> extends Logger<T>{
+class DebugLogger<T> extends stx.log.logger.Base<T>{
   
 }

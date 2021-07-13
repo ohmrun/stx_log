@@ -9,6 +9,10 @@
     "hashlink" : {
       "-main" : "Main",
       "-hl"   : "build/test/hl/main.hl" 
+    },
+    "neko" : {
+      "-main" : "Main",
+      "-neko" : "build/neko/main.n"      
     }
   },
   "run" : {

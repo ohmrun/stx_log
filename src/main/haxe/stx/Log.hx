@@ -12,6 +12,7 @@ typedef EntryCtr<T>       = stx.log.EntryCtr<T>;
 typedef Stringify<T>      = stx.log.Stringify<T>;
 typedef StringCtr<T>      = stx.log.StringCtr<T>;
 typedef StringCtrDef<T>   = stx.log.StringCtr.StringCtrDef<T>;
+typedef Logger            = stx.log.Logger;
 
 class LiftLog{
 
@@ -105,13 +106,14 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
       this(ctr.capture(v),pos);
     }
   }
+  static public function attach(logger){
+    new stx.log.Signal().attach(logger);
+  }
+
 }
 class LogLift{
   static public function Filter(){
     return stx.log.Filter;  
-  }
-  static public function Facade(){
-    return new stx.log.Facade();
   }
   static public inline function Logic(){
     return stx.log.Logic._.make();

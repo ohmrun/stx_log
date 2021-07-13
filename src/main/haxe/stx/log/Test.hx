@@ -21,7 +21,7 @@ class Test{
 class GlobTest extends TestCase{
 	public function test(){
 		var log 		= __.log().tag("some/deep/package");
-		var logger 	= new stx.log.Facade();
+		var logger 	= Logger.ZERO;
 		 		logger.includes.push("some/deep/*");
 				log.debug("test");
 	}

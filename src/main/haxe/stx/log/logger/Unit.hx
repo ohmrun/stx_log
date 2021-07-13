@@ -1,6 +1,6 @@
 package stx.log.logger;
 
-class Unit extends Logger<Any>{
+class Unit extends stx.log.logger.Base<Any>{
   public var level      : Level;
   public var reinstate  : Bool;
   public function new(?logic:Filter<Any>,?format:Format,?level = CRAZY,?verbose=false,?reinstate=false){

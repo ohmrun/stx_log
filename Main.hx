@@ -7,14 +7,15 @@ using stx.Log;
 class Main{
 
   static function main(){
-    macro_test(); 
+    //macro_test(); 
     trace("MAIN");
-    stx.log.Test.main();   
-  }
-  macro static function macro_test(){
-    trace("MACRO");
     stx.log.Test.main();
-    __.log().debug("ok");
-    return macro {};
+    //$type(__.log().trace);   
   }
+  // macro static function macro_test(){
+  //   trace("MACRO");
+  //   stx.log.Test.main();
+  //   __.log().debug("ok");
+  //   return macro {};
+  // }
 }
