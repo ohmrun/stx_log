@@ -13,4 +13,5 @@ class Logger{
     return new stx.log.logger.ConsoleLogger(logic,format,level,verbose,reinstate);
   }
   #end
+
 }
