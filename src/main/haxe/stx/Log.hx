@@ -15,7 +15,6 @@ typedef StringCtrDef<T>   = stx.log.StringCtr.StringCtrDef<T>;
 typedef Logger            = stx.log.Logger;
 
 class LiftLog{
-
   static public inline function log(wildcard:Wildcard):Log{
     return Log.ZERO;
   }
@@ -35,6 +34,11 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
   
+  public var global(get,never) : stx.log.logger.Global;
+  inline function get_global(){
+    return stx.log.logger.Global.instance;
+  }
+
   static public inline function pkg(pkg:Pkg):Log{
     return @:privateAccess pkg.source().map(
       scope -> unit().tag((scope.pack.join("/")))

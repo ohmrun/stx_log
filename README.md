@@ -19,6 +19,11 @@ class Main{
  static function main(){
   __.log()("test");
   __.log().trace("traced");
+
+  //get Global Logger
+  final logger = __.log().global;
+  //whitelist with glob format
+        logger.includes.push("**/*");
  }
 }
 ```
@@ -27,7 +32,7 @@ The `Log` is a function that sends a signal, and a `Logger` is an interface that
 
 The default situation works as follows.
 
-`stx.log.Facade` is a singleton used for easy setup and points to `stx.log.logger.Unit`
+`stx.log.logger.Global` is a singleton used for easy setup and points to `stx.log.logger.Unit`
 
 The Logger `stx.log.logger.Default` is attached by default, but is removed automatically when you add your own via: `stx.log.Signal.attach(logger:LoggerApi<Dynamic>)`
 
@@ -39,13 +44,13 @@ The Logger `stx.log.logger.Default` is attached by default, but is removed autom
   );//automatically disuse default
 
   __.log()("test")//nothing, default unused.
-  stx.log.Facade.reinstate = true;
+  stx.log.logger.Global.reinstate = true;
   __.log()("test")//we're back using `stx.log.logger.Default`
 ```
-The Facade **only shows values which are not tagged** unless you add to the array `Facade.includes` or set `Facade.verbose` to true.
+The Global **only shows values which are not tagged** unless you tag your Log and add to the array `includes` or set `verbose` to true.
 
 ```haxe
-  var facade = stx.log.Facade;
+  var facade = __.log().global;
   __.log()("test")//ok
   __.log().tag("tagged")("test")//not shown 
       facade.includes.push("tagged");
@@ -54,7 +59,7 @@ The Facade **only shows values which are not tagged** unless you add to the arra
 
 There is a default `stx.log.Level` filter.
 ```haxe
-  stx.log.Facade.level = INFO;
+  __.log().global.level = INFO;
   __.log()("test")//Level CRAZY, nope
   __.log().info("test")// Ok
 ```
@@ -64,22 +69,23 @@ here is an example override to tag your Log values.
 package my.pack;
 
 using stx.Nano;
-using my.pack.Log;//needs to go after `using stx.Nano` for this local `log` function to be used.
+using my.pack.Logging;//needs to go after `using stx.Nano` for this local `log` function to be used.
 
-@:forward @:callable abstract Log(stx.Log){
- static public function log(wildcard:Wildcard){
-  return new my.pack.Log();
- }
- public function new(){
-  this = __log().tag('my.pack');
- }
+using stx.Nano;
+using stx.Log;
+using stx.Pkg;
+
+class Logging{
+  static public function log(wildcard:Wildcard){
+    return stx.Log.pkg(__.pkg());//Log tagged `my/pack`
+  }
 }
 
 class Main{
  static public function main(){
-  var facade = stx.log.Facade.unit();
-      facade.includes.push("my.pack")//tagged log values are hidden by default
-  __.log()("test")//value.source.stamp.tags == ['my.pack']
+  var logger = __.log().global;
+      logger.includes.push("my/pack")//tagged log values are hidden by default
+  __.log().debug("test")//value.source.stamp.tags == ['my.pack']
  }
 }
 ```
@@ -141,7 +147,7 @@ See `stx.log.Logic` for examples of this.
   INCLUDE_DETAIL;
 ```
 
-To edit the format on the Facade, use `stx.log.Facade.unit().format =  [];`
+To edit the format on the Facade, use `stx.log.logger.Global.unit().format =  [];`
 
 The order is currently fixed `[level, timestamp, tags, path, newline, detail]`.
 

@@ -47,7 +47,7 @@ class GlobTest extends TestCase{
 #end
 @:rtti class StartTest extends TestCase{
 	public function test_basic_effect(){
-		new Facade().reset();
+		__.log().global.reset();
 		__.log()("test");
 	}
 	public function _test(){
@@ -58,7 +58,7 @@ class GlobTest extends TestCase{
 	}
 	public function test_default(){
 		trace('test_default');
-		var facade 				= Facade.ZERO;
+		var facade 				= __.log().global;
 		var track 				= "stx.log".split(".");
 		var logic  				= Log._.Logic();
 
@@ -86,7 +86,7 @@ class GlobTest extends TestCase{
 		__.log().tag("test").info("hello");
 	}
 	public function test_custom_log(){
-		var facade = stx.log.Facade.unit();
+		var facade = __.log().global;
 				facade.reset();
 				facade.includes.push("testy");
 		__.clog()("Test");
