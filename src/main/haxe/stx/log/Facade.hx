@@ -1,6 +1,6 @@
 package stx.log;
 
-@:forward abstract Facade(stx.log.logger.Unit) to stx.log.logger.Unit{
+@:forward abstract Facade(stx.log.logger.Unit) to stx.log.logger.Unit from stx.log.logger.Unit{
   static public var ZERO(default,never) = unit();
   @:isVar public static var instance(get,null):stx.log.logger.Unit;
   static private function get_instance(){
@@ -13,6 +13,9 @@ package stx.log;
     return new Facade();
   }
   @:to public function toLoggerApi():LoggerApi<Dynamic>{
+    return this;
+  }
+  public function prj(){
     return this;
   }
 }

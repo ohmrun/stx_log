@@ -8,7 +8,7 @@ class Race<T> extends Filter<T>{
     super();
     this.races = [];
   }
-  override public function applyI(value:Value<T>){
+  override public function apply(value:Value<T>){
     var race = races.fold(
       (next:Stamp,memo:Option<Stamp>) -> memo.fold(
         (v:Stamp) -> (next.timestamp > v.timestamp).if_else(

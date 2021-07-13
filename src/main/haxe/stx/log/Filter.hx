@@ -3,7 +3,7 @@ package stx.log;
 class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure>{
   public function new(){}
 
-  public function applyI(value:Value<T>):Report<LogFailure>{
+  public function apply(value:Value<T>):Report<LogFailure>{
     return Report.unit();
   }
   function note(str){

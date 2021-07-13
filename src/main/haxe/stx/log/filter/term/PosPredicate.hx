@@ -7,7 +7,7 @@ class PosPredicate extends Filter<Dynamic>{
     super();
     this.delegate = delegate;
   }
-  override public function applyI(value:Value<Dynamic>){
-    return delegate.applyI(value.source);
+  override public function apply(value:Value<Dynamic>){
+    return delegate.apply(value.source);
   }
 }

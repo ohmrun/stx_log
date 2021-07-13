@@ -57,7 +57,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
         (e) -> Report.unit(),
         ()  -> Report.make(E_Log_Not)//TODO hmmm
       );
-      case LV(v)      : v.applyI(value);
+      case LV(v)      : v.apply(value);
     }
   }
   public function opine(value:Value<T>){

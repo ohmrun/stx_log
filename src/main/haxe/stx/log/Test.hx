@@ -3,7 +3,7 @@ package stx.log;
 import stx.log.test.*;
 
 using stx.log.Test;
-using stx.unit.Test;
+using stx.Test;
 
 import stx.log.filter.term.Level in LevelFilter;
 
@@ -11,7 +11,7 @@ class Test{
 	static public function main(){
 		trace("test");
 		#if !macro
-			__.unit([
+			__.test([
 				//new ConsoleTest(),
 				new GlobTest()
 			],[GlobTest]);
@@ -58,7 +58,7 @@ class GlobTest extends TestCase{
 	}
 	public function test_default(){
 		trace('test_default');
-		var facade 				= Log._.Facade();
+		var facade 				= Facade.ZERO;
 		var track 				= "stx.log".split(".");
 		var logic  				= Log._.Logic();
 

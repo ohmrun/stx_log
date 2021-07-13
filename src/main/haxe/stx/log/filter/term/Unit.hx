@@ -1,7 +1,7 @@
 package stx.log.filter.term;
 
 class Unit<T> extends Filter<T>{
-  override public function applyI(value:Value<T>){
+  override public function apply(value:Value<T>){
     return Report.unit();
   }
 }
