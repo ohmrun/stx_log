@@ -39,7 +39,7 @@ typedef SignalDef = SignalCls;
       instance.attach(new DebugLogger());
       has_custom = false;
     #end
-    var facade = Global.ZERO;
+    var facade = stx.log.logger.Global.ZERO;
     instance.attach(facade);
     has_custom = false;
   }
