@@ -36,7 +36,7 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
   
   public var global(get,never) : stx.log.logger.Global;
   inline function get_global(){
-    return stx.log.logger.Global.instance;
+    return stx.log.logger.Global.ZERO;
   }
 
   static public inline function pkg(pkg:Pkg):Log{
