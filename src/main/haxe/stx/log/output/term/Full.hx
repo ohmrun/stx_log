@@ -1,5 +1,9 @@
 package stx.log.output.term;
 
+#if (sys || hxnodejs)
+	using stx.Sys;
+#end
+
 class Full implements OutputApi extends Debugging{
   private function render( v : Dynamic, ?infos : LogPosition ) : Void {
     note('haxelog $infos');
@@ -44,7 +48,7 @@ class Full implements OutputApi extends Debugging{
 			python.Lib.println(str);
 		#else
 			note('default');
-			Sys.println(Std.string(v));
+			__.sys().println(Std.string(v));
 		#end
 	}
 		#if (flash || js)

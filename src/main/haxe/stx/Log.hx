@@ -45,7 +45,7 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
     ).def(unit);
   }
   static public inline function LOG<T>(value:stx.log.core.Entry<T>,?pos:Pos):Void{
-    //trace("transmit");
+    //trace("transmit");cid
     #if stx.log.null
     #else
       stx.log.Signal.transmit(enlog(value,pos));

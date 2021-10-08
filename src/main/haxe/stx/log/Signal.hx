@@ -1,5 +1,8 @@
 package stx.log;
 
+#if sys
+  using stx.Sys;
+#end
 import tink.core.Signal               in TinkSignal;
 import tink.core.Signal.SignalTrigger in TinkSignalTrigger;
 
@@ -47,7 +50,7 @@ typedef SignalDef = SignalCls;
   @:isVar static public  var instance(get,null):SignalDef;
   static private function get_instance(){ 
 #if sys
-      var do_logging = __.option(Sys.getEnv("STX_LOG"));
+      var do_logging = __.sys().env("STX_LOG");
       return (instance == null).if_else(
         () -> {
           return instance = do_logging.fold(
