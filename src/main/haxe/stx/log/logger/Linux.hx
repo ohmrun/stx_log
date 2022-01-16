@@ -4,7 +4,7 @@ package stx.log.logger;
   import sys.io.Process;
 #end
 class Linux extends Unit{
-  public function new(?logic:Filter<Dynamic>,?format:Format,?level = TRACE,?verbose=false,?reinstate=false){
+  public function new(?logic:Filter<Dynamic>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
     super(logic,__.option(format).defv(new stx.log.core.format.Column()),level,verbose,reinstate);
   }
   override private function render( v : Dynamic, ?infos : LogPosition ) : Void{

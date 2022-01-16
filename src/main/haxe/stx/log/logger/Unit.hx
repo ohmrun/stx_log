@@ -3,7 +3,7 @@ package stx.log.logger;
 class Unit extends stx.log.logger.Base<Any>{
   public var level      : Level;
   public var reinstate  : Bool;
-  public function new(?logic:Filter<Any>,?format:Format,?level = TRACE,?verbose=false,?reinstate=false){
+  public function new(?logic:Filter<Any>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
     super(logic,format);
     this.level      = level;
     this.verbose    = verbose;
@@ -67,7 +67,7 @@ class Unit extends stx.log.logger.Base<Any>{
   }
   public function reset(){
     this.includes.clear();
-    this.level = TRACE;
+    this.level = DEBUG;
     this.logic = Log._.Logic().always();
   }
 }

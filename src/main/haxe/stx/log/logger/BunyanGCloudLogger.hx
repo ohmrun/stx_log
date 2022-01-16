@@ -20,7 +20,7 @@ extern class BunyanGCloud{
 class BunyanGCloudLogger extends Custom{
   private final internal : Bunyan;
 
-  public function new(?logic:Filter<Any>,?level = TRACE,?verbose=false,?reinstate=false){
+  public function new(?logic:Filter<Any>,?level = DEBUG,?verbose=false,?reinstate=false){
     super(logic,[INCLUDE_TAGS,INCLUDE_LOCATION,INCLUDE_DETAIL],level,verbose,reinstate);
     // Creates a Bunyan Cloud Logging client
     final loggingBunyan = new BunyanGCloud();
@@ -31,11 +31,11 @@ class BunyanGCloudLogger extends Custom{
       // will contain "name": "my-service"
         name: 'ov8-server-haxe-log',
         streams: [
-        // Log to the console at 'info' and above
-        {stream: js.Node.process.stdout, level: 'debug'},
-          // And log to Cloud Logging, logging at 'info' and above
-        loggingBunyan.stream('debug'),
-      ],
+          // Log to the console at 'info' and above
+          { stream: js.Node.process.stdout, level: 'debug' },
+            // And log to Cloud Logging, logging at 'info' and above
+          loggingBunyan.stream('debug'),
+        ],
     });
   } 
   override private function render( v : Dynamic, ?infos : LogPosition ) : Void{

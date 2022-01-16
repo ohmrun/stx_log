@@ -7,7 +7,7 @@ import asys.io.Process;
 
 class Linux extends Unit{
   var delegate : Unit;
-  public function new(?logic:stx.log.Filter<Dynamic>,?format:Format,?level = TRACE,?verbose=false,?reinstate=false){
+  public function new(?logic:stx.log.Filter<Dynamic>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
     super(logic,__.option(format).defv(new stx.log.core.format.Column()),level,verbose,reinstate);
     this.delegate = new Unit(logic,format,level,verbose,reinstate);
   }
