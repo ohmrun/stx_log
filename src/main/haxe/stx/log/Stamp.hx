@@ -11,7 +11,7 @@ class Stamp{
 
   public function new(?id,?level,?timestamp,?tags,?hidden=false){
     this.id         = __.option(id).def(__.uuid.bind("xxxxx"));
-    this.level      = __.option(level).defv(CRAZY);
+    this.level      = __.option(level).defv(BLANK);
     this.timestamp  = __.option(timestamp).def(Date.now);
     this.tags       = __.option(tags).defv([]);
     this.hidden     = hidden;

@@ -1,7 +1,7 @@
 package stx.log;
 
 @:enum abstract LevelSum(Int) from Int to Int{
-  var CRAZY = 0;
+  var BLANK = 0;
   var TRACE = 1;
   var DEBUG = 2;
   var INFO  = 3;

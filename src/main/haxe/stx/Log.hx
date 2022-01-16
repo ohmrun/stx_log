@@ -75,8 +75,8 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
       }
     );
   }
-  /** Logs with Level.CRAZY   **/
-  public inline function crazy<X>(v:Stringify<X>,?pos:Pos) level(CRAZY)(v(new EntryCtr()),pos);
+  /** Logs with Level.BLANK   **/
+  public inline function blank<X>(v:Stringify<X>,?pos:Pos) level(BLANK)(v(new EntryCtr()),pos);
   /** Logs with Level.TRACE   **/
   public inline function trace<X>(v:Stringify<X>,?pos:Pos) level(TRACE)(v(new EntryCtr()),pos);
   /** Logs with Level.DEBUG   **/

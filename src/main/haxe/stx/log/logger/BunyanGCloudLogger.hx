@@ -20,7 +20,7 @@ extern class BunyanGCloud{
 class BunyanGCloudLogger extends Custom{
   private final internal : Bunyan;
 
-  public function new(?logic:Filter<Any>,?level = CRAZY,?verbose=false,?reinstate=false){
+  public function new(?logic:Filter<Any>,?level = TRACE,?verbose=false,?reinstate=false){
     super(logic,[INCLUDE_TAGS,INCLUDE_LOCATION,INCLUDE_DETAIL],level,verbose,reinstate);
     // Creates a Bunyan Cloud Logging client
     final loggingBunyan = new BunyanGCloud();

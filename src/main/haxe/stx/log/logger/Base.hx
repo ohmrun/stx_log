@@ -20,7 +20,7 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
               if(!value.stamp.hidden){
                 #if macro
                   render(string,value.source);
-                  // if(value.stamp.level != CRAZY){
+                  // if(value.stamp.level != BLANK){
                    
                   // }
                 #else

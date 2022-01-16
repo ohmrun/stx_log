@@ -15,7 +15,7 @@ class Console extends FormatCls{
         case ERROR  : '<red>${l}</red>';//ERROR
         case FATAL  : '<invert><red>${l}</red></invert>';//FATAL
 
-        default: '${l}';//CRAZY
+        default: '${l}';//BLANK
       }
       a.push('$level_str');
     }
