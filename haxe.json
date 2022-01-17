@@ -6,6 +6,15 @@
       "stx_assert","stx_fp","stx_fn","stx_test","console.hx","hre","polygonal-printf"
     ],
     "-cp"  : ["src/main/haxe"],
+    "unit"  : {
+      "--macro" : [
+        "include('stx.Log',true)",
+        "include('stx.log',true)"
+      ],
+      "interp" : {
+        "--interp"  : true
+      }
+    },
     "main" : {
       "-main"     : "Main",
       "hashlink"  : {

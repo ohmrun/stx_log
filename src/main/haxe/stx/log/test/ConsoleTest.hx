@@ -1,6 +1,6 @@
 package stx.log.test;
 
-@:rtti class ConsoleTest extends stx.unit.test.TestCase{
+@:rtti class ConsoleTest extends TestCase{
 	public function test(){
 		Signal.instance.attach(new stx.log.logger.ConsoleLogger());
 		__.log()("hello");

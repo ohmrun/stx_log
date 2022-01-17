@@ -1,6 +1,6 @@
 package stx.log.logger;
 
-
+#if hxnodejs
 @:jsRequire("bunyan") extern class Bunyan{
   static public function createLogger(obj:Dynamic):Dynamic;
   public function debug(meta:Dynamic,str:String):Void;
@@ -60,3 +60,4 @@ class BunyanGCloudLogger extends Custom{
     );
   }
 }
+#end

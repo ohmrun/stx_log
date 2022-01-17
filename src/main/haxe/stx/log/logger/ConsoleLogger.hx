@@ -5,7 +5,6 @@ class ConsoleLogger extends Custom{
     super(logic,__.option(format).defv(new stx.log.core.format.Console()),level,verbose,reinstate);
   }
   override private function render( v : Dynamic, ?infos : LogPosition ) : Void{
-    //.haxe.Log.trace(v);
-    std.Console.log(v);
+    @:privateAccess std.Console.log(v);
   }
 }

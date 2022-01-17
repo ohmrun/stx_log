@@ -2,7 +2,7 @@ package stx.log.output.term;
 
 class Js implements OutputApi extends Clazz{
   #if js
-  private function render(v:Dynamic,?si : Pos) {
+  private function render(v:Dynamic,?pos : Pos) {
     untyped {
       var msg = "";//if( i != null ) i.fileName+":"+i.lineNumber+": " else "";
       #if jsfl
@@ -19,6 +19,6 @@ class Js implements OutputApi extends Clazz{
     }
   }
   #else
-  private function render( v : Dynamic, pos : Pos ) {}
+  private function render( v : Dynamic, ?pos : Pos ) {}
   #end
 }

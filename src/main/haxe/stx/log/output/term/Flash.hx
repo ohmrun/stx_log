@@ -1,8 +1,9 @@
-package stx.log;
+package stx.log.output.term;
 
+#if flash
 class Flash implements OutputApi extends Clazz{
-  #if flash
-  private function render( v : Dynamic, pos : Pos ) {
+  
+  private function render( v : Dynamic, ?pos : Pos ) {
     var tf = flash.Boot.getTrace();
     var pstr = if( pos == null ) "(null)" else pos.fileName+":"+pos.lineNumber;
     if( lines == null ) lines = [];
@@ -17,7 +18,5 @@ class Flash implements OutputApi extends Clazz{
       tf.text = lines.join("\n");
     }
   }
-  #else
-  private function render( v : Dynamic, pos : Pos ) {}
-  #end
 }
+#end
