@@ -5,7 +5,8 @@ package stx.log.logger;
   static private function get_ZERO(){
     return ZERO == null ? {
       #if sys 
-        ZERO = new stx.log.logger.ConsoleLogger();
+        //ZERO = new stx.log.logger.ConsoleLogger();
+        ZERO = new stx.log.logger.Unit();
         trace("stx.Log.global = stx.log.logger.ConsoleLogger()");
         ZERO;
       #else

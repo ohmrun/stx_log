@@ -21,7 +21,7 @@ package stx.log;
     return obj;
   }
   public function restamp(fn:Stamp->Stamp):LogCustomParameters{
-    var indexed = this.mapi(__.couple).search(
+    var indexed = this.imap(__.couple).search(
 
       (tp:Couple<Int,Dynamic>)-> is_stamp(tp.snd())
     ).def(

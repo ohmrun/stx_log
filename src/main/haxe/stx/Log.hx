@@ -18,22 +18,25 @@ class LiftLog{
   static public inline function log(wildcard:Wildcard):Log{
     return Log.ZERO;
   }
-  static public inline function scope(stx:Wildcard,pos:Pos,?method:String){
-    var scoping = return LogPosition.fromPos(pos).scoping;
+  static public inline function scope(stx:Wildcard,pos:Pos,?method:String):stx.Scoping{
+    var scoping : Scoping = LogPosition.fromPos(pos).scoping;
     if(method!=null){
-      scoping.method = method;
+      scoping = scoping.with_method(method);
     }
     return scoping;
   }
   static public inline function stamp(pos:Pos):LogPosition{
-    return new LogPosition(pos);
+    return LogPosition.pure(pos);
   }
 }
-typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
+typedef LogDef = stx.log.core.Entry<Dynamic> -> LogPosition -> Void;
 
 @:callable abstract Log(LogDef) to LogDef from LogDef{
   static public var _(default,never) = LogLift;
-  
+
+  @:noUsing static public inline function lift(self:LogDef){
+    return new Log(self);
+  }
   public var global(get,never) : stx.log.logger.Global;
   inline function get_global(){
     return stx.log.logger.Global.ZERO;
@@ -44,34 +47,39 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
       scope -> unit().tag((scope.pack.join("/")))
     ).def(unit);
   }
-  static public inline function LOG<T>(value:stx.log.core.Entry<T>,?pos:Pos):Void{
+  static public inline function LOG<T>(value:stx.log.core.Entry<T>,pos:LogPosition):Void{
     //trace("transmit");cid
     #if stx.log.null
     #else
       stx.log.Signal.transmit(enlog(value,pos));
     #end 
   }
+  static public inline function VOID<T>(value:stx.log.core.Entry<T>,pos:LogPosition):Void{
+
+  }
   static public function unit():Log{
     return new Log();
   }
-  static public function enlog<T>(value:stx.log.core.Entry<T>,?pos:Pos):Value<T>{
-    var log_position  = LogPosition.pure(pos);
-    var value         = new Value(value,log_position);
+  static public function void():Log{
+    return new Log(VOID);
+  }
+  static public function enlog<T>(value:stx.log.core.Entry<T>,info:LogPosition):Value<T>{
+    var value         = new Value(value,info);
     return value;
   }
   static public function make<T>(fn:Value<T>->Void):Log{
-    return (value:Dynamic,?pos:Pos) -> fn(enlog(value,pos));
+    return (value:Dynamic,pos:LogPosition) -> fn(enlog(value,pos));
   }
   static public var ZERO(default,null)  : Log     = LOG;
 
-  inline public function new() this = LOG;
+  inline public function new(?self) this = self == null ? LOG : self;
   
   /** Logs with LogLevel[LEVEL] **/
   public inline function level(level:Level):Log{
     return mod(
       (pos:LogPosition) -> {
         //trace(pos);
-        return pos.restamp( stamp -> stamp.relevel(level) );
+        return pos.with_stamp( stamp -> stamp.relevel(level) );
       }
     );
   }
@@ -91,22 +99,23 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
   public inline function fatal<X>(v:Stringify<X>,?pos:Pos) level(FATAL)(v(new EntryCtr()),pos);
 
   public inline function mod(fn:LogPosition->LogPosition){
-    return (value:stx.log.core.Entry<Dynamic>,?pos:Pos) -> this(value,fn(pos));
+    return (value:stx.log.core.Entry<Dynamic>,pos:LogPosition) -> this(value,fn(pos));
   }
   public inline function tag(tag:String):Log{
-    return mod((pos) -> pos.restamp((stamp) -> stamp.tag(tag)));
+    return mod((pos) -> pos.with_stamp((stamp) -> stamp.tag(tag)));
   }
   public inline function close():Log{
-    return mod((pos) -> pos.restamp(stamp -> stamp.hide()));
+    return mod((pos) -> pos.with_stamp(stamp -> stamp.hide()));
   }
   public inline function through<T>(?ctr:StringCtr<T>,?pos:Pos):T->T{
-    ctr = __.option(ctr).def(StringCtr.unit);
+    final log_pos = LogPosition.pure(pos);
+          ctr     = __.option(ctr).def(StringCtr.unit);
     return (v:T) -> {
       this(ctr.capture(v),pos);
       return v;
     }
   }
-  public inline function printer<T>(?ctr:StringCtr<T>,?pos:Pos):T->Void{
+  public inline function printer<T>(?ctr:StringCtr<T>,pos:LogPosition):T->Void{
     ctr = __.option(ctr).def(StringCtr.unit);
     return (v:T) -> {
       this(ctr.capture(v),pos);
@@ -115,7 +124,9 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> ?Pos -> Void;
   static public function attach(logger){
     new stx.log.Signal().attach(logger);
   }
-
+  public function prj():LogDef{
+    return this;
+  }
 }
 class LogLift{
   static public function Filter(){

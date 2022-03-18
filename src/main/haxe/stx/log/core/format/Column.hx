@@ -16,7 +16,7 @@ class Column extends FormatCls{
     }
     if(has(INCLUDE_LOCATION)){
       //TODO can be earlier than __init__?;
-      a.push(stx.nano.Position.PositionLift.to_vscode_clickable_link(p));
+      a.push(p.pos.map(stx.nano.Position.PositionLift.to_vscode_clickable_link).defv('<unknown>'));
     }
     if(has(INCLUDE_NEWLINE_FOR_DETAIL)){
       a.push("\n");

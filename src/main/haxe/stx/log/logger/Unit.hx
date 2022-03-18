@@ -14,10 +14,15 @@ class Unit extends stx.log.logger.Base<Any>{
   public var verbose                : Bool;
 
   override private function do_apply(data:Value<Any>):Continuation<Res<String,LogFailure>,Value<Any>>{
+    note('$this');
     var applied     = super.do_apply(data);
     var applied_fn  = __.reject.bind(__.fault().of(E_Log_Zero));
-    var parent      = applied(_ -> applied_fn()).ok();
-    var has_custom  = Signal.has_custom;
+    var parent      = applied(_ -> applied_fn()).is_ok();
+    var has_custom    = Signal.has_custom;
+    final stamp_level = data.stamp.level;
+    note('level: $level stamp.level: $stamp_level ${stamp_level.asInt()} >= ${level.asInt()}');
+    note('${data.stamp.level.asInt()}');
+    note('${level.asInt()}');
     var level       = data.stamp.level.asInt() >= level.asInt();
     var include_tag = includes.is_defined().if_else(
       () -> 

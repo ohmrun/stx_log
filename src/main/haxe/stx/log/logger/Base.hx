@@ -21,7 +21,6 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
                 #if macro
                   render(string,value.source);
                   // if(value.stamp.level != BLANK){
-                   
                   // }
                 #else
                   render(string,value.source);

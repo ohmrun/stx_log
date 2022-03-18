@@ -8,4 +8,8 @@ package stx.log;
   var WARN  = 4;
   var ERROR = 5;
   var FATAL = 6;
+
+  public function prj():Int{
+    return this;
+  }
 }

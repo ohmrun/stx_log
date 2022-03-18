@@ -5,7 +5,7 @@ package stx.log.output.term;
 #end
 
 class Full implements OutputApi extends Debugging{
-  private function render( v : Dynamic, ?infos : LogPosition ) : Void {
+  private function render( v : Dynamic, infos : LogPosition ) : Void {
     note('haxelog $infos');
 		#if flash
 			note('flash');
@@ -16,7 +16,7 @@ class Full implements OutputApi extends Debugging{
 				//if( infos != null && infos.customParams != null ) for( v in infos.customParams ) str += "," + flash.Boot.__string_rec(v, "");
 				untyped __global__["trace"](pstr+": "+str);
 			#else
-				untyped new Flash().render(v,infos);
+				untyped new Flash().render(v,infos.pos);
 			#end
 		#elseif neko
 			note('neko');
@@ -26,13 +26,13 @@ class Full implements OutputApi extends Debugging{
 			}
 		#elseif js
 			note('js');
-			untyped new Js().render(v,infos);
+			untyped new Js().render(v,infos.pos);
 		#elseif php
 			note('php');
 				untyped _call__('_hx_trace', v, null);
 		#elseif cpp
 			note('cpp');
-				untyped __trace(v,infos);
+				untyped __trace(v,infos.pos);
 		#elseif (cs || java)
 			var str:String  = v;
 			#if cs

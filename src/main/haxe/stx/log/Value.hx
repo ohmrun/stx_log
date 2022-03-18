@@ -4,7 +4,7 @@ class Value<T>{
   static public function make<T>(detail:stx.log.core.Entry<T>,?source:Pos){
     return new Value(detail,source);
   }
-  public function new(detail:stx.log.core.Entry<T>,?source:Pos){
+  public function new(detail:stx.log.core.Entry<T>,source:LogPosition){
     this.detail     = detail;
     this.source     = source;
   }
@@ -17,7 +17,7 @@ class Value<T>{
   public var source(default,null)     : LogPosition;
 
   public function restamp(fn:Stamp->Stamp){
-    var next = source.restamp(fn);
+    var next = source.with_stamp(fn);
     return new Value(detail,next);
   }
   

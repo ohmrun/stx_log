@@ -1,9 +1,9 @@
 package stx.log;
 
 class Scoping{
-  public var method : String;
-  public var type   : String;
-  public var module : String;
+  public final method : String;
+  public final type   : String;
+  public final module : String;
 
   public function new(method,type,module){
     this.method = method;

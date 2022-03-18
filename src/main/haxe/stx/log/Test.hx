@@ -23,7 +23,7 @@ class GlobTest extends TestCase{
 		var log 		= __.log().tag("some/deep/package");
 		var logger 	= Logger.ZERO;
 		 		logger.includes.push("some/deep/*");
-				log.debug("test");
+				log.trace("test");
 	}
 }
 #if hxnodejs
@@ -48,7 +48,7 @@ class GlobTest extends TestCase{
 @:rtti class StartTest extends TestCase{
 	public function test_basic_effect(){
 		__.log().global.reset();
-		__.log()("test");
+		__.log().debug("test");
 	}
 	public function _test(){
 		var track = "stx.log".split(".");
@@ -89,14 +89,17 @@ class GlobTest extends TestCase{
 		var facade = __.log().global;
 				facade.reset();
 				facade.includes.push("testy");
-		__.clog()("Test");
+		__.clog().debug("Test");
 	}
 }
-@:callable abstract TestyLog(Log){
-	static public function clog(wildcard:Wildcard){
-		return new TestyLog();
+@:forward @:callable abstract TestyLog(LogDef) to Log{
+	static public function clog(wildcard:Wildcard):Log{
+		return Log.lift(new TestyLog().prj());
 	}
 	public function new(){
-		this = __.log().tag("testy");
+		this = __.log().tag("testy").prj();
+	}
+	public function prj():LogDef{
+		return this;
 	}
 }

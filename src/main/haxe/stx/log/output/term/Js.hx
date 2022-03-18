@@ -19,6 +19,6 @@ class Js implements OutputApi extends Clazz{
     }
   }
   #else
-  private function render( v : Dynamic, ?pos : Pos ) {}
+  private function render( v : Dynamic, info : LogPosition ) {}
   #end
 }

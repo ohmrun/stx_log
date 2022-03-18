@@ -7,7 +7,7 @@ class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure
     return Report.unit();
   }
   function note(str){
-    #if stx.log.filter.show
+    #if (stx.log.filter.show==true)
       trace(str);
     #end
   }

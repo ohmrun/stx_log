@@ -16,6 +16,7 @@
       }
     },
     "main" : {
+      "-D" : ["stx.log.filter.show=true"],
       "-main"     : "Main",
       "hashlink"  : {
         "-hl"     : "build/test/hl/main.hl" 

@@ -5,8 +5,7 @@ abstract Level(LevelSum) from LevelSum to LevelSum{
     this  = self;
   }
   public function asInt():Int{
-    var int : Int = this;
-    return int;
+    return this.prj();
   }
   public function toString():String{
     return switch (this) {

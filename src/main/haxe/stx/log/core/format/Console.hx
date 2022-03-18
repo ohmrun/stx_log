@@ -30,7 +30,7 @@ class Console extends FormatCls{
     }
     if(has(INCLUDE_LOCATION)){
       //TODO can be earlier than __init__?;
-      var lnk = stx.nano.Position.PositionLift.to_vscode_clickable_link(p);
+      var lnk = p.pos.map(stx.nano.Position.PositionLift.to_vscode_clickable_link).defv("<unknown>");
       a.push(lnk);
     }
     if(has(INCLUDE_NEWLINE_FOR_DETAIL)){

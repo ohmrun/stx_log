@@ -73,28 +73,43 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
 
 
   static public function pack(pack:Array<String>):stx.log.Logic<Dynamic>{
-    return construct((value:LogPosition) -> {
+    return construct((info:LogPosition) -> {
       var canonical   = pack.join(".");
       var query       = new RegExp('${canonical}.*','g');
-      var result      = query.test(value.fileName.get_pack().join("."));
-      return result.if_else(
+
+      return info.pos.map(
+        pos -> query.test(Identifier.lift(pos.fileName).pack.join("."))
+      ).defv(false).if_else(
         () -> Report.unit(),
-        () -> __.report(f -> f.of(E_Log_SourceNotInPackage(value.fileName,canonical)))
+        () -> __.report(
+          f -> f.of(
+            info.pos.map(
+              pos -> E_Log_SourceNotInPackage(Identifier.fromPath(new haxe.io.Path(pos.fileName)),pack.join("."))
+            ).def(() -> E_Log_SourceNotInPackage('<unknown>',pack.join("."))) 
+          )  
+        )
       );
     });
   }
   static public function type(type:String):stx.log.Logic<Dynamic>{
-    return construct((value:LogPosition) -> {
-      var result      = type == value.fileName.get_canonical();
-      return result.if_else(
+    return construct((info:LogPosition) -> {
+      return info.pos.map(
+        pos -> type == Identifier.fromPath(new haxe.io.Path(pos.fileName))
+      ).defv(false).if_else(
         () -> Report.unit(),
-        () -> __.report(f -> f.of(E_Log_SourceNotInPackage(value.fileName,value.fileName.get_canonical())))
+        () -> __.report(
+          f -> f.of(
+            info.pos.map(
+              pos -> E_Log_SourceNotInPackage(Identifier.fromPath(new haxe.io.Path(pos.fileName)),type)
+            ).def(() -> E_Log_SourceNotInPackage('<unknown>','<unknown>')) 
+          )  
+        )
       );
     });
   }
   static public function line(n:Int):stx.log.Logic<Dynamic>{
-    return construct((value) -> {
-      var result      = value.lineNumber == n;
+    return construct((info) -> {
+      var result      = info.pos.map(x -> x.lineNumber == n).defv(false);
       return result.if_else(
         () -> Report.unit(),
         () -> __.report(f -> f.of(E_Log_NotLine(n)))
@@ -103,17 +118,19 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   }
   static public function lines(l:Int,h:Int):stx.log.Logic<Dynamic>{
     return construct((
-      (value) -> return 
-        ((value.lineNumber >= l) && (value.lineNumber <= h)).if_else(
-        () -> Report.unit(),
-        () -> __.report(f -> f.of(E_Log_NotOfRange(l,h)))
-      )
+      (info) -> info.pos.map(
+          pos -> ((pos.lineNumber >= l) && (pos.lineNumber <= h))
+        ).defv(false)
+         .if_else(
+          () -> Report.unit(),
+          () -> __.report(f -> f.of(E_Log_NotOfRange(l,h)))
+        )
     ));
   }
   static public function tag(str:String):stx.log.Logic<Dynamic>{
     return construct(
-      (value) -> value.stamp.tags.search(
-        (tag) -> tag == str
+      (info) -> info.stamp.tags.search(
+          (tag) -> tag == str
       ).is_defined().if_else(
         () -> Report.unit(),
         () -> __.report(f -> f.of(E_Log_DoesNotContainTag(str)))
@@ -122,7 +139,9 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   }
   static public function method(str:String):stx.log.Logic<Dynamic>{
     return construct(
-      (value) -> (value.methodName == str).if_else(
+      (info) -> (info.pos.map(
+        pos -> pos.methodName == str)
+      ).defv(false).if_else(
         () -> Report.unit(),
         () -> __.report(f -> f.of(E_Log_NotInMethod(str)))
       )
@@ -130,7 +149,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   }
   static public function always():stx.log.Logic<Dynamic>{
     return construct(
-      (value) -> Report.unit()
+      (pos) -> Report.unit()
     );
   }
   static public function never():stx.log.Logic<Dynamic>{

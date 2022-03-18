@@ -3,7 +3,8 @@ package stx.log.output.term;
 #if flash
 class Flash implements OutputApi extends Clazz{
   
-  private function render( v : Dynamic, ?pos : Pos ) {
+  private function render( v : Dynamic, infos : LogPosition ) {
+    final pos = infos.pos;
     var tf = flash.Boot.getTrace();
     var pstr = if( pos == null ) "(null)" else pos.fileName+":"+pos.lineNumber;
     if( lines == null ) lines = [];

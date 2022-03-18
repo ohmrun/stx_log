@@ -7,7 +7,7 @@ class Linux extends Unit{
   public function new(?logic:Filter<Dynamic>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
     super(logic,__.option(format).defv(new stx.log.core.format.Column()),level,verbose,reinstate);
   }
-  override private function render( v : Dynamic, ?infos : LogPosition ) : Void{
+  override private function render( v : Dynamic, infos : LogPosition ) : Void{
     //.haxe.Log.trace(v);
     var cols = new Process('tput',['cols']);
     var val  = cols.stdout.readAll().toString();
@@ -21,7 +21,7 @@ class Linux extends Unit{
     if(error.length > 0){
       throw error.toString();
     }else{
-      super.render(proc.stdout.readAll().toString());
+      super.render(proc.stdout.readAll().toString(),infos);
     }
   }
 }
