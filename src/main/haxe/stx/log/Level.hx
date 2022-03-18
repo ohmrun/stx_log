@@ -18,4 +18,16 @@ abstract Level(LevelSum) from LevelSum to LevelSum{
       case 6: "FATAL";
     }
   }
+  static public function fromString(self:String):Option<Level>{
+    return switch(self){
+      case "BLANK"      : Some(BLANK); 
+      case "TRACE"      : Some(TRACE); 
+      case "DEBUG"      : Some(DEBUG); 
+      case "INFO"       : Some(INFO); 
+      case "WARN"       : Some(WARN); 
+      case "ERROR"      : Some(ERROR); 
+      case "FATAL"      : Some(FATAL);
+      default           : None; 
+    }
+  }
 }

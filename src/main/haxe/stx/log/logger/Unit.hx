@@ -23,6 +23,7 @@ class Unit extends stx.log.logger.Base<Any>{
     note('level: $level stamp.level: $stamp_level ${stamp_level.asInt()} >= ${level.asInt()}');
     note('${data.stamp.level.asInt()}');
     note('${level.asInt()}');
+    note('${data.detail}');
     var level       = data.stamp.level.asInt() >= level.asInt();
     var include_tag = includes.is_defined().if_else(
       () -> 
