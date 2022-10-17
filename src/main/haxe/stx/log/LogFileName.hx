@@ -2,7 +2,7 @@ package stx.log;
 
 abstract LogFileName(String) from String to String{
   public function new(self) this = self;
-  static public function lift(self:String):LogFileName return new LogFileName(self);
+  @:noUsing static public function lift(self:String):LogFileName return new LogFileName(self);
   
 
   public function get_pack():Array<String>{

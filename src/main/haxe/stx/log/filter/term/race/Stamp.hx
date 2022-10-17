@@ -7,10 +7,10 @@ typedef StampDef = {
 }
 @:forward abstract Stamp(StampDef) from StampDef to StampDef{
   public function new(self) this = self;
-  static public function lift(self:StampDef):Stamp return new Stamp(self);
+  @:noUsing static public function lift(self:StampDef):Stamp return new Stamp(self);
   
 
-  static public function make(scoping:Scoping,timestamp:Float,?scope){
+  @:noUsing static public function make(scoping:Scoping,timestamp:Float,?scope){
     return {
       scoping       : scoping,
       timestamp     : timestamp,

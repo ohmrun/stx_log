@@ -4,7 +4,7 @@ package stx.log.logger;
   @:isVar static public var ZERO(get,null): stx.log.logger.Unit;
   static private function get_ZERO(){
     final result = ZERO == null ? {
-      #if sys 
+      #if (sys || nodejs)
         //ZERO = new stx.log.logger.ConsoleLogger();
         ZERO = new stx.log.logger.Unit();
         trace("stx.Log.global = stx.log.logger.ConsoleLogger()");
@@ -17,14 +17,16 @@ package stx.log.logger;
      } : ZERO;
     
     //trace(std.Sys.environment());
+    #if (sys || nodejs)
     for(level in __.option(std.Sys.getEnv("STX_LOG__LEVEL")).flat_map(x -> Level.fromString(x))){
       ZERO.level = level;
       trace('ENV SET STX_LOG Global $level');
     };
-    if(std.Sys.environment().exists("VERBOSE")){
+    if(std.Sys.getEnv("VERBOSE") == 'true'){
       trace("ENV SET STX_LOG Global VERBOSE");
       ZERO.verbose = true;
     }
+    #end
     return result;
   }
   public function new(){

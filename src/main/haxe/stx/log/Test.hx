@@ -11,7 +11,7 @@ class Test{
 	static public function main(){
 		trace("test");
 		#if !macro
-			__.test([
+			__.test().run([
 				//new ConsoleTest(),
 				new GlobTest()
 			],[GlobTest]);
@@ -26,7 +26,7 @@ class GlobTest extends TestCase{
 				log.trace("test");
 	}
 }
-#if hxnodejs
+#if nodejs
 @:rtti class ColumnTest extends TestCase{
 	public function test(){
 		// stx.log.Signal.ZERO.attach(

@@ -14,7 +14,7 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
     return do_apply(value).mod(
       (res) -> {
         return res.map(
-          __.passthrough(
+          (
             (string:String) -> { 
               //trace('about to render: ${value.stamp}');
               if(!value.stamp.hidden){
@@ -27,7 +27,7 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
                 #end
               }
             }
-          )
+          ).promote()
         );
       }
     );

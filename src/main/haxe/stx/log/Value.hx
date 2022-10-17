@@ -1,7 +1,7 @@
 package stx.log;
 
 class Value<T>{
-  static public function make<T>(detail:stx.log.core.Entry<T>,?source:Pos){
+  @:noUsing static public function make<T>(detail:stx.log.core.Entry<T>,?source:Pos){
     return new Value(detail,source);
   }
   public function new(detail:stx.log.core.Entry<T>,source:LogPosition){

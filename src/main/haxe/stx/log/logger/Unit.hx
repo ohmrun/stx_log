@@ -24,7 +24,7 @@ class Unit extends stx.log.logger.Base<Any>{
     note('${data.stamp.level.asInt()}');
     note('${level.asInt()}');
     note('${data.detail}');
-    var level       = data.stamp.level.asInt() >= level.asInt();
+    var levelI      = data.stamp.level.asInt() >= level.asInt();
     var include_tag = includes.is_defined().if_else(
       () -> 
         __.option(data).flat_map(x -> x.stamp).flat_map(x -> x.tags).defv([]).lfold(
@@ -41,20 +41,20 @@ class Unit extends stx.log.logger.Base<Any>{
       () -> reinstate,
       () -> verbose.if_else(
         () -> true,
-        () -> include_tag.if_else(
-          () -> parent && level,
+        () -> data.stamp.level == FATAL || include_tag.if_else(
+          () -> parent && levelI,
           () -> false
         )
       )
     );
     note( 
-      'has_custom:$has_custom '                     +
+      'has_custom:$has_custom '                   +
       'parent:$parent '                           +
       'level:$level '                             +
       'includes:${includes} '                     +
       'include_tag:$include_tag '                 +
-      'stamp_tag:${data.stamp.tags} '            +
-      'parent && level: ${parent && level} '      +
+      'stamp_tag:${data.stamp.tags} '             +
+      'parent && level: ${parent && levelI} '     +
       'verbose:$verbose '                         +
       'res:$res '
     );

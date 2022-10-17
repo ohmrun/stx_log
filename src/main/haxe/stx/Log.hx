@@ -67,7 +67,7 @@ typedef LogDef = stx.log.core.Entry<Dynamic> -> LogPosition -> Void;
     var value         = new Value(value,info);
     return value;
   }
-  static public function make<T>(fn:Value<T>->Void):Log{
+  @:noUsing static public function make<T>(fn:Value<T>->Void):Log{
     return (value:Dynamic,pos:LogPosition) -> fn(enlog(value,pos));
   }
   static public var ZERO(default,null)  : Log     = LOG;

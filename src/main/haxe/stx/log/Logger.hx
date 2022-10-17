@@ -14,7 +14,7 @@ class Logger{
     return ZERO;
   }
 
-  #if (sys || hxnodejs)
+  #if (sys || nodejs)
   static public function ConsoleLogger(?logic:Filter<Dynamic>,?format:Format,?level,?verbose=false,?reinstate=false){
     return new stx.log.logger.ConsoleLogger(logic,format,level,verbose,reinstate);
   }

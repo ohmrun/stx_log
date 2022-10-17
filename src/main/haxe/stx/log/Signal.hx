@@ -1,8 +1,11 @@
 package stx.log;
 
+using stx.Bake;
+
 #if sys
-  using stx.Sys;
+  using stx.System;
 #end
+
 import tink.core.Signal               in TinkSignal;
 import tink.core.Signal.SignalTrigger in TinkSignalTrigger;
 
@@ -44,6 +47,17 @@ typedef SignalDef = SignalCls;
     #end
     var facade = stx.log.logger.Global.ZERO;
     instance.attach(facade);
+
+    for(v in __.sys().env("STX_LOG__FILE")){
+      final bake = __.bake();
+      #if (sys || nodejs)
+        final output = sys.io.File.append(v);
+        final log    = new stx.log.logger.File(output);
+        instance.attach(log);
+      #else
+        __.log().warn('No output file available');
+      #end
+    }
     has_custom = false;
   }
   static public var has_custom(default,null):Bool                              = false;

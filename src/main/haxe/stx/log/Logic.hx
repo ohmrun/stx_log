@@ -21,7 +21,7 @@ enum LogicSum<T>{
 abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   public function new(self) this = self;
   static public var _(default,never) = LogicLift;
-  static public function lift<T>(self:LogicSum<T>):Logic<T> return new Logic(self);
+  @:noUsing static public function lift<T>(self:LogicSum<T>):Logic<T> return new Logic(self);
  
   @:noUsing static public function ctr<T>(fn):Logic<T>{
     return _._(fn);
@@ -159,7 +159,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   }
 }
 class LogicLift{
-  static public function make():LogicMake{
+  @:noUsing static public function make():LogicMake{
     return {
       pack      : stx.log.Logic.pack,
       type      : stx.log.Logic.type,

@@ -8,7 +8,7 @@ abstract StringCtr<T>(StringCtrDef<T>) from StringCtrDef<T> to StringCtrDef<T>{
   static public function unit<T>():StringCtr<T>{
     return lift({ ctr : Std.string });
   }
-  static public function lift<T>(self:StringCtrDef<T>):StringCtr<T> return new StringCtr(self);
+  @:noUsing static public function lift<T>(self:StringCtrDef<T>):StringCtr<T> return new StringCtr(self);
   
   public function capture(val:T):stx.log.core.Entry<T>{
     return {

@@ -1,7 +1,7 @@
 package stx.log.output.term;
 
-#if (sys || hxnodejs)
-	using stx.Sys;
+#if (sys || nodejs)
+	using stx.System;
 #end
 
 class Full implements OutputApi extends Debugging{
@@ -26,7 +26,7 @@ class Full implements OutputApi extends Debugging{
 			}
 		#elseif js
 			note('js');
-			untyped new Js().render(v,infos.pos);
+			untyped new Js().render(v,infos);
 		#elseif php
 			note('php');
 				untyped _call__('_hx_trace', v, null);

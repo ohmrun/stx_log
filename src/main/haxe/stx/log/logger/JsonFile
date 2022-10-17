@@ -1,0 +1,13 @@
+package stx.log.logger;
+
+class JsonFile extends Json{
+  final archive : sys.io.FileOutput;
+
+  public function new(archive:sys.io.FileOutput,?logic:Filter<Dynamic>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
+    this.archive = archive;
+    super(logic,__.option(format).defv(new stx.log.core.format.Console()),level,verbose,reinstate);
+  }
+  override private function render( v : Dynamic, infos : LogPosition ) : Void{
+    archive.writeString('$v');
+  }
+}

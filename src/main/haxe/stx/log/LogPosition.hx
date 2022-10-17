@@ -52,7 +52,7 @@ class LogPositionCls{
 }
 @:forward abstract LogPosition(LogPositionCls) from LogPositionCls to LogPositionCls{
   public function new(self) this = self;
-  static public function lift(self:LogPositionCls):LogPosition return new LogPosition(self);
+  @:noUsing static public function lift(self:LogPositionCls):LogPosition return new LogPosition(self);
 
   @:noUsing static public function pure(pos:Pos){
     return new LogPositionCls(Some(pos),new Stamp());
