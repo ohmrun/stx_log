@@ -49,6 +49,9 @@ class LogPositionCls{
   public function with_stamp(fn:Stamp->Stamp){
     return copy(null,fn(stamp));
   }
+  public function toString(){
+    return '$stamp ${pos.map(x -> (x:Position).toString())} $scoping';
+  }
 }
 @:forward abstract LogPosition(LogPositionCls) from LogPositionCls to LogPositionCls{
   public function new(self) this = self;

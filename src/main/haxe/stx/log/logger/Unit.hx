@@ -3,7 +3,7 @@ package stx.log.logger;
 class Unit extends stx.log.logger.Base<Any>{
   public var level      : Level;
   public var reinstate  : Bool;
-  public function new(?logic:Filter<Any>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
+  public function new(?logic:Logic<Any>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
     super(logic,format);
     this.level      = level;
     this.verbose    = verbose;
@@ -16,8 +16,10 @@ class Unit extends stx.log.logger.Base<Any>{
   override private function do_apply(data:Value<Any>):Continuation<Res<String,LogFailure>,Value<Any>>{
     note('$this');
     var applied     = super.do_apply(data);
+    note('applied: $applied');
     var applied_fn  = __.reject.bind(__.fault().of(E_Log_Zero));
     var parent      = applied(_ -> applied_fn()).is_ok();
+    note('parent applied');
     var has_custom    = Signal.has_custom;
     final stamp_level = data.stamp.level;
     note('level: $level stamp.level: $stamp_level ${stamp_level.asInt()} >= ${level.asInt()}');
@@ -62,7 +64,7 @@ class Unit extends stx.log.logger.Base<Any>{
       () -> __.accept(format.print(data)),
       () -> __.reject(__.fault().of(E_Log_Default({
         has_custom   : has_custom,
-        parent      : parent,
+       arent      : parent,
         level       : level,
         includes    : includes,
         include_tag : include_tag,
@@ -70,10 +72,5 @@ class Unit extends stx.log.logger.Base<Any>{
         verbose     : verbose
       })))
     );
-  }
-  public function reset(){
-    this.includes.clear();
-    this.level = DEBUG;
-    this.logic = Log._.Logic().always();
   }
 }

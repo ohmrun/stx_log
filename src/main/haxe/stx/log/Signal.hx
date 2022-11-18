@@ -13,22 +13,18 @@ private class SignalCls{
   public function new(){
     this.handlers = [];
   }
-  var handlers : Array<Value<Dynamic> -> Void>;
-  public function handle(fn:Value<Dynamic>->Void){
+  var handlers : Array<LoggerApi<Dynamic>>;
+  public function handle(fn:LoggerApi<Dynamic>){
     this.handlers.push(fn);
   }
   public function trigger(v:Value<Dynamic>):Void{
     for (handle in handlers){
-      handle(v);
+      handle.apply(v);
     }
   }
   public function attach(logger:LoggerApi<Dynamic>){
-    @:privateAccess Signal.has_custom = true;
-    handle(
-      (x:Value<Dynamic>) -> { 
-        var o = logger.apply(x)(Logger.spur);
-      }
-    );
+    new stx.log.global.config.HasCustomLogger().value = true;
+    handle(logger);
   }
 }
 private class NullSignalCls extends SignalCls{
@@ -48,12 +44,12 @@ typedef SignalDef = SignalCls;
     var facade = stx.log.logger.Global.ZERO;
     instance.attach(facade);
 
-    for(v in __.sys().env("STX_LOG__FILE")){
+    for(v in __.option(Sys.getEnv("STX_LOG__FILE"))){
       final bake = __.bake();
       #if (sys || nodejs)
-        final output = sys.io.File.append(v);
-        final log    = new stx.log.logger.File(output);
-        instance.attach(log);
+        // final output = sys.io.File.append(v);
+        // final log    = new stx.log.logger.File(output);
+        // instance.attach(log);
       #else
         __.log().warn('No output file available');
       #end
@@ -63,6 +59,7 @@ typedef SignalDef = SignalCls;
   static public var has_custom(default,null):Bool                              = false;
   @:isVar static public  var instance(get,null):SignalDef;
   static private function get_instance(){ 
+    //trace('getting instance ${instance == null}');
 #if sys
       var do_logging = __.sys().env("STX_LOG");
       return (instance == null).if_else(

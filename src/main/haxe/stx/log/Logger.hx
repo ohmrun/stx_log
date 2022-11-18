@@ -1,6 +1,5 @@
 package stx.log;
 
-
 class Logger{
   static public function spur<T>(value:Value<T>):Res<String,LogFailure>{
     return __.reject(__.fault().of(E_Log_Zero));
@@ -15,7 +14,7 @@ class Logger{
   }
 
   #if (sys || nodejs)
-  static public function ConsoleLogger(?logic:Filter<Dynamic>,?format:Format,?level,?verbose=false,?reinstate=false){
+  static public function ConsoleLogger(?logic:Logic<Dynamic>,?format:Format,?level,?verbose=false,?reinstate=false){
     return new stx.log.logger.ConsoleLogger(logic,format,level,verbose,reinstate);
   }
   #end

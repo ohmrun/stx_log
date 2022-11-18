@@ -1,5 +1,7 @@
 package stx.log.core;
 
+using stx.lift.ArrayLift;
+
 enum FormatSum{
   INCLUDE_LEVEL;
   INCLUDE_TIMESTAMP;

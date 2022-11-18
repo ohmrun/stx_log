@@ -9,12 +9,20 @@ import stx.log.filter.term.Level in LevelFilter;
 
 class Test{
 	static public function main(){
+		tink.RunLoop.current.onError = (e:Error, t:tink.runloop.Task, w:tink.runloop.Worker, stack:Array<haxe.CallStack.StackItem>) -> {
+			trace('$e');
+			trace('$t');
+			for(item in stack){
+				trace('$item');
+			}
+		}
+
 		trace("test");
 		#if !macro
 			__.test().run([
 				//new ConsoleTest(),
-				new GlobTest()
-			],[GlobTest]);
+				//new GlobTest()
+			],[]);
 		#end
 	}
 }
@@ -45,11 +53,7 @@ class GlobTest extends TestCase{
 	}
 }
 #end
-@:rtti class StartTest extends TestCase{
-	public function test_basic_effect(){
-		__.log().global.reset();
-		__.log().debug("test");
-	}
+class StartTest extends TestCase{
 	public function _test(){
 		var track = "stx.log".split(".");
 		var pred 	= Log._.Logic().pack(track);
@@ -58,18 +62,17 @@ class GlobTest extends TestCase{
 	}
 	public function test_default(){
 		trace('test_default');
-		var facade 				= __.log().global;
-		var track 				= "stx.log".split(".");
-		var logic  				= Log._.Logic();
+		var facade : LoggerApi<Dynamic>				= __.log().global;
+		var track 														= "stx.log".split(".");
+		var logic  														= Log._.Logic();
 
 		var pred 					= logic.pack(track);
-				facade.logic 	= pred;
+				facade 				= facade.with_logic(pred);
 
 		var tag 					= logic.tag("tagged");
-				facade.logic 	= pred && tag;
+				facade 				= facade.with_logic(pred && tag);
 
-				facade.level	= INFO;
-				facade.includes.push("tagged");
+				facade				= facade.with_logic(l -> l.and(l.level(INFO)));
 
 		__.log().trace("hello");
 		__.log().tag("tagged").debug("heroo");
@@ -77,29 +80,29 @@ class GlobTest extends TestCase{
 		__.log().tag("tagged").info("ROO");
 
 
-				facade.logic 	= logic.always();
-				facade.includes.clear();
+				facade = facade.with_logic(logic -> logic.always());		
 
 		__.log().info("hello");
 		__.log().tag("test").info("hello");
-				facade.includes.push('test');
+				facade = facade.with_logic(logic -> logic.or(logic.tag('test')));
+
 		__.log().tag("test").info("hello");
 	}
-	public function test_custom_log(){
-		var facade = __.log().global;
-				facade.reset();
-				facade.includes.push("testy");
-		__.clog().debug("Test");
-	}
+	// public function test_custom_log(){
+	// 	var facade = __.log().global;
+	// 			facade.reset();
+	// 			facade.includes.push("testy");
+	// 	__.clog().debug("Test");
+	// }
 }
-@:forward @:callable abstract TestyLog(LogDef) to Log{
-	static public function clog(wildcard:Wildcard):Log{
-		return Log.lift(new TestyLog().prj());
-	}
-	public function new(){
-		this = __.log().tag("testy").prj();
-	}
-	public function prj():LogDef{
-		return this;
-	}
-}
+// @:forward @:callable abstract TestyLog(LogDef) to Log{
+// 	static public function clog(wildcard:Wildcard):Log{
+// 		return Log.lift(new TestyLog().prj());
+// 	}
+// 	public function new(){
+// 		this = __.log().tag("testy").prj();
+// 	}
+// 	public function prj():LogDef{
+// 		return this;
+// 	}
+// }

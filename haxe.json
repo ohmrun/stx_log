@@ -2,8 +2,10 @@
   "build" : {
     "-D" : ["no-deprecation-warnings"],
     "-lib" : [
-      "tink_core","stx_pico","tink_core","stx_pico","stx_nano",
-      "stx_assert","stx_fp","stx_fn","stx_test","console.hx","hre","polygonal-printf"
+      "tink_core",
+      "stx_pico","stx_nano","stx_assert","stx_fp","stx_fn","stx_test",
+      
+      "console.hx","hre","polygonal-printf"
     ],
     "-cp"  : ["src/main/haxe"],
     "unit"  : {

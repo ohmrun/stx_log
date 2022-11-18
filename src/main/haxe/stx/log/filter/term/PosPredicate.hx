@@ -1,6 +1,6 @@
 package stx.log.filter.term;
 
-class PosPredicate extends Filter<Dynamic>{
+class PosPredicate<T> extends Filter<T>{
   public var delegate(default,null):stx.assert.Predicate<LogPosition,LogFailure>;
   public function new(delegate){
     super();

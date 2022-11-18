@@ -11,13 +11,22 @@ class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure
       trace(str);
     #end
   }
-  static public function Unit(){
+  static public function Unit<T>():Filter<T>{
     return new stx.log.filter.term.Unit();
   }
-  static public function Race(){
+  static public function Race<T>():Filter<T>{
     return new stx.log.filter.term.Race();
   }
-  static public function PosPredicate(){
-    return stx.log.filter.term.PosPredicate;
+  static public function PosPredicate<T>(delegate):Filter<T>{
+    return new stx.log.filter.term.PosPredicate(delegate);
+  }
+  static public function HasCustom<T>():Filter<T>{
+    return new stx.log.filter.term.HasCustom();
+  }
+  static public function Level<T>(level):Filter<T>{
+    return new stx.log.filter.term.Level(level);
+  }
+  public function toLogic(){
+    return Logic.fromFilter(this);
   }
 }

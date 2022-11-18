@@ -3,6 +3,7 @@ package stx.fail;
 import haxe.DynamicAccess;
 
 enum LogFailure{
+  E_Log(explanation:String);
   E_Log_UnderLogLevel;
   E_Log_SourceNotInPackage(source:String,dir:String);
   E_Log_NotLine(n:Int);

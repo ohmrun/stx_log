@@ -18,7 +18,7 @@ package stx.log.logger;
     
     //trace(std.Sys.environment());
     #if (sys || nodejs)
-    for(level in __.option(std.Sys.getEnv("STX_LOG__LEVEL")).flat_map(x -> Level.fromString(x))){
+    for(level in new stx.log.env.LogLevel()){
       ZERO.level = level;
       trace('ENV SET STX_LOG Global $level');
     };
