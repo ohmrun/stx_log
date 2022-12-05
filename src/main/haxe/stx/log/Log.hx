@@ -89,9 +89,6 @@ package stx.log;
   public function logic(){
     return new stx.log.Logic.LogicCtr();
   }
-  static public function attach(logger){
-    new stx.log.Signal().attach(logger);
-  }
   public function prj():LogApi{
     return this;
   }

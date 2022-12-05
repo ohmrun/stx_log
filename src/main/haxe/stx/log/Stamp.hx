@@ -40,7 +40,7 @@ class Stamp{
     var lev   = level.toString();
     var out   = 'Stamp($lev $time)';
     return out;
-  }/*
+  }
   public function toLogString(posInfos:Pos){
     var pos   = LogPosition.is_runtime().if_else(
       () -> Position._.to_vscode_clickable_link(posInfos),
@@ -52,7 +52,7 @@ class Stamp{
     var out   = '$lev $time [$tags] $pos';
     return out;
   }
-  */
+  
   public function is_zero(){
     return this == ZERO;
   }

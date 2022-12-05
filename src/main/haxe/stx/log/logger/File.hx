@@ -3,9 +3,9 @@ package stx.log.logger;
 class File extends Custom{
   final archive : sys.io.FileOutput;
 
-  public function new(archive:sys.io.FileOutput,?logic:Filter<Dynamic>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
+  public function new(archive:sys.io.FileOutput){
     this.archive = archive;
-    super(logic,__.option(format).defv(new stx.log.core.Format.FormatCls()),level,verbose,reinstate);
+    super(logic,__.option(format).defv(new stx.log.core.Format.FormatCls()));
   }
   override private function do_apply(value:Value<Dynamic>):Continuation<Res<String,LogFailure>,Value<Dynamic>>{
     return Continuation.lift(

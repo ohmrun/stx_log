@@ -1,7 +1,7 @@
 package stx.log.global.config;
 
-abstract HasCustomLogger(Ref<Bool>){
-  static private finals instance(get,null) : Ref<Bool>;
+@:forward abstract HasCustomLogger(Ref<Bool>) to Ref<Bool>{
+  static private var instance(get,null) : Ref<Bool>;
   static private function get_instance(){
     return instance == null ? instance = false : instance;
   }

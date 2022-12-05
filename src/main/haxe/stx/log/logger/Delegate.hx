@@ -13,7 +13,7 @@ class Delegate<T> implements LoggerApi<T>{
     return new Delegate(this.delegate.with_format(f(this.format)));
   }
 
-  public final logic(get,null) : stx.log.Logic<T>;
+  public var logic(get,null) : stx.log.Logic<T>;
   public function get_logic(){
     return this.delegate.logic;
   }

@@ -21,7 +21,7 @@ class Value<T>{
     return new Value(detail,next);
   }
   
-  // public function toString(){
-  //   return this.source.stamp.toLogString(this.source) + ":" + Std.string(this.detail);
-  // }
+  public function toString(){
+    return this.source.pos.map(x -> this.source.stamp.toLogString(x)).defv(".") + ":" + Std.string(this.detail);
+  }
 }

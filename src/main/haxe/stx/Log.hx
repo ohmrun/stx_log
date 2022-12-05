@@ -20,7 +20,10 @@ class LiftLog{
   static public inline function log(wildcard:Wildcard):Log{
     return Log.ZERO;
   }
-static public inline function scope(stx:Wildcard,pos:Pos,?method:String):stx.Scoping{
+  static public inline function logger(wildcard:Wildcard){
+    return new stx.log.Module();
+  }
+  static public inline function scope(stx:Wildcard,pos:Pos,?method:String):stx.Scoping{
     var scoping : Scoping = LogPosition.fromPos(pos).scoping;
     if(method!=null){
       scoping = scoping.with_method(method);

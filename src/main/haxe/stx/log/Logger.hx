@@ -14,8 +14,8 @@ class Logger{
   }
 
   #if (sys || nodejs)
-  static public function ConsoleLogger(?logic:Logic<Dynamic>,?format:Format,?level,?verbose=false,?reinstate=false){
-    return new stx.log.logger.ConsoleLogger(logic,format,level,verbose,reinstate);
+  static public function ConsoleLogger(?logic:Logic<Dynamic>,?format:Format){
+    return new stx.log.logger.ConsoleLogger(logic,format);
   }
   #end
 

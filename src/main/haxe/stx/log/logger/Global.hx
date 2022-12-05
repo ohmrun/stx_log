@@ -15,18 +15,6 @@ package stx.log.logger;
         ZERO;
       #end
      } : ZERO;
-    
-    //trace(std.Sys.environment());
-    #if (sys || nodejs)
-    for(level in new stx.log.env.LogLevel()){
-      ZERO.level = level;
-      trace('ENV SET STX_LOG Global $level');
-    };
-    if(std.Sys.getEnv("VERBOSE") == 'true'){
-      trace("ENV SET STX_LOG Global VERBOSE");
-      ZERO.verbose = true;
-    }
-    #end
     return result;
   }
   public function new(){

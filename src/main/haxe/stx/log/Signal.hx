@@ -19,7 +19,7 @@ private class SignalCls{
   }
   public function trigger(v:Value<Dynamic>):Void{
     for (handle in handlers){
-      handle.apply(v);
+      handle.apply(v)(Logger.spur);
     }
   }
   public function attach(logger:LoggerApi<Dynamic>){
@@ -37,24 +37,25 @@ typedef SignalDef = SignalCls;
 @:forward(attach) abstract Signal(SignalDef){
   static public var ZERO(default,null) : Signal = new Signal();
   static function __init__(){
+    trace('__init__');
     #if (stx.log.debugging)
       instance.attach(new DebugLogger());
-      has_custom = false;
+      new stx.log.global.config.HasCustomLogger().value = false;
     #end
-    var facade = stx.log.logger.Global.ZERO;
+    var facade = @:privateAccess new stx.log.logger.DelegateRef(stx.log.Global.instance);
     instance.attach(facade);
 
     for(v in __.option(Sys.getEnv("STX_LOG__FILE"))){
       final bake = __.bake();
       #if (sys || nodejs)
-        // final output = sys.io.File.append(v);
-        // final log    = new stx.log.logger.File(output);
-        // instance.attach(log);
+        final output = sys.io.File.append(v);
+        final log    = new stx.log.logger.File(output);
+        instance.attach(log);
       #else
         __.log().warn('No output file available');
       #end
     }
-    has_custom = false;
+    new stx.log.global.config.HasCustomLogger().value = false;
   }
   static public var has_custom(default,null):Bool                              = false;
   @:isVar static public  var instance(get,null):SignalDef;

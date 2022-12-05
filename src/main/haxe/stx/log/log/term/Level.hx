@@ -7,6 +7,6 @@ class Level extends Mod{
     this.level = level;
   }
   public function mod(pos:LogPosition){
-    return pos.with_stamp( stamp -> stamp.relevel(this.level) );
+    return pos.with_stamp(stamp -> stamp.relevel(this.level) );
   }
 }

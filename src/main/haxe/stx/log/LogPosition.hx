@@ -4,7 +4,7 @@ import haxe.ds.Map;
 import stx.log.Stamp;
 
 class LogPositionCls{
-  public function new(pos,stamp){
+  public function new(pos:Option<Position>,stamp){
     this.pos    = pos;
     this.stamp  = stamp;
   }
@@ -33,11 +33,6 @@ class LogPositionCls{
     public function match(race){
       return true;
     }
-  #end
-  #if !macro
-  static public function is_runtime() return true;
-  #else
-  static public function is_runtime() return false;
   #end
 
   public function copy(?pos,?stamp):LogPosition{
@@ -70,5 +65,11 @@ class LogPositionCls{
   public function prj():LogPositionCls return this;
   private var self(get,never):LogPosition;
   private function get_self():LogPosition return lift(this);
+
+  #if !macro
+  static public function is_runtime() return true;
+  #else
+  static public function is_runtime() return false;
+  #end
 }
 

@@ -8,7 +8,7 @@ class Includes<T> extends Filter<T>{
     this.includes = includes;
   }
   override public function apply(value:Value<Dynamic>){
-    return __.option(data).flat_map(x -> x.stamp).flat_map(x -> x.tags).defv([]).lfold(
+    return __.option(value).flat_map(x -> x.stamp).flat_map(x -> x.tags).defv([]).lfold(
       (next:String,memo:Bool) -> memo.if_else(
         () -> true,
         () -> includes.match(next)
@@ -16,7 +16,7 @@ class Includes<T> extends Filter<T>{
       false
     ).if_else(
       () -> __.report(),
-      () -> __.report(E_Log('No Tag $tag'))
+      () -> __.report(f -> f.of(E_Log('No Tag of $includes')))
     );
   }
 }

@@ -3,6 +3,7 @@ package stx.log.filter.term;
 class Tag<T> extends Filter<T>{
   final tag : String;
   public function new(tag){
+    new stx.log.global.config.IsFilteringWithTags().value = true;
     super();
     this.tag = tag;
   }

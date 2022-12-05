@@ -7,6 +7,7 @@ class Level<T> extends Filter<T>{
     this.level = level;
   }
   override public function apply(v:Value<T>){
+    trace('apply $v $level');
     return (v.stamp.level.asInt() >= level.asInt()).if_else(
       () -> Report.unit(),
       () -> Report.make(E_Log_UnderLogLevel)

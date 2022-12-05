@@ -1,13 +1,10 @@
 package stx.log.logger;
 
 class ConsoleLogger extends Custom{
-  public function new(?logic:Logic<Dynamic>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
+  public function new(?logic:Logic<Dynamic>,?format:Format){
     super(
       logic,
-      __.option(format).defv(new stx.log.core.format.Console()),
-      level,
-      verbose,
-      reinstate
+      __.option(format).defv(new stx.log.core.format.Console())
     );
   }
   override private function render( v : Dynamic, infos : LogPosition ) : Void{
