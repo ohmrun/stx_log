@@ -8,19 +8,19 @@
     "releasenote": "see CHANGELOG.md",
     "contributors": ["0b1kn00b"],
     "dependencies": {
-        "tink_core"             : "git:https://github.com/haxetink/tink_core.git",
+        "tink_core"             : "",
         
-        "stx_pico"              : "git:https://github.com/ohmrun/stx_pico.git",
-        "stx_nano"              : "git:https://github.com/ohmrun/stx_nano.git",
-        "stx_assert"            : "git:https://github.com/ohmrun/stx_assert.git",
-        "stx_fp"                : "git:https://github.com/ohmrun/stx_fp.git",
-        "stx_fn"                : "git:https://github.com/ohmrun/stx_fn.git",
-        "stx_pkg"               : "git:https://github.com/ohmrun/stx_pkg.git",
+        "stx_pico"              : "",
+        "stx_nano"              : "",
+        "stx_assert"            : "",
+        "stx_fp"                : "",
+        "stx_fn"                : "",
+        "stx_pkg"               : "",
 
-        "console.hx"            : "git:https://github.com/haxiomic/console.hx.git",
-        "hre"                   : "git:https://gitlab.com/demurgos/hre.git",
-        "polygonal-printf"      : "git:https://github.com/polygonal/printf.git",
-        "haxe-files"            : "git:https://github.com/vegardit/haxe-files.git"
+        "console.hx"            : "",
+        "hre"                   : "",
+        "polygonal-printf"      : "",
+        "haxe-files"            : ""
     },
     "classPath": "src/main/haxe"
 }
