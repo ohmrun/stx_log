@@ -9,8 +9,8 @@ class LogicCtr extends Clazz{
   private static function construct<T>(fn:LogPosition->Report<LogFailure>):stx.log.Logic<T>{
     return Logic.fromPosPredicate(stx.assert.Predicate.Anon(fn));
   }
-  public function pack<T>(pack:Cluster<String>):stx.log.Logic<T>{
-    return new stx.log.filter.term.Pack(pack).toLogic();
+  public function pack<T>(pack:String):stx.log.Logic<T>{
+    return new stx.log.filter.term.Pack(pack.split("/")).toLogic();
   }
   public function type<T>(type:String):stx.log.Logic<T>{
     return new stx.log.filter.term.Type(type).toLogic();
@@ -139,7 +139,7 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   private var self(get,never):Logic<T>;
   private function get_self():Logic<T> return lift(this);
 
-  public function pack(pack:Cluster<String>):stx.log.Logic<Dynamic>{
+  public function pack(pack:String):stx.log.Logic<Dynamic>{
     return LogicCtr.unit().pack(pack);
   }
   public function level<T>(level:stx.log.Level):stx.log.Logic<T>{
