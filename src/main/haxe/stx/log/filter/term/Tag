@@ -8,7 +8,7 @@ class Tag<T> extends Filter<T>{
     this.tag = tag;
   }
   override public function apply(value:Value<Dynamic>){
-    return __.option(data).flat_map(x -> x.stamp).flat_map(x -> x.tags).defv([]).lfold(
+    return __.option(value).flat_map(x -> x.stamp).flat_map(x -> x.tags).defv([]).lfold(
       (next:String,memo:Bool) -> memo.if_else(
         () -> true,
         () -> includes.match(next)

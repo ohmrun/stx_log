@@ -1,7 +1,7 @@
 package stx.log.logger;
 
 class Delegate<T> implements LoggerApi<T>{
-  public final delegate : Logger<T>;
+  public final delegate : LoggerApi<T>;
   public function new(delegate){
     this.delegate = delegate;
   }
@@ -25,6 +25,6 @@ class Delegate<T> implements LoggerApi<T>{
     return delegate.apply(v);
   }
   private function do_apply(v:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
-    return delegate.do_apply(c);
+    return delegate.do_apply(v);
   }
 }

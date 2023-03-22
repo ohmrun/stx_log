@@ -3,7 +3,7 @@
     "-D" : ["no-deprecation-warnings"],
     "-lib" : [
       "tink_core",
-      "stx_pico","stx_nano","stx_assert","stx_fp","stx_fn","stx_test",
+      "stx_pico","stx_nano","stx_assert","stx_fp","stx_fn","stx_pkg","stx_bake",
       
       "console.hx","hre","polygonal-printf"
     ],
@@ -29,6 +29,10 @@
       "interp" : {
         "--interp" : true
       }
+    },
+    "test" : {
+      "-L" : ["stx_test"],
+      "-cp" : "src/test/haxe"
     }
   },
   "run" : {

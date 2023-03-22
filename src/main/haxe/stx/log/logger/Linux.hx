@@ -4,8 +4,8 @@ package stx.log.logger;
   import sys.io.Process;
 #end
 class Linux extends Unit{
-  public function new(?logic:Filter<Dynamic>,?format:Format,?level = DEBUG,?verbose=false,?reinstate=false){
-    super(logic,__.option(format).defv(new stx.log.core.format.Column()),level,verbose,reinstate);
+  public function new(?logic:Logic<Any>,?format:Format,?level = DEBUG){
+    super(logic,__.option(format).defv(new stx.log.core.format.Column()));
   }
   override private function render( v : Dynamic, infos : LogPosition ) : Void{
     //.haxe.Log.trace(v);
