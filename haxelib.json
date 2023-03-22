@@ -16,7 +16,8 @@
         "stx_fp"                : "",
         "stx_fn"                : "",
         "stx_pkg"               : "",
-
+        "stx_bake"              : "",
+        
         "console.hx"            : "",
         "hre"                   : "",
         "polygonal-printf"      : "",

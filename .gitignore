@@ -1,3 +1,4 @@
+.env.machine
 bin
 yarn.lock
 node_modules

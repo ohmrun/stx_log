@@ -1,7 +1,5 @@
 package stx.log;
 
-
-
 class LogicCtr extends Clazz{
   static public function unit(){
     return new LogicCtr();
@@ -79,6 +77,9 @@ class LogicCtr extends Clazz{
     return construct(
       (value) -> Report.make(E_Log_Zero)
     );
+  }
+  public function clear(){
+    return unit();
   }
 }
 @:using(stx.log.Logic.LogicLift)
