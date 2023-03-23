@@ -11,9 +11,9 @@ package stx.log;
   inline function get_global(){
     return stx.log.logger.Global.ZERO;
   }
-  static public function configure(fn:LoggerApi<Dynamic>->LoggerApi<Dynamic>){
+  // static public function configure(fn:LoggerApi<Dynamic>->LoggerApi<Dynamic>){
 
-  }
+  // }
   static public inline function pkg(pkg:Pkg):Log{
     return @:privateAccess pkg.source().map(
       scope -> unit().tag((scope.pack.join("/")))
