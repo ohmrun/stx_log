@@ -1,5 +1,9 @@
 package stx;
 
+using stx.Pico;
+using stx.Fail;
+using stx.Nano;
+
 typedef Value<T>          = stx.log.Value<T>;
 typedef Level             = stx.log.Level;
 typedef LevelSum          = stx.log.LevelSum;
