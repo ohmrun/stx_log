@@ -1,5 +1,6 @@
 package stx.log.logger;
 
+#if (sys || hxnodejs)
 class ConsoleLogger extends Custom{
   public function new(?logic:Logic<Dynamic>,?format:Format){
     super(
@@ -11,3 +12,4 @@ class ConsoleLogger extends Custom{
     @:privateAccess std.Console.log(v);
   }
 }
+#end
