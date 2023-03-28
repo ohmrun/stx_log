@@ -6,7 +6,7 @@ class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure
   public function apply(value:Value<T>):Report<LogFailure>{
     return Report.unit();
   }
-  function note(str){
+  function note(str:Dynamic){
     #if (stx.log.filter.show==true)
       trace(str);
     #end
