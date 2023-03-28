@@ -37,7 +37,7 @@ typedef SignalDef = SignalCls;
 @:forward(attach) abstract Signal(SignalDef){
   static public var ZERO(default,null) : Signal = new Signal();
   static function __init__(){
-    trace('__init__');
+    //trace('__init__');
     #if (stx.log.debugging)
       instance.attach(new DebugLogger());
       new stx.log.global.config.HasCustomLogger().value = false;

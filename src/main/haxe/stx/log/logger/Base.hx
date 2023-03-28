@@ -3,7 +3,7 @@ package stx.log.logger;
 class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   
   public function new(?logic:Logic<T>,?format:Format){
-    trace(logic);
+    note(logic);
     this.logic  = __.option(logic).defv(new stx.log.logic.term.Default());
     this.format = __.option(format).defv(Format.unit());
   }
@@ -24,14 +24,14 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   }
 
   final public function apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
-    trace('apply: ${value.source}');
+    note('apply: ${value.source}');
     return do_apply(value).mod(
       (res) -> {
-        trace('applied: $res');
+        note('applied: $res');
         return res.map(
           (
             (string:String) -> { 
-              trace('about to render: ${value.stamp}');
+              note('about to render: ${value.stamp}');
               if(!value.stamp.hidden){
                 #if macro
                   render(string,value.source);
@@ -49,14 +49,14 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   }
 
   private function do_apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
-    trace('do_apply');
+    note('do_apply');
     return Continuation.lift(
       (fn:Value<T>->Res<String,LogFailure>) -> {
-        trace(logic);
+        note(logic);
         final proceed = logic.apply(value);
-        trace(proceed);
+        note(proceed);
         var result    = proceed.resolve(() -> this.format.print(value));
-        trace(result);
+        note(result);
         return result;
       }
     );

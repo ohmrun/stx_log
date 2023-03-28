@@ -51,7 +51,7 @@ class LogicCtr extends Clazz{
   }
   public function tagless<T>():stx.log.Logic<T>{
     return construct(
-      (info) -> if(!__.tracer()(info).stamp.tags.is_defined()){
+      (info) -> if(!(info).stamp.tags.is_defined()){
         Report.unit();
       }else{
         __.report(f -> f.of(E_Log('not tagless')));
@@ -115,12 +115,12 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   public function apply(value:Value<T>):Report<LogFailure>{
     __.assert().exists(this);
     __.assert().exists(value);
-    trace(self);
+    //trace(self);
     return switch(this){
       case LAnd(l,r)  : l.apply(value).or(() -> r.apply(value));
       case LOr(l,r)   : 
         var fst = l.apply(value);
-        trace(fst);
+        //trace(fst);
         fst.is_defined().if_else(
           () -> r.apply(value),
           () -> fst
