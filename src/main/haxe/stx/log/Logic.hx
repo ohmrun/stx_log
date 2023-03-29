@@ -76,7 +76,9 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   }
   public function apply(value:Value<T>):Report<LogFailure>{
     function p(x){
+      #if (debug && verbose)
       trace(x);
+      #end
     }
     __.assert().exists(this);
     __.assert().exists(value);

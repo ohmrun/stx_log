@@ -31,6 +31,8 @@
       }
     },
     "test" : {
+      "-debug" : true,
+      "-D" : ["verbose"],
       "-L" : ["stx_test"],
       "-cp" : "src/test/haxe",
       "-main" : "stx.log.Test",
