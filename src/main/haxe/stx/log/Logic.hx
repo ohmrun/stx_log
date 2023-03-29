@@ -75,17 +75,48 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
     return LNot(lift(this));
   }
   public function apply(value:Value<T>):Report<LogFailure>{
+    function p(x){
+      trace(x);
+    }
     __.assert().exists(this);
     __.assert().exists(value);
     //trace(self);
     return switch(this){
-      case LAnd(l,r)  : l.apply(value).or(() -> r.apply(value));
-      case LOr(l,r)   : 
-        var fst = l.apply(value);
-        //trace(fst);
-        fst.is_defined().if_else(
-          () -> r.apply(value),
-          () -> fst
+      case LOr(l,r)     : 
+        final lI = l.apply(value);
+        //p('$l $lI');
+        return lI.fold(
+          er -> {
+            final rI = r.apply(value);
+            //p('$r $rI');
+            rI.fold(
+              e   -> p('NO: $self ($e)'),
+              () -> p('OK: $self')
+            );
+            return rI;
+          },
+          () -> {
+            p('OK: $self');
+            return Report.unit();
+          }
+        );
+      case LAnd(l,r)    : 
+        final lI = l.apply(value);
+        //p('$l $lI');
+        lI.is_defined().if_else(
+          () -> {
+            p('NO: $self $lI');
+            return lI;
+          },
+          () -> {
+            final rI = r.apply(value);
+            //p('$r $rI');
+            rI.fold(
+              e  -> p('NO: $self $e'),
+              () -> p('OK: $self')
+            );
+            return rI;
+          }
         );
       case LNot(v)    : v.apply(value).fold(
         (e) -> Report.unit(),

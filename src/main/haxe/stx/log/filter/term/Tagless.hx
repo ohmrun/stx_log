@@ -2,7 +2,6 @@ package stx.log.filter.term;
 
 class Tagless<T> extends Filter<T>{
   public function new(){
-    new stx.log.global.config.IsFilteringWithTags().value = true;
     super();
   }
   override public function apply(value:Value<Dynamic>){

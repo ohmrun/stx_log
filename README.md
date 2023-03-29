@@ -17,43 +17,45 @@ using stx.Log;
 
 class Main{
  static function main(){
-  __.log()("test");
   __.log().trace("traced");
 
-  //get Global Logger
-  final logger = __.log().global;
-  //whitelist with glob format
-        logger.includes.push("**/*");
+  //logic constructor
+  final lx = __.log().logic();
+
+  //configure global/default logger;
+  __.logger().global().configure(
+    log -> log.with_logic(
+      l -> l.or(lx.Tag("**/*"))//includes with glob format
+    )
+  );
  }
 }
 ```
 
-The `Log` is a function that sends a signal, and a `Logger` is an interface that exposes a handler for `stx.log.Signal`.
+The global logger is swappable like so:
+```haxe
+  __.logger().global().configure((x:LoggerApi<Dynamic>) -> @:note("whatever thing that implements LoggerApi<Dynamic> can be returned here") x);
+```
 
-The default situation works as follows.
-
-`stx.log.logger.Global` is a singleton used for easy setup and points to `stx.log.logger.Unit`
-
-The Logger `stx.log.logger.Default` is attached by default, but is removed automatically when you add your own via: `stx.log.Signal.attach(logger:LoggerApi<Dynamic>)`
 
 ```haxe
   var logger = new MyEmptyLogger();//A logger which does nothing.
   __.log()("test")//printed to screen
-  stx.log.Signal.attach(
-    logger
-  );//automatically disuse default
+  __.logger().attach(logger);//automatically disuse default
 
   __.log()("test")//nothing, default unused.
-  stx.log.logger.Global.reinstate = true;
+  __.logger().global().reinstate();
   __.log()("test")//we're back using `stx.log.logger.Default`
 ```
 The Global **only shows values which are not tagged** unless you tag your Log and add to the array `includes` or set `verbose` to true.
 
 ```haxe
-  var facade = __.log().global;
+  final lc = __.log().logic();
   __.log()("test")//ok
   __.log().tag("tagged")("test")//not shown 
-      facade.includes.push("tagged");
+      __.logger().global().configure(
+        log -> log.with_logic(l -> l.or(lc.Tag("tagged")))
+      )
   __.log().tag("tagged")("test")//ok
 ```
 
@@ -83,8 +85,10 @@ class Logging{
 
 class Main{
  static public function main(){
-  var logger = __.log().global;
-      logger.includes.push("my/pack")//tagged log values are hidden by default
+  final lX = __.log().logic();
+  __.logger().global().configure(
+    l -> l.or(lX.Tag("my/pack"))
+  )
   __.log().debug("test")//value.source.stamp.tags == ['my.pack']
  }
 }
@@ -92,7 +96,7 @@ class Main{
 You can use this to make your logs unobtrusive to other projects and development whilst still having full data available at `stx.log.Signal`
 
 
-There is `stx.log.Logic` available to do complex white and blacklisting
+There is `stx.log.Logic` available to do complex including and excluding
 The value of Logic is a `stx.log.Filter` which keeps a record of it's decision. override `applyI` for your own use.
 
 `stx.log.Logic` supports the `&&` and `||` operators.
@@ -120,7 +124,7 @@ class TestLogger<T> implement Logger<T>{
 }
 ```
 
-`LogPosition` is backward compatible with `haxe.PosInfos` but keeps track of a value in `customParams` called `stamp:stx.log.Stamp`
+`LogPosition` Does not contain a pos in [Initialisation Macros](https://haxe.org/manual/macro-initialization.html)
 
 ```haxe
 //Stamp variables
@@ -152,5 +156,4 @@ To edit the format on the Facade, use `stx.log.logger.Global.unit().format =  []
 The order is currently fixed `[level, timestamp, tags, path, newline, detail]`.
 
 ### TODO
-1 FileSystem Logger.  
-2 Sane detail printing
+1 FileSystem Logger. 

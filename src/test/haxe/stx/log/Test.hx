@@ -27,7 +27,8 @@ class Test{
 			__.test().run([
 				//new ConsoleTest(),
 				//new GlobTest()
-				new PrintFilterTest()
+				//new PrintFilterTest()
+				new DefaultArrangementTest()
 			],[]);
 		#end
 	}

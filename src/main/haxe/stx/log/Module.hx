@@ -15,6 +15,9 @@ private class Global extends Clazz{
   public function configure(f : CTR<LoggerApi<Dynamic>,LoggerApi<Dynamic>> ){
     stx.log.FrontController.configure(f);
   }
+  public function reinstate(){
+    new stx.log.global.config.ReinstateTagless().value = true;
+  }
 }
 // private class Config extends Clazz{
   

@@ -13,7 +13,9 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
     return this.logic;
   }
   public function with_logic(f : CTR<stx.log.Logic<T>,stx.log.Logic<T>>):LoggerApi<T>{
-    return new Base(f.apply(logic),this.format);
+    final res = f.apply(logic);
+    stx.log.Logging.log(__).info(res.toString());
+    return new Base(res,this.format);
   }
   public var format(get,null) : Format;
   public function get_format():Format{
