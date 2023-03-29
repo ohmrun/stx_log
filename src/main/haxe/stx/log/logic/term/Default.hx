@@ -2,7 +2,7 @@ package stx.log.logic.term;
 
 import stx.log.global.filter.*;
 
-final l = __.log().logic();
+final l = () -> __.log().logic();
 
 @:forward abstract Default<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
   @:to public function toLogic(){
@@ -14,7 +14,7 @@ final l = __.log().logic();
     final level                   = Filter.Level(level).toLogic();
     final verbose                 = new Verbose().toLogic();
     final is_filtering_with_tags  = new IsFilteringWithTags().toLogic();  
-    final base_state_filter       = l.tagless().and(
+    final base_state_filter       = l().tagless().and(
       is_filtering_with_tags.not()
     );
     
