@@ -42,7 +42,7 @@ typedef SignalDef = SignalCls;
       instance.attach(new DebugLogger());
       new stx.log.global.config.HasCustomLogger().value = false;
     #end
-    var facade = @:privateAccess new stx.log.logger.DelegateRef(stx.log.Global.instance);
+    var facade = FrontController.facade;
     instance.attach(facade);
 
     for(v in __.option(Sys.getEnv("STX_LOG__FILE"))){

@@ -7,13 +7,10 @@ package stx.log;
     return new Log(self);
   }
   
-  public var global(get,never) : stx.log.logger.Global;
+  public var global(get,never) : LoggerApi<Dynamic>;
   inline function get_global(){
-    return stx.log.logger.Global.ZERO;
+    return FrontController.facade;
   }
-  // static public function configure(fn:LoggerApi<Dynamic>->LoggerApi<Dynamic>){
-
-  // }
   static public inline function pkg(pkg:Pkg):Log{
     return @:privateAccess pkg.source().map(
       scope -> unit().tag((scope.pack.join("/")))

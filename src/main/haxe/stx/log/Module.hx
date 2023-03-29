@@ -4,13 +4,18 @@ class Module extends Clazz{
   public function attach(logger){
     new stx.log.Signal().attach(logger);
   } 
-  public function configure(f : LoggerApi<Dynamic> -> LoggerApi<Dynamic> ){
-    new stx.log.Global().configure(f);
-  }
-  public function config(){
-    return new Config(); 
+  // public function config(){
+  //   return new Config(); 
+  // }
+  public function global(){
+    return new Global();
   }
 }
-private class Config extends Clazz{
+private class Global extends Clazz{
+  public function configure(f : CTR<LoggerApi<Dynamic>,LoggerApi<Dynamic>> ){
+    stx.log.FrontController.configure(f);
+  }
+}
+// private class Config extends Clazz{
   
-}
+// }
