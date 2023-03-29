@@ -12,4 +12,7 @@ class HasCustom<T> extends Filter<T>{
     trace('has custom? $result');
     return result;
   }
+  public function canonical(){
+    return 'HasCustom';
+  }
 }

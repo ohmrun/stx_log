@@ -26,4 +26,7 @@ class Pack<T> extends Filter<T>{
         )
       );
   }
+  public function canonical(){
+    return 'Pack($pack)';
+  }
 }

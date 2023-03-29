@@ -22,4 +22,7 @@ class Type<T> extends Filter<T>{
       )
     );
   }
+  public function canonical(){
+    return 'Type("$type")';
+  }
 }

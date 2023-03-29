@@ -7,4 +7,7 @@ class IsFilteringWithTags<T> extends Filter<T>{
     note('IsFilteringWithTags $result');
     return result;
   }
+  public function canonical(){
+    return 'IsFilteringWithTags';
+  }
 }

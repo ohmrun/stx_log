@@ -5,4 +5,7 @@ class HasCustomLogger<T> extends Filter<T>{
     return new stx.log.global.config.HasCustomLogger().value == true 
       ? __.report() : __.report(f -> f.of(E_Log('No Custom Logger added')));
   }
+  public function canonical(){
+    return 'HasCustomLogger';
+  }
 }

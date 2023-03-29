@@ -1,11 +1,11 @@
 package stx.log.filter.term;
 
-class Tag<T> extends Filter<T>{
-  final tag : String;
-  public function new(tag){
+class Tags<T> extends Filter<T>{
+  final includes : stx.log.Includes;
+  public function new(includes){
     new stx.log.global.config.IsFilteringWithTags().value = true;
     super();
-    this.tag = tag;
+    this.includes = includes;
   }
   override public function apply(value:Value<Dynamic>){
     return __.option(value).flat_map(x -> x.stamp).flat_map(x -> x.tags).defv([]).lfold(
@@ -16,7 +16,10 @@ class Tag<T> extends Filter<T>{
       false
     ).if_else(
       () -> __.report(),
-      () -> __.report(E_Log('No Tag $tag'))
+      () -> __.report(f -> f.of(E_Log('No Tag of $includes')))
     );
+  }
+  public function canonical(){
+    return 'Tags($includes)';
   }
 }

@@ -1,5 +1,10 @@
 package stx.log;
 
+using stx.Nano;
+using stx.Test;
+using stx.Log;
+using stx.Fail;
+
 import stx.log.test.*;
 
 using stx.log.Test;
@@ -9,19 +14,20 @@ import stx.log.filter.term.Level in LevelFilter;
 
 class Test{
 	static public function main(){
-		tink.RunLoop.current.onError = (e:Error, t:tink.runloop.Task, w:tink.runloop.Worker, stack:Array<haxe.CallStack.StackItem>) -> {
-			trace('$e');
-			trace('$t');
-			for(item in stack){
-				trace('$item');
-			}
-		}
+		// tink.RunLoop.current.onError = (e:Error, t:tink.runloop.Task, w:tink.runloop.Worker, stack:Array<haxe.CallStack.StackItem>) -> {
+		// 	trace('$e');
+		// 	trace('$t');
+		// 	for(item in stack){
+		// 		trace('$item');
+		// 	}
+		// }
 
 		trace("test");
 		#if !macro
 			__.test().run([
 				//new ConsoleTest(),
 				//new GlobTest()
+				new PrintFilterTest()
 			],[]);
 		#end
 	}
@@ -29,9 +35,9 @@ class Test{
 class GlobTest extends TestCase{
 	public function test(){
 		var log 		= __.log().tag("some/deep/package");
-		var logger 	= Logger.ZERO;
-		 		logger.includes.push("some/deep/*");
-				log.trace("test");
+		// var logger 	= Logger.ZERO;
+		//  		logger.includes.push("some/deep/*");
+		// 		log.trace("test");
 	}
 }
 #if nodejs
@@ -63,7 +69,7 @@ class StartTest extends TestCase{
 	public function test_default(){
 		trace('test_default');
 		var facade : LoggerApi<Dynamic>				= __.log().global;
-		var track 														= "stx.log".split(".");
+		var track 														= "stx/log";
 		var logic  														= Log._.Logic();
 
 		var pred 					= logic.pack(track);

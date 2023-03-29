@@ -23,7 +23,7 @@ final l = __.log().logic();
     );
     if(includes!=null){
       result = result.or(
-        new stx.log.filter.term.Includes(includes).toLogic()
+        new stx.log.filter.term.Tags(includes).toLogic()
       );
     }
     result = result.or(level);

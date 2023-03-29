@@ -30,4 +30,7 @@ class Race<T> extends Filter<T>{
         default       : Report.pure(__.fault().of(E_Log_LosesRace));
     }
   }
+  public function canonical(){
+    return 'Race($races)';
+  }
 }

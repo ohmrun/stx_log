@@ -1,6 +1,6 @@
 package stx.log;
 
-class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure>{
+abstract class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure>{
   public function new(){}
 
   public function apply(value:Value<T>):Report<LogFailure>{
@@ -29,4 +29,5 @@ class Filter<T> implements stx.assert.Predicate.PredicateApi<Value<T>,LogFailure
   public function toLogic(){
     return Logic.fromFilter(this);
   }
+  abstract public function canonical():String;
 }

@@ -5,4 +5,7 @@ class Verbose<T> extends Filter<T>{
     return new stx.log.env.Verbose() == true 
       ? __.report() : __.report(f -> f.of(E_Log('Env VERBOSE not set')));
   }
+  public function canonical(){
+    return 'Verbose';
+  }
 }

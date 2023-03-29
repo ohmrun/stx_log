@@ -32,7 +32,11 @@
     },
     "test" : {
       "-L" : ["stx_test"],
-      "-cp" : "src/test/haxe"
+      "-cp" : "src/test/haxe",
+      "-main" : "stx.log.Test",
+      "interp" : {
+        "--interp" : true
+      }
     }
   },
   "run" : {
