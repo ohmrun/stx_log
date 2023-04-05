@@ -3,7 +3,7 @@
     "-D" : ["no-deprecation-warnings"],
     "-lib" : [
       "tink_core",
-      "stx_pico","stx_nano","stx_assert","stx_fp","stx_fn","stx_pkg","stx_bake",
+      "stx_pico","stx_nano","stx_assert","stx_fp","stx_fn","stx_pkg","bake",
       
       "console.hx","hre","polygonal-printf"
     ],

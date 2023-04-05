@@ -1,6 +1,6 @@
 package stx.log;
 
-using stx.Bake;
+using Bake;
 
 #if sys
   using stx.System;
@@ -46,7 +46,7 @@ typedef SignalDef = SignalCls;
     instance.attach(facade);
 
     for(v in __.option(Sys.getEnv("STX_LOG__FILE"))){
-      final bake = __.bake();
+      final bake = Bake.pop();
       #if (sys || nodejs)
         final output = sys.io.File.append(v);
         final log    = new stx.log.logger.File(output);

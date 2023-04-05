@@ -16,7 +16,7 @@
         "stx_fp"                : "",
         "stx_fn"                : "",
         "stx_pkg"               : "",
-        "stx_bake"              : "",
+        "bake"              : "",
 
         "console.hx"            : "",
         "hre"                   : "",
