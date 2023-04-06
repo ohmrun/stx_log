@@ -5,7 +5,7 @@
       "tink_core",
       "stx_pico","stx_nano","stx_assert","stx_fp","stx_fn","stx_pkg","bake",
       
-      "console.hx","hre","polygonal-printf"
+      "console.hx","hre","polygonal-printf","haxe-files"
     ],
     "-cp"  : ["src/main/haxe"],
     "unit"  : {
