@@ -13,7 +13,7 @@ enum FormatSum{
 class FormatCls{
   public final data :  Array<FormatSum>;
   public function new(?data){
-    this.data = __.option(data).defv(Format.DEFAULT);
+    this.data = Option.make(data).defv(Format.DEFAULT);
   }
   public function has(v:FormatSum){
     return this.data.has(v).is_defined();
