@@ -12,9 +12,9 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
   public function get_logic():stx.log.Logic<T>{
     return this.logic;
   }
-  public function with_logic(f : CTR<stx.log.Logic<T>,stx.log.Logic<T>>):LoggerApi<T>{
+  public function with_logic(f : CTR<stx.log.Logic<T>,stx.log.Logic<T>>,?pos:Pos):LoggerApi<T>{
     final res = f.apply(logic);
-    stx.log.Logging.log(__).info(res.toString());
+    stx.log.Logging.log(__).info('${res.toString()} at ${pos.toPosition()}');
     return new Base(res,this.format);
   }
   public var format(get,null) : Format;

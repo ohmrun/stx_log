@@ -17,8 +17,8 @@ class DelegateRef<T> implements LoggerApi<T>{
   public function get_logic(){
     return this.delegate.value.logic;
   }
-  public function with_logic(f : CTR<stx.log.Logic<T>,stx.log.Logic<T>>):LoggerApi<T>{
-    return new DelegateRef(this.delegate.value.with_logic(f(this.logic)));
+  public function with_logic(f : CTR<stx.log.Logic<T>,stx.log.Logic<T>>,?pos:Pos):LoggerApi<T>{
+    return new DelegateRef(this.delegate.value.with_logic(f(this.logic),pos));
   }
 
   public function apply(v:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
