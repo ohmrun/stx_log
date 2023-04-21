@@ -25,7 +25,7 @@ class Console extends FormatCls{
       a.push('${DateTools.format(s.timestamp,fmt)}');
     }
     if(has(INCLUDE_TAGS)){
-      var tag_string = [${s.tags.join(",")}]; 
+      var tag_string = ['${s.tags.join(",")}']; 
       a.push('<magenta>$tag_string</magenta>');
     }
     if(has(INCLUDE_LOCATION)){
