@@ -9,8 +9,8 @@ interface LoggerApi<T>{
   public function get_format():Format;
   public function with_format(f : CTR<Format,Format>):LoggerApi<T>;
 
-  public function apply(v:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>;
-  private function do_apply(v:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>;
+  public function apply(v:Value<T>):Continuation<Upshot<String,LogFailure>,Value<T>>;
+  private function do_apply(v:Value<T>):Continuation<Upshot<String,LogFailure>,Value<T>>;
 
   //public function configure(logic:APP<stx.log.Logic<T>,stx.log.Logic<T>>,format:APP<Format,Format>):LoggerApi<T>;
 }

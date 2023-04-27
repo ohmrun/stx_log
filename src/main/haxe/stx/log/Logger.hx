@@ -1,7 +1,7 @@
 package stx.log;
 
 class Logger{
-  static public function spur<T>(value:Value<T>):Res<String,LogFailure>{
+  static public function spur<T>(value:Value<T>):Upshot<String,LogFailure>{
     return __.reject(__.fault().of(E_Log_Zero));
   }  
   

@@ -21,10 +21,10 @@ class DelegateRef<T> implements LoggerApi<T>{
     return new DelegateRef(this.delegate.value.with_logic(f(this.logic),pos));
   }
 
-  public function apply(v:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
+  public function apply(v:Value<T>):Continuation<Upshot<String,LogFailure>,Value<T>>{
     return delegate.value.apply(v);
   }
-  private function do_apply(v:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
+  private function do_apply(v:Value<T>):Continuation<Upshot<String,LogFailure>,Value<T>>{
     return delegate.value.do_apply(v);
   }
 }

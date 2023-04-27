@@ -106,13 +106,13 @@ The log value type is at `stx.log.Value`, it's immutable, so keep that in mind, 
 
 ## Logger Type
 
-The Logger `apply` function takes a `Value` and produces a `stx.fp.Continuation<Res<String,LogFailure>>`. `apply` hardwires the effect and `do_apply` does the filter logic in the typical case, although you can go from scratch with `LoggerApi` should you need it.
+The Logger `apply` function takes a `Value` and produces a `stx.fp.Continuation<Upshot<String,LogFailure>>`. `apply` hardwires the effect and `do_apply` does the filter logic in the typical case, although you can go from scratch with `LoggerApi` should you need it.
 
 ```haxe
 class TestLogger<T> implement Logger<T>{
- override public function do_apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
+ override public function do_apply(value:Value<T>):Continuation<Upshot<String,LogFailure>,Value<T>>{
   super.do_apply(value).mod(// allows you to edit the result
-    (res:Res<String,LogFailure>) -> {
+    (res:Upshot<String,LogFailure>) -> {
       return res;
     }
   ).map(

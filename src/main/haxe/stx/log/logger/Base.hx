@@ -25,7 +25,7 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
     return new Base(logic,f.apply(this.format));
   }
 
-  final public function apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
+  final public function apply(value:Value<T>):Continuation<Upshot<String,LogFailure>,Value<T>>{
     note('apply: ${value.source}');
     return do_apply(value).mod(
       (res) -> {
@@ -50,10 +50,10 @@ class Base<T> implements LoggerApi<T> extends stx.log.output.term.Full{
     );
   }
 
-  private function do_apply(value:Value<T>):Continuation<Res<String,LogFailure>,Value<T>>{
+  private function do_apply(value:Value<T>):Continuation<Upshot<String,LogFailure>,Value<T>>{
     note('do_apply');
     return Continuation.lift(
-      (fn:Value<T>->Res<String,LogFailure>) -> {
+      (fn:Value<T>->Upshot<String,LogFailure>) -> {
         note(logic);
         final proceed = logic.apply(value);
         note(proceed);
