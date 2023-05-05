@@ -1,7 +1,5 @@
 package stx.log.filter.term;
 
-import hre.RegExp;
-
 class Type<T> extends Filter<T>{
   public var type(default,null):String;
   public function new(type){

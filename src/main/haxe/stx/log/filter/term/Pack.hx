@@ -1,6 +1,5 @@
 package stx.log.filter.term;
 
-import hre.RegExp;
 
 class Pack<T> extends Filter<T>{
   public var pack(default,null):Cluster<String>;
@@ -11,10 +10,15 @@ class Pack<T> extends Filter<T>{
   override public function apply(v:Value<T>){
     trace('apply $v $pack');
       final canonical   = pack.join(".");
-      final query       = new RegExp('${canonical}.*','g');
+      final query       = new EReg('${canonical}.*','g');
+
+      
 
       return v.source.pos.map(
-        pos -> query.test(Identifier.lift(pos.fileName).pack.join("."))
+        pos -> {
+          final string      = Identifier.lift(pos.fileName).pack.join(".");
+          return query.match(string);
+        }
       ).defv(false).if_else(
         () -> Report.unit(),
         () -> __.report(

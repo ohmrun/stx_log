@@ -5,7 +5,9 @@ package stx.log;
     return this.lfold(
       (next:String,memo:Bool) -> memo.if_else(
         ()  -> true,
-        ()  -> hx.files.GlobPatterns.toEReg(next).match(string)
+        ()  -> {
+          return new EReg(next,"g").match(string);
+        }
       ),
       false
     );
