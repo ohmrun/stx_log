@@ -1,5 +1,6 @@
-package stx.log.logger;
+package sys.log.logger;
 
+#if (sys || nodejs)
 #if (!macro)
   import sys.io.Process;
 #end
@@ -25,3 +26,4 @@ class Linux extends Unit{
     }
   }
 }
+#end

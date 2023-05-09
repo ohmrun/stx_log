@@ -1,5 +1,5 @@
-package stx.log.logger;
-
+package sys.log.logger;
+#if (sys || nodejs)
 class Json extends Custom{
   public function new(arhive:sys.io.FileOutput,?logic:Logic<Any>,?format:Format){
     super(logic,__.option(format).defv(new stx.log.core.format.Console()));
@@ -15,3 +15,4 @@ class Json extends Custom{
     );
   }
 }
+#end

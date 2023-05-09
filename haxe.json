@@ -15,6 +15,9 @@
       ],
       "interp" : {
         "--interp"  : true
+      },
+      "javascript" : {
+        "--js" : "build/javascript/main/js"
       }
     },
     "main" : {

@@ -2,10 +2,6 @@ package stx.log;
 
 using Bake;
 
-#if sys
-  using stx.System;
-#end
-
 import tink.core.Signal               in TinkSignal;
 import tink.core.Signal.SignalTrigger in TinkSignalTrigger;
 
@@ -45,24 +41,24 @@ typedef SignalDef = SignalCls;
     var facade = FrontController.facade;
     instance.attach(facade);
 
-    for(v in __.option(Sys.getEnv("STX_LOG__FILE"))){
-      final bake = Bake.pop();
-      #if (sys || nodejs)
-        final output = sys.io.File.append(v);
-        final log    = new stx.log.logger.File(output);
-        instance.attach(log);
-      #else
-        __.log().warn('No output file available');
-      #end
-    }
+    #if (sys || nodejs)
+      for(v in __.option(Sys.getEnv("STX_LOG__FILE"))){
+          final bake    = Bake.pop();
+          final output  = sys.io.File.append(v);
+          final log     = new sys.log.logger.File(output);
+          instance.attach(log);
+      }
+    #else
+      __.log().warn('No output file available');
+    #end
     new stx.log.global.config.HasCustomLogger().value = false;
   }
   static public var has_custom(default,null):Bool                              = false;
   @:isVar static public  var instance(get,null):SignalDef;
   static private function get_instance(){ 
     //trace('getting instance ${instance == null}');
-#if sys
-      var do_logging = __.sys().env("STX_LOG");
+    #if sys
+      var do_logging = std.Sys.env("STX_LOG");
       return (instance == null).if_else(
         () -> {
           return instance = do_logging.fold(
@@ -75,12 +71,12 @@ typedef SignalDef = SignalCls;
         },
         () -> instance
         );
-#else
+    #else
       return (instance == null).if_else(
         () -> instance = new SignalCls(),
         () -> instance
         );
-#end
+    #end
   }
 
   public inline function new(){

@@ -1,5 +1,6 @@
-package stx.log.logger;
+package sys.log.logger;
 
+#if (sys || nodejs)
 class File extends Custom{
   final archive : sys.io.FileOutput;
 
@@ -19,3 +20,4 @@ class File extends Custom{
     archive.writeString('$v');
   }
 }
+#end

@@ -1,8 +1,5 @@
 package stx.log.output.term;
 
-#if (sys || nodejs)
-	using stx.System;
-#end
 
 class Full implements OutputApi extends Debugging{
   private function render( v : Dynamic, infos : LogPosition ) : Void {
@@ -48,7 +45,7 @@ class Full implements OutputApi extends Debugging{
 			python.Lib.println(str);
 		#else
 			note('default');
-			__.sys().println(Std.string(v));
+			std.Sys.println(Std.string(v));
 		#end
 	}
 		#if (flash || js)
