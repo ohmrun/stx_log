@@ -4,8 +4,8 @@ package sys.log.logger;
 #if (!macro)
   import sys.io.Process;
 #end
-class Linux extends Unit{
-  public function new(?logic:Logic<Any>,?format:Format,?level = DEBUG){
+class Linux extends stx.log.logger.Unit{
+  public function new(?logic:stx.log.Logic<Any>,?format:stx.log.core.Format,?level = DEBUG){
     super(logic,__.option(format).defv(new stx.log.core.format.Column()));
   }
   override private function render( v : Dynamic, infos : LogPosition ) : Void{
