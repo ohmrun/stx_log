@@ -80,8 +80,8 @@ abstract Logic<T>(LogicSum<T>) from LogicSum<T> to LogicSum<T>{
       trace(x);
       #end
     }
-    __.assert().exists(this);
-    __.assert().exists(value);
+    __.assert().that().exists(this);
+    __.assert().that().exists(value);
     //trace(self);
     return switch(this){
       case LOr(l,r)     : 
