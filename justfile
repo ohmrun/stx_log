@@ -1,5 +1,5 @@
 default: main-interp
 unit:
-  clear && hx build unit
+  clear && hb build unit
 main-interp:
-  clear && hx build main/interp
+  clear && hb build main/interp
