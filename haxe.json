@@ -42,6 +42,17 @@
       "interp" : {
         "--interp" : true
       }
+    },
+    "feat" : {
+      "macro_time" : {
+        "-D" : ["stx.log.filter.show=false"],
+        "-L" : ["stx_test"],
+        "-cp" : "src/test/haxe",
+        "-main" : "stx.log.feat.macro_time.Test",
+        "interp" : {
+          "--interp" : true
+        }
+      }
     }
   },
   "run" : {

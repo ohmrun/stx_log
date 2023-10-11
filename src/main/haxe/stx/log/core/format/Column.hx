@@ -3,7 +3,7 @@ package stx.log.core.format;
 class Column extends FormatCls{
   override public function print<T>(value:Value<T>):String{
     var p = value.source;
-    var s = p.stamp;
+    var s = value.stamp;
     var a : Array<String> = [];
     if(has(INCLUDE_LEVEL)){
       a.push(s.level.toString());

@@ -1,12 +1,12 @@
 package stx.log.log.term;
 
 class Anon implements LogApi extends Base{
-  public function new(_comply){
-    this._comply = _comply;
+  public function new(_apply){
+    this._apply = _apply;
   }
-  final _comply : stx.log.core.Entry<Dynamic> -> LogPosition -> Void;
+  final _apply : Value<Dynamic> -> Void;
 
-  public function comply(entry:Entry<Dynamic>,pos:LogPosition):Void{
-    _comply(entry,pos);
+  public function apply(value:Value<Dynamic>):Void{
+    _apply(value);
   }
 }

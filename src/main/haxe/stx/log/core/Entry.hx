@@ -11,4 +11,7 @@ abstract Entry<T>(EntryDef<T>) from EntryDef<T> to EntryDef<T>{
   public function toString():String{
     return this.ctr(this.val);
   }
+  public function toValue(source:LogPosition){
+    return Value.makeI(this,source);
+  }
 }

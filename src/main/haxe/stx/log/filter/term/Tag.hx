@@ -9,7 +9,7 @@ class Tag<T> extends Filter<T>{
   }
   override public function apply(value:Value<Dynamic>){
     final info = value.source;
-    return info.stamp.tags.search(
+    return value.stamp.tags.search(
       (s) -> tag == s
     ).is_defined().if_else(
       () -> Report.unit(),

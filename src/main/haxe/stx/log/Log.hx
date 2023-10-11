@@ -11,10 +11,13 @@ package stx.log;
   inline function get_global(){
     return FrontController.facade;
   }
-  static public inline function pkg(pkg:Pkg):Log{
-    return @:privateAccess pkg.source().map(
-      scope -> unit().tag((scope.pack.join("/")))
-    ).def(unit);
+  static public inline function pkg(pkg:Pkg,?macro_time:String):Log{
+    return __.option(macro_time)
+             .or(
+                () -> @:privateAccess pkg.source().map(scope -> scope.pack.join("/"))
+             ).map(
+                name -> unit().tag(name)
+             ).def(unit);
   }
   static public function unit():Log{
     return new Log();
@@ -22,12 +25,12 @@ package stx.log;
   static public function empty():Log{
     return new stx.log.log.term.Empty();
   }
-  @:noUsing static public function enlog<T>(value:stx.log.core.Entry<T>,info:LogPosition):Value<T>{
-    var value         = new Value(value,info);
+  @:noUsing static public function enlog<T>(entry:stx.log.core.Entry<T>,info:LogPosition):Value<T>{
+    var value         = new Value(entry,new Stamp(),info);
     return value;
   }
-  @:noUsing static public function make<T>(fn:Value<T>->Void):Log{
-    return new stx.log.log.term.Anon((value:Dynamic,pos:LogPosition) -> fn(enlog(value,pos)));
+  @:noUsing static public function make(fn:Value<Dynamic>->Void):Log{
+    return new stx.log.log.term.Anon(fn);
   }
   static public var ZERO(default,null)  : Log     = new stx.log.log.term.Unit();
 
@@ -38,25 +41,25 @@ package stx.log;
     return new stx.log.log.term.Level(this,level).toLogApi();
   }
   /** Logs with Level.BLANK   **/
-  public inline function blank<X>(v:Stringify<X>,?pos:Pos) level(BLANK).comply(v(new EntryCtr()),pos);
+  public inline function blank<X>(v:Stringify<X>,?pos:Pos) level(BLANK).apply(v(new EntryCtr()).toValue(pos));
   /** Logs with Level.TRACE   **/
-  public inline function trace<X>(v:Stringify<X>,?pos:Pos) level(TRACE).comply(v(new EntryCtr()),pos);
+  public inline function trace<X>(v:Stringify<X>,?pos:Pos) level(TRACE).apply(v(new EntryCtr()).toValue(pos));
   /** Logs with Level.DEBUG   **/
-  public inline function debug<X>(v:Stringify<X>,?pos:Pos) level(DEBUG).comply(v(new EntryCtr()),pos);
+  public inline function debug<X>(v:Stringify<X>,?pos:Pos) level(DEBUG).apply(v(new EntryCtr()).toValue(pos));
   /** Logs with LogLevel.INFO **/
-  public inline function info<X>(v:Stringify<X>,?pos:Pos)  level(INFO).comply(v(new EntryCtr()),pos);
+  public inline function info<X>(v:Stringify<X>,?pos:Pos)  level(INFO).apply(v(new EntryCtr()).toValue(pos));
   /** Logs with LogLevel.WARN **/
-  public inline function warn<X>(v:Stringify<X>,?pos:Pos)  level(WARN).comply(v(new EntryCtr()),pos);
+  public inline function warn<X>(v:Stringify<X>,?pos:Pos)  level(WARN).apply(v(new EntryCtr()).toValue(pos));
   /** Logs with LogLevel.ERROR **/
-  public inline function error<X>(v:Stringify<X>,?pos:Pos) level(ERROR).comply(v(new EntryCtr()),pos);
+  public inline function error<X>(v:Stringify<X>,?pos:Pos) level(ERROR).apply(v(new EntryCtr()).toValue(pos));
   /** Logs with LogLevel.FATAL **/
-  public inline function fatal<X>(v:Stringify<X>,?pos:Pos) level(FATAL).comply(v(new EntryCtr()),pos);
+  public inline function fatal<X>(v:Stringify<X>,?pos:Pos) level(FATAL).apply(v(new EntryCtr()).toValue(pos));
 
-  public inline function mod(fn:LogPosition->LogPosition){
+  public inline function mod(fn:Value<Dynamic>->Value<Dynamic>){
     return new stx.log.log.term.ModAnon(this,fn);
   }
   public inline function tag(tag:String):Log{
-    return mod((pos) -> pos.with_stamp((stamp) -> stamp.tag(tag)));
+    return mod((value) -> value.with_stamp((stamp) -> stamp.tag(tag)));
   }
   public inline function close():Log{
     return mod((pos) -> pos.with_stamp(stamp -> stamp.hide()));
@@ -65,21 +68,21 @@ package stx.log;
     final log_pos = LogPosition.pure(pos);
           ctr     = __.option(ctr).def(StringCtr.unit);
     return (v:T) -> {
-      this.comply(ctr.capture(v),pos);
+      this.apply(ctr.capture(v).toValue(pos));
       return v;
     }
   }
   public inline function printer<T>(?ctr:StringCtr<T>,pos:LogPosition):T->Void{
     ctr = __.option(ctr).def(StringCtr.unit);
     return (v:T) -> {
-      this.comply(ctr.capture(v),pos);
+      this.apply(ctr.capture(v).toValue(pos));
     }
   }
   public inline function logger<T>(?ctr:StringCtr<T>,?pos:Pos):T->T{
     final log_pos = LogPosition.pure(pos);
           ctr     = __.option(ctr).def(StringCtr.unit);
     return (v:T) -> {
-      this.comply(ctr.capture(v),pos);
+      this.apply(ctr.capture(v).toValue(pos));
       return v;
     }
   }

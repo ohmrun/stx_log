@@ -5,8 +5,8 @@ class ModAnon extends Mod{
     super(delegate);
     this._mod = _mod;
   }
-  final _mod : LogPosition -> LogPosition;
-  public function mod(pos:LogPosition):LogPosition{
+  final _mod : Value<Dynamic> -> Value<Dynamic>;
+  public function mod(pos:Value<Dynamic>):Value<Dynamic>{
     return _mod(pos);
   }
 }

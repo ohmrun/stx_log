@@ -22,7 +22,7 @@ class Race<T> extends Filter<T>{
     return switch(race){
       case Some(v)  : 
         trace('wins race');
-        var out = value.source.match(v);
+        var out = value.match(v);
         if(out){
           trace('wins race');
         }

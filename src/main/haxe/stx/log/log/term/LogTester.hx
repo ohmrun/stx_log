@@ -22,8 +22,7 @@ class LogTester implements LogApi{
     this.history  = [];
     this.logger   = logger;
   }
-  public function comply(entry:stx.log.core.Entry<Dynamic>,pos:LogPosition):Void{
-    final value   = new Value(entry,pos);
+  public function apply(value:Value<Dynamic>):Void{
     final logic   = logger.logic;
     final result  = logger.logic.apply(value);
     this.history.push(new LogTesterInfo(logic,value,result));

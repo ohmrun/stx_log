@@ -16,7 +16,10 @@ class Tags<T> extends Filter<T>{
       false
     ).if_else(
       () -> __.report(),
-      () -> __.report(f -> f.of(E_Log('No Tag of $includes')))
+      () -> {
+        trace(value.stamp.tags);
+        return __.report(f -> f.of(E_Log('No Tag of $includes')));
+      }
     );
   }
   public function canonical(){

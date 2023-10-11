@@ -6,7 +6,7 @@ class Level extends Mod{
     super(delegate);
     this.level = level;
   }
-  public function mod(pos:LogPosition){
-    return pos.with_stamp(stamp -> stamp.relevel(this.level) );
+  public function mod(value:Value<Dynamic>):Value<Dynamic>{
+    return value.restamp(stamp -> stamp.relevel(this.level));
   }
 }

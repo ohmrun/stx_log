@@ -38,7 +38,7 @@ class Stamp{
   inline public function toString(){
     var time  = timestamp.toString();
     var lev   = level.toString();
-    var out   = 'Stamp($lev $time)';
+    var out   = 'Stamp($lev $time $tags)';
     return out;
   }
   public function toLogString(posInfos:Pos){

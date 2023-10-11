@@ -5,8 +5,8 @@ abstract class Mod implements LogApi extends Base{
   public function new(delegate){
     this.delegate = delegate;
   }
-  public function comply(entry:Entry<Dynamic>,pos:LogPosition):Void{
-    this.delegate.comply(entry,mod(pos));
+  public function apply(value:Value<Dynamic>):Void{
+    this.delegate.apply(mod(value));
   }
-  abstract public function mod(pos:LogPosition):LogPosition;
+  abstract public function mod(pos:Value<Dynamic>):Value<Dynamic>;
 }
