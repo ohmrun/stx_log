@@ -17,7 +17,7 @@ class Tags<T> extends Filter<T>{
     ).if_else(
       () -> __.report(),
       () -> {
-        trace(value.stamp.tags);
+        //trace(value.stamp.tags);
         return __.report(f -> f.of(E_Log('No Tag of $includes')));
       }
     );
