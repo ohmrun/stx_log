@@ -41,7 +41,7 @@ typedef SignalDef = SignalCls;
     var facade = FrontController.facade;
     instance.attach(facade);
 
-    #if (sys || nodejs)
+    #if (sys || nodejs || macro)
       for(v in __.option(Sys.getEnv("STX_LOG__FILE"))){
           final bake    = Bake.pop();
           final output  = sys.io.File.append(v);

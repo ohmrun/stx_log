@@ -62,10 +62,10 @@ class GlobTest extends TestCase{
 #end
 class StartTest extends TestCase{
 	public function _test(){
-		var track = "stx/log";
-		var pred 	= Log._.Logic().pack(track);
-		var ok 		= pred.opine(Value.make(null,__.here()));
-		trace(ok);
+		// var track = "stx/log";
+		// var pred 	= Log._.Logic().pack(track);
+		// var ok 		= pred.opine(Value.make(null,__.here()));
+		// trace(ok);
 	}
 	public function test_default(){
 		trace('test_default');
